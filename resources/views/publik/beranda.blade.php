@@ -2,169 +2,132 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>SIAP PKK</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" href="{{ asset(mix('dashboards/img/baru/logo.png')) }}">
-    <!-- <link rel="stylesheet" href="{{ asset(mix('dashboards/img/baru/logo.png')) }}" rel="icon" /> -->
-    <!-- <link rel="stylesheet" href="{{ asset(mix('dashboards/img/baru/logo.png')) }}" rel="apple-touch-icon" /> -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>SIAP PKK</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="icon" type="image/png" href="{{ asset('storage/assets/images/logos/siap.png') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-  <!-- Vendor CSS Files -->
-
-{{-- <link rel="stylesheet" href="{{ asset(mix('dashboards/vendor/bootstrap/css/bootstrap.min.css')) }}" />
-<link rel="stylesheet" href="{{ asset(mix('dashboards/vendor/bootstrap-icons/bootstrap-icons.css')) }}" />
-<link rel="stylesheet" href="{{ asset(mix('dashboards/vendor/aos/aos.css')) }}" />
-<link rel="stylesheet" href="{{ asset(mix('dashboards/vendor/glightbox/css/glightbox.min.css')) }}" />
-<link rel="stylesheet" href="{{ asset(mix('dashboards/vendor/swiper/swiper-bundle.min.css')) }}" /> --}}
-
-    <link rel="stylesheet" href="{{ asset('dashboards/vendor/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboards/vendor/bootstrap-icons/bootstrap-icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboards/vendor/aos/aos.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboards/vendor/glightbox/css/glightbox.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboards/vendor/swiper/swiper-bundle.min.css') }}">
-
-  <!-- Main CSS File -->
-   
-  <link rel="stylesheet" href="{{ asset('dashboards/css/main.css') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('storage/dashboards/vendor/bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('storage/dashboards/vendor/bootstrap-icons/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('storage/dashboards/vendor/aos/aos.css') }}">
+    <link rel="stylesheet" href="{{ asset('storage/dashboards/vendor/glightbox/css/glightbox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('storage/dashboards/vendor/swiper/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('storage/dashboards/css/main.css') }}" />
 </head>
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="header-container container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
-
-        <h1 class="sitename btn-getstarted">SI-AP Bandarsono</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#beranda" class="active">Beranda</a></li>
-          <li><a href="#profil">Profil</a></li>
-          <li><a href="#artikel">Artikel</a></li>
-          <li><a href="#peraturan">Peraturan</a></li>
-          <!-- <li><a href="#pricing">Kotak</a></li> -->
-          <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li> -->
-          <li><a href="#lapor">Kontak dan Lapor</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
-      <!-- <a class="btn-getstarted" href="index.html#about">Get Started</a> -->
-
-    </div>
-  </header>
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="header-container ">
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+                    {{-- <h1 class="sitename btn-getstarted">SI-AP Bandarsono</h1> --}}
+                    <img src="{{ asset('storage/assets/images/logos/siap.png') }}" alt="" style="width:120px;">
+                </a>
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                    <li><a href="#beranda" class="active">Beranda</a></li>
+                    <li><a href="#profil">Profil</a></li>
+                    <li><a href="#artikel">Artikel</a></li>
+                    <li><a href="#peraturan">Peraturan</a></li>
+                    
+                    <li><a href="#lapor">Kontak dan Lapor</a></li>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+            </div>
+        </div>
+    </header>
 
   <main class="main">
 
     <!-- Hero Section -->
     <section id="beranda" class="hero section">
-      <div class="background-hero" data-aos-delay="50"></div>
-      <div class="background-hero-line" data-aos-delay="100"></div>
+        <div class="background-hero" data-aos-delay="50"></div>
+        <div class="background-hero-line" data-aos-delay="100"></div>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="150">
+        <div class="container" data-aos="fade-up" data-aos-delay="150">
 
-        <div class="row align-items-center">
-          <div class="col-lg-6">
-            <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
-              <div class="company-badge mb-4">
-              <span class="material-symbols-outlined">speaker_notes</span>
-                Lapor Insiden Siber
-              </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
+                    <div class="company-badge mb-4">
+                    <span class="material-symbols-outlined">speaker_notes</span>
+                        Lapor Insiden Siber
+                    </div>
 
-              <h1 class="mb-4">
-                Backup Today, <br>
-                <span class="accent-text">Recover Tomorrow</span>
-              </h1>
+                    <h1 class="mb-4">
+                        Backup Today, <br>
+                        <span class="accent-text">Recover Tomorrow</span>
+                    </h1>
 
-              <p class="mb-4 mb-md-5">
-              "Hadapi Ancaman, Jangan Diam! Jika terjadi insiden siber terhadap layanan Pemerintah Kota Tebing Tinggi, segera laporkan ke TTIS untuk tindakan cepat dan tepat. Keamanan digital adalah tanggung jawab bersama!"
-              </p>
+                    <p class="mb-4 mb-md-5">
+                    "Hadapi Ancaman, Jangan Diam! Jika terjadi insiden siber terhadap layanan Pemerintah Kota Tebing Tinggi, segera laporkan ke TTIS untuk tindakan cepat dan tepat. Keamanan digital adalah tanggung jawab bersama!"
+                    </p>
 
-              <div class="hero-buttons">
-                <a href="#lapor" class="btn btn-primary me-0 me-sm-2 mx-1">LAPORKAN</a>
+                    <div class="hero-buttons">
+                        <a href="#lapor" class="btn btn-primary me-0 me-sm-2 mx-1">LAPORKAN</a>
 
-              </div>
+                    </div>
+                </div>
             </div>
-          </div>
 
-          <div class="col-lg-6">
-            <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
-              <img src="{{ asset('dashboards/img/baru/section1.png')}}" alt="Hero Image" class="img-fluid">
+            <div class="col-lg-6">
+                <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
+                    <img src="{{ asset('storage/dashboards/img/baru/section1.png')}}" alt="Hero Image" class="img-fluid">
+                </div>
             </div>
-          </div>
         </div>
 
         <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
-          <div class="col-lg-3 col-md-6">
-            <div class="stat-item">
-              <div class="stat-icon">
-              <span class="material-symbols-outlined">dns</span>
-              </div>
-              <div class="stat-content">
-                <h4>Domain</h4>
-                <p class="mb-0">tebingtinggikota.go.id</p>
-              </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-item">
+                <div class="stat-icon">
+                <span class="material-symbols-outlined">dns</span>
+                </div>
+                <div class="stat-content">
+                    <h4>Domain</h4>
+                    <p class="mb-0">tebingtinggikota.go.id</p>
+                </div>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div class="stat-item">
-              <div class="stat-icon">
-              <span class="material-symbols-outlined">host</span>
-              </div>
-              <div class="stat-content">
-                <h4>Server</h4>
-                <p class="mb-0">Terdapat 50 Server</p>
-              </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined">host</span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>Server</h4>
+                            <p class="mb-0">Terdapat 50 Server</p>
+                        </div>
+                    </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div class="stat-item">
-              <div class="stat-icon">
-              <span class="material-symbols-outlined">vpn_lock</span>
-              </div>
-              <div class="stat-content">
-                <h4>VPN</h4>
-                <p class="mb-0">Akses Aman dan Terenkripsi</p>
-              </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined">vpn_lock</span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>VPN</h4>
+                            <p class="mb-0">Akses Aman dan Terenkripsi</p>
+                        </div>
+                    </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div class="stat-item">
-              <div class="stat-icon">
-              <span class="material-symbols-outlined">encrypted</span>
-              </div>
-              <div class="stat-content">
-                <h4>SSL</h4>
-                <p class="mb-0">Komunikasi Terenkripsi</p>
-              </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined">encrypted</span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>SSL</h4>
+                            <p class="mb-0">Komunikasi Terenkripsi</p>
+                        </div>
+                    </div>
             </div>
-          </div>
         </div>
 
       </div>
@@ -306,7 +269,7 @@
 
           <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
             <div class="phone-mockup text-center">
-              <img src="{{ asset('dashboards/img/baru/phonesec.png')}}" alt="Phone Mockup" class="img-fluid">
+              <img src="{{ asset('storage/dashboards/img/baru/phonesec.png')}}" alt="Phone Mockup" class="img-fluid">
             </div>
           </div><!-- End Phone Mockup -->
 
@@ -594,15 +557,15 @@
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><span class="material-symbols-outlined">arrow_upward</span></a>
 
   <!-- Vendor JS Files -->
-  <script src="{{asset('dashboards/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{asset('dashboards/vendor/php-email-form/validate.js')}}"></script>
-  <script src="{{asset('dashboards/vendor/aos/aos.js')}}"></script>
-  <script src="{{asset('dashboards/vendor/glightbox/js/glightbox.min.js')}}"></script>
-  <script src="{{asset('dashboards/vendor/swiper/swiper-bundle.min.js')}}"></script>
-  <script src="{{asset('dashboards/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+  <script src="{{asset('storage/dashboards/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{asset('storage/dashboards/vendor/php-email-form/validate.js')}}"></script>
+  <script src="{{asset('storage/dashboards/vendor/aos/aos.js')}}"></script>
+  <script src="{{asset('storage/dashboards/vendor/glightbox/js/glightbox.min.js')}}"></script>
+  <script src="{{asset('storage/dashboards/vendor/swiper/swiper-bundle.min.js')}}"></script>
+  <script src="{{asset('storage/dashboards/vendor/purecounter/purecounter_vanilla.js')}}"></script>
   
   <!-- Main JS File -->
-  <script src="{{asset('dashboards/js/main.js')}}"></script>
+  <script src="{{asset('storage/dashboards/js/main.js')}}"></script>
 
   <!-- <script src="assets/js/main.js"></script> -->
 
