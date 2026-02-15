@@ -10,7 +10,7 @@ use App\Http\Controllers\JabatanAnggotaTimPenggerakPKKController;
 Route::get('/', [BerandaController::class, 'index']);
 Route::get('/masuk', [AnggotaTimPenggerakPKKController::class, 'index']);
 Route::resource('/form-anggota', AnggotaTimPenggerakPKKController::class);
-Route::resource('/form-anggota', JabatanAnggotaTimPenggerakPKKController::class);
+Route::resource('/jabatan-anggota', JabatanAnggotaTimPenggerakPKKController::class);
 
 
 
