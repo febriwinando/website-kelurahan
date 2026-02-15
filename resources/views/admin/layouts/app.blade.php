@@ -25,7 +25,7 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="./index.html" class="text-nowrap logo-img">
-            <img src="{{ asset('storage/assets/images/logos/logoidaman.png') }}" alt="" style="width:200px;" />
+            <img src="{{ asset('storage/assets/images/logos/siap.png') }}" alt="" style="width:200px;margin-top:10px;" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -36,14 +36,30 @@
           <ul id="sidebarnav">
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
-              <span class="hide-menu">Beranda</span>
+              <span class="hide-menu">TIM Anggota PKK</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="form-anggota" aria-expanded="false">
+                <span>
+                  <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
+                </span>
+                <span class="hide-menu">Tambah Angota</span>
+              </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="./index.html" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
-                <span class="hide-menu">Beranda</span>
+                <span class="hide-menu">Daftar Anggota</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <span>
+                  <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
+                </span>
+                <span class="hide-menu">Anggota Tidak Aktif</span>
               </a>
             </li>
             <li class="nav-small-cap">
@@ -226,7 +242,7 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.2/dist/bootstrap-table.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script> --}}
 
-
+{{-- 
     <script>
       $(function () {
         $('.selectpicker').selectpicker();
@@ -619,7 +635,7 @@
         });
     });
 
-    </script>
+    </script> --}}
 
 </body>
 
