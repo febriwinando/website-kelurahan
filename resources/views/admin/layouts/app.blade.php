@@ -55,11 +55,11 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+              <a class="sidebar-link" href="/jabatan-anggota" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
-                <span class="hide-menu">Anggota Tidak Aktif</span>
+                <span class="hide-menu">Daftar Jabatan</span>
               </a>
             </li>
             <li class="nav-small-cap">
@@ -236,6 +236,64 @@
     <script src="{{ asset('storage/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap-table.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap-select.min.js') }}"></script>
+<script>
+document.getElementById('formTambahJabatan')
+.addEventListener('submit', function(e) {
+
+    e.preventDefault();
+
+    let formData = new FormData(this);
+
+    fetch("{{ route('jabatan-anggota.store') }}", {
+        method: "POST",
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        let alertContainer = document.getElementById('alert-container');
+
+        if(data.success) {
+
+            alertContainer.innerHTML = `
+                <div class="alert alert-success alert-dismissible fade show">
+                    ${data.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+
+            document.getElementById('formTambahJabatan').reset();
+
+        } else {
+
+            alertContainer.innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show">
+                    ${data.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+        }
+
+    })
+    .catch(error => {
+
+        document.getElementById('alert-container').innerHTML = `
+            <div class="alert alert-danger alert-dismissible fade show">
+                Terjadi kesalahan server!
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+
+    });
+
+});
+</script>
+
+
     {{-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script> --}}

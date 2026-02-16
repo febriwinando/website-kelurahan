@@ -7,9 +7,24 @@
         @section('title', 'Dashboad Aduan')
 
         @section('content')
-            <div id="successAlert" class="alert alert-success alert-dismissible fade" role="alert" style="display: none;">
+            {{-- <div id="successAlert" class="alert alert-success alert-dismissible fade" role="alert" style="display: none;">
                 {{ session('success') }}
-            </div>
+            </div> --}}
+
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <div id="alert-container"></div>
+
 
             <div id="errorAlert" class="alert alert-danger alert-dismissible fade" role="alert" style="display: none;">
                 @if($errors->any())
@@ -27,19 +42,13 @@
                 </div>
             @else --}}
             <div class="row">
-                <div class="col-lg-9" id="informasi-container">
+                <div class="col-lg-12" id="informasi-container">
                     <div class="card">
                         <div class="card-body">
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-semibold mb-0">Informasi Aduan</h5>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                Teruskan
-                                            </button>
-                                            <a href="#" class="btn btn-danger">Tolak</a>
-                                        </div>
+                                        <h5 class="card-title fw-semibold mb-0">Daftar Jabatan Anggota Tim Penggerak PKK</h5>
                                     </div>
                                 </div>
                             </div>
@@ -48,24 +57,42 @@
                                 <span id="pelapor"></span>
                             </div>
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Pesan Aduan: </h5>
+                                <h5 class="card-title fw-semibold card-header">Tambah Jabatan</h5>
 
                                 <div class="card-body">
-                                    <form>
-                                    <div class="mb-3">
-                                        <label for="namaLengkap" class="form-label">Nama Lengkap</label>
-                                        <input type="text" class="form-control" id="namaLengkap" aria-describedby="namaLengkap" name="name">
-                                        <div id="namaLengkap" class="form-text">isi berdasarkan data Kartu Tanda Penduduk (KTP)</div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1">
-                                    </div>
-                                    <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <form id="formTambahJabatan">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label for="namaJabatan" class="form-label">Nama Jabatan</label>
+                                            <input type="text" class="form-control" id="namaJabatan" aria-describedby="namaJabatan" name="nama_jabatan">
+                                            <div id="namaJabatan" class="form-text">isi nama jabatan berdasarkan struktur organisasi</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="deskripsi" class="form-label">Deskripsi Jabatan</label>
+                                            <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Leave a comment here" id="deskripsi" name="deskripsi"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="hirarkiJabatan" class="form-label">Hierarki Jabatan</label>
+                                            <select id="hirarkiJabatan" class="form-select" name="urutan">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="hirarkiJabatan" class="form-label">Status</label>
+                                            <select id="hirarkiJabatan" class="form-select" name="is_active">
+                                                <option value="true">Aktif</option>
+                                                <option value="false">Tidak Aktif</option>
+
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Tambah Jabatan</button>
                                     </form>
                                 </div>
             
