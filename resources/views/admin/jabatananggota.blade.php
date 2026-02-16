@@ -60,7 +60,7 @@
                                 <h5 class="card-title fw-semibold card-header">Tambah Jabatan</h5>
 
                                 <div class="card-body">
-                                    <form id="formTambahJabatan">
+                                    {{-- <form id="formTambahJabatan">
                                         @csrf
                                         <div class="mb-3">
                                             <label for="namaJabatan" class="form-label">Nama Jabatan</label>
@@ -93,7 +93,48 @@
                                             </select>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Tambah Jabatan</button>
+                                    </form> --}}
+                                    <form id="formTambahJabatan">
+                                        @csrf
+
+                                        <!-- ID untuk mode edit -->
+                                        <input type="hidden" id="jabatan_id">
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Nama Jabatan</label>
+                                            <input type="text" class="form-control" id="namaJabatan" name="nama_jabatan">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Deskripsi Jabatan</label>
+                                            <textarea class="form-control" id="deskripsi" name="deskripsi"></textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Hierarki Jabatan</label>
+                                            <select class="form-select" id="urutan" name="urutan">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Status</label>
+                                            <select class="form-select" id="is_active" name="is_active">
+                                                <option value="true">Aktif</option>
+                                                <option value="false">Tidak Aktif</option>
+                                            </select>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary" id="btnSubmit">
+                                            Tambah Jabatan
+                                        </button>
                                     </form>
+
                                 </div>
             
                             </div>
@@ -101,9 +142,32 @@
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Bukti Aduan:</h5>
                                 <div class="card-body">
-                                    <div class="row" id="bukti-container">
-                                    
-                                    </div>
+                                    <table class="table mt-4" id="tabelJabatan">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nama</th>
+                                                <th>Urutan</th>
+                                                <th>Status</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($jabatans as $key => $jabatan)
+                                        <tr id="row-{{ $jabatan->id }}">
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $jabatan->nama_jabatan }}</td>
+                                            <td>{{ $jabatan->urutan }}</td>
+                                            <td>{{ $jabatan->is_active ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                            <td>
+                                                <button class="btn btn-warning btn-sm editBtn" data-id="{{ $jabatan->id }}">Edit</button>
+                                                <button class="btn btn-danger btn-sm deleteBtn" data-id="{{ $jabatan->id }}">Delete</button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        </tbody>
+
+                                    </table>
                                 </div>
                             </div>
 

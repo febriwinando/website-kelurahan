@@ -236,464 +236,197 @@
     <script src="{{ asset('storage/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap-table.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap-select.min.js') }}"></script>
-<script>
-document.getElementById('formTambahJabatan')
-.addEventListener('submit', function(e) {
-
-    e.preventDefault();
-
-    let formData = new FormData(this);
-
-    fetch("{{ route('jabatan-anggota.store') }}", {
-        method: "POST",
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Accept': 'application/json'
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-
-        let alertContainer = document.getElementById('alert-container');
-
-        if(data.success) {
-
-            alertContainer.innerHTML = `
-                <div class="alert alert-success alert-dismissible fade show">
-                    ${data.message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            `;
-
-            document.getElementById('formTambahJabatan').reset();
-
-        } else {
-
-            alertContainer.innerHTML = `
-                <div class="alert alert-danger alert-dismissible fade show">
-                    ${data.message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            `;
-        }
-
-    })
-    .catch(error => {
-
-        document.getElementById('alert-container').innerHTML = `
-            <div class="alert alert-danger alert-dismissible fade show">
-                Terjadi kesalahan server!
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        `;
-
-    });
-
-});
-</script>
-
-
-    {{-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.2/dist/bootstrap-table.min.js"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script> --}}
-
-{{-- 
     <script>
-      $(function () {
-        $('.selectpicker').selectpicker();
-      });
 
-      // Variabel array untuk simpan data terpilih
-      let selectedValues = [];
+    const csrf = '{{ csrf_token() }}';
+    const baseUrl = "{{ url('jabatan-anggota') }}";
 
-      // Saat option dipilih
-      $('#opd').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-        let selectedVal = $(this).val(); // ambil value yang terpilih
-        let selectedText = $(this).find("option[value='"+selectedVal+"']").text();
-
-        if (selectedVal && !selectedValues.includes(selectedVal)) {
-          selectedValues.push(selectedVal); // tambah ke array jika belum ada
-          renderSelected();
-        }
-      });
-      
-      function renderSelected() {
-        let container = $("#selectedList");
-        container.empty();
-
-        selectedValues.forEach(function(val){
-            let text = $("#opd option[value='"+val+"']").text();
-            let item = `
-                <span class="btn btn-light m-1">
-                  ${text}
-                  <button type="button" class="btn-close btn-close-dark btn-sm ms-1 remove-item" data-value="${val}"></button>
-                </span>`;
-            container.append(item);
-        });
-
-        // Update hidden input
-        $('#opd_selected').val(selectedValues.join(',')); // bisa juga JSON.stringify(selectedValues)
-
-        console.log("render: "+selectedValues);
-
-      }
-
-      $(document).on("click", ".remove-item", function(){
-    let value = String($(this).data("value")); // pastikan string
-    selectedValues = selectedValues.filter(v => v !== value);
-    console.log("hapus: "+value+" - "+selectedValues);
-
-    // kalau mau sekalian unselect dari selectpicker
-    $('#opd').find(`option[value='${value}']`).prop('selected', false);
-    $('#opd').selectpicker('refresh');
-
-    renderSelected();
-});
+    const form = document.getElementById('formTambahJabatan');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const jabatanId = document.getElementById('jabatan_id');
 
 
-    </script>
+    // ================= SUBMIT (STORE + UPDATE) =================
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    <script>
-          function loadDetail(id) {
-              console.log("load 2:"+id);
+        let id = jabatanId.value;
+        let formData = new FormData(form);
 
-              $.get("{{ url('/aduan') }}/" + id, function (data) {
-                  $('#pelapor').text(toTitleCase(data.nama) + ' | Nomor WhatsApp ' + formatPhone(data.number));
-                  $('#aduan-body').text("\""+data.body+"\"");
-                  $('#aduan-time').text("Aduan diterima pada " + formatDate(data.created_at));
-                  $('#whatsapp_message_id').val(data.id);
-                  $('#aksesaduan_id').val(data.aksesaduan_id);
+        let url = id ? `${baseUrl}/${id}` : baseUrl;
+        let method = id ? 'PUT' : 'POST';
 
-                  $('.btn-terima').attr('data-id', data.id);
-                  $('#form-tolak').attr('action', '/opd/tolak/' + data.id);
+        fetch(url, {
+            method: 'POST', // tetap POST (Laravel spoof method)
+            headers: {
+                'X-CSRF-TOKEN': csrf,
+                'Accept': 'application/json'
+            },
+            body: (() => {
+                if(id) formData.append('_method', 'PUT');
+                return formData;
+            })()
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success){
 
-                  // status check
-                  if (data.status == 2) {
-                      $('#btnTangani').show();
-                      $('.btn-terima').hide();
-                      $('#form-tolak').hide();
-                  } else if (data.status == 3) {
-                      $('#btnTangani').hide();
-                      $('#selesai').show();
-                      $('.btn-terima').hide();
-                      $('#form-tolak').hide();
-                  } else {
-                      $('#btnTangani').hide();
-                      $('.btn-terima').show();
-                      $('#form-tolak').show();
-                  }
+              if(id){
+                  let row = document.getElementById(`row-${id}`);
 
-                  // render bukti
-                  // $('#bukti-container').empty();
-                  // if (data.filepath && data.filepath.length > 0) {
-                  //     let buktiHtml = '';
-                  //     data.filepath.forEach((path) => {
-                  //         buktiHtml += `
-                  //             <div class="col-md-6 mb-2">
-                  //                 <div class="card position-relative">
-                  //                     <img src="/storage/${path}" class="card-img" alt="bukti"
-                  //                         data-bs-toggle="modal" data-bs-target="#modalBukti"
-                  //                         data-bs-img="/storage/${path}" style="cursor:pointer;">
-
-                  //                     <a href="/storage/${path}" download
-                  //                         class="btn btn-sm btn-primary position-absolute"
-                  //                         style="left: 10px; bottom: 10px;">
-                  //                         <i class="bi bi-file-arrow-down-fill"></i> Download
-                  //                     </a>
-                  //                 </div>
-                  //             </div>`;
-                  //     });
-                  //     $('#bukti-container').html(buktiHtml);
-                  // }
-
-                  $('#bukti-container').empty();
-
-                  if (data.filepath && data.filepath.length > 0) {
-                      let imageHtml = '';
-                      let videoHtml = '';
-                      let docHtml = '';
-
-                      data.filepath.forEach((path, index) => {
-                          let mime = data.mimetype[index];
-                          let filename = data.filename[index];
-
-                          if (mime && mime.startsWith("image/")) {
-                              // Gambar
-                              imageHtml += `
-                                  <div class="col-md-6 mb-2">
-                                      <div class="card position-relative">
-                                          <img src="/storage/${path}" class="card-img" alt="${filename}"
-                                              data-bs-toggle="modal" data-bs-target="#modalBukti"
-                                              data-bs-img="/storage/${path}" style="cursor:pointer;">
-
-                                          <a href="/storage/${path}" download
-                                              class="btn btn-sm btn-primary position-absolute"
-                                              style="left: 10px; bottom: 10px;">
-                                              <i class="bi bi-file-arrow-down-fill"></i>
-                                          </a>
-                                      </div>
-                                  </div>`;
-                          } else if (mime && mime.startsWith("video/")) {
-                              // Video
-                              videoHtml += `
-                                  <div class="col-md-6 mb-2">
-                                      <div class="card position-relative">
-                                          <video controls class="card-img" style="max-height:300px;">
-                                              <source src="/storage/${path}" type="${mime}">
-                                              Browser kamu tidak mendukung video.
-                                          </video>
-                                          <a href="/storage/${path}" download
-                                              class="btn btn-sm btn-primary position-absolute"
-                                              style="left: 10px; bottom: 10px;">
-                                              <i class="bi bi-file-arrow-down-fill"></i>
-                                          </a>
-                                      </div>
-                                  </div>`;
-                          } else {
-                              // Dokumen (pdf, word, dll)
-                              docHtml += `
-                                  <div class="col-md-12 mb-2">
-                                      <div class="card p-3 d-flex flex-row justify-content-between align-items-center">
-                                          <div>
-                                              <i class="bi bi-file-earmark-text me-2"></i> ${filename}
-                                          </div>
-                                          <a href="/storage/${path}" download
-                                              class="btn btn-sm btn-primary">
-                                              <i class="bi bi-file-arrow-down-fill"></i>
-                                          </a>
-                                      </div>
-                                  </div>`;
-                          }
-                      });
-
-                      $('#bukti-container').html(`
-                          <div class="row">${imageHtml}</div>
-                          <div class="row mt-3">${videoHtml}</div>
-                          <div class="row mt-3">${docHtml}</div>
-                      `);
-                  }
-
-
-                  // render timeline tanggal_penanganan
-                $('#timeline-container').empty();
-
-                if (data.penanganan.length > 0) {
-                  data.penanganan.forEach(function(p) {
-                      let tgl = p.tanggal_penanganan; // array dari penanganan
-
-                      let labels = {
-                            kirim_opd: 'Dikirim ke',
-                            terima_opd: 'Diterima oleh',
-                            selesai_opd: 'Selesai ditangani oleh'
-                        };
-
-                        Object.entries(tgl).forEach(([key, val]) => {
-                            let item = `
-                                <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <p class="mb-1"><span class="fw-bold">${labels[key] ?? key}</span> ${p.opd.opd}</p>
-                                        <small>${formatDate(val)}</small>
-                                    </div>
-                            `;
-
-                            // Tampilkan petugas dan catatan hanya jika selesai_opd
-                            if(key === 'selesai_opd') {
-                                let petugas = (p.petugas_positions || []).map(pos => pos.jabatan).join(', ');
-                                item += `
-                                    <p class="mb-1"><span class="fw-bold">Petugas yang melaksanakan: </span>${petugas || '-'}</p>
-                                    <p class="mb-1"><span class="fw-bold">Keterangan: </span>${p.catatan_penanganan || '-'}</p>
-                                `;
-
-                                // Tampilkan bukti_penanganan
-                                // if(p.bukti_penanganan && p.bukti_penanganan.length > 0) {
-                                //     let buktiHtml = '<p class="mb-1">Bukti Penanganan:</p><ul>';
-                                //     p.bukti_penanganan.forEach(file => {
-                                //         let url = '/storage/' + file.path; // path dari database
-                                //         buktiHtml += `<li><a href="${url}" target="_blank">${file.name}</a></li>`;
-                                //     });
-                                //     buktiHtml += '</ul>';
-                                //     item += buktiHtml;
-                                // }
-                            }
-                            item += `</a>`; // tutup <a>
-                            $('#timeline-container').append(item);
-                        });
-                  });
+                  row.children[1].innerText = data.data.nama_jabatan;
+                  row.children[2].innerText = data.data.urutan ?? '';
+                  row.children[3].innerText = data.data.is_active ? 'Aktif' : 'Tidak Aktif';
               } else {
-                  $('#timeline-container').append('<p>Tidak ada penanganan.</p>');
+
+                  let row = `
+                  <tr id="row-${data.data.id}">
+                      <td></td>
+                      <td>${data.data.nama_jabatan}</td>
+                      <td>${data.data.urutan ?? ''}</td>
+                      <td>${data.data.is_active ? 'Aktif' : 'Tidak Aktif'}</td>
+                      <td>
+                          <button class="btn btn-warning btn-sm editBtn" data-id="${data.data.id}">Edit</button>
+                          <button class="btn btn-danger btn-sm deleteBtn" data-id="${data.data.id}">Delete</button>
+                      </td>
+                  </tr>
+                  `;
+
+                  document.querySelector('#tabelJabatan tbody')
+                          .insertAdjacentHTML('beforeend', row);
               }
 
-                  var modalBukti = document.getElementById('modalBukti');
-                  modalBukti.addEventListener('show.bs.modal', function (event) {
-                      var img = event.relatedTarget;
-                      var src = img.getAttribute('data-bs-img');
-                      var modalImg = document.getElementById('modalBuktiImg');
-                      modalImg.src = src;
-                  });
-              });
+              updateRowNumbers(); // ✅ letakkan di sini
+              showAlert('success', 'Data berhasil disimpan!');
+              resetForm();
           }
-      $(document).ready(function () {
 
 
-          // ketika item diklik
-          $(document).on('click', '.aduan-item', function () {
-              $('.aduan-item').removeClass('active');
-              $(this).addClass('active');
-              let id = $(this).data('id');
-              loadDetail(id);
+        })
+        .catch(async error => {
+
+      let response = await error.response?.json?.();
+
+      if(response && response.errors){
+
+          let pesan = '';
+          Object.values(response.errors).forEach(err => {
+              pesan += err[0] + '<br>';
           });
 
-          // otomatis load data pertama
-          let firstId = $('.aduan-item').first().data('id');
-          if (firstId) {
-              loadDetail(firstId);
-          }
+          showAlert('danger', pesan);
+
+      } else {
+          showAlert('danger', 'Terjadi kesalahan server!');
+      }
+
+  });
+
+    });
+
+  function updateRowNumbers() {
+      const rows = document.querySelectorAll('#tabelJabatan tbody tr');
+      rows.forEach((row, index) => {
+          row.children[0].innerText = index + 1;
       });
+  }
 
-      
 
-      function formatPhone(num) {
-          // hapus @c.us
-          num = num.replace('@c.us', '');
+    // ================= EDIT =================
+    document.addEventListener('click', function(e){
 
-          // tambah +
-          if (!num.startsWith('+')) {
-              num = '+' + num;
-          }
+        if(e.target.classList.contains('editBtn')){
 
-          // pisahkan sesuai pola (2)-(3)-(4)-(4)
-          return num.replace(/(\+62)(\d{3})(\d{4})(\d{4})/, '$1-$2-$3-$4');
-      }
+            let id = e.target.dataset.id;
 
-      function toTitleCase(str) {
-          return str
-              .toLowerCase()
-              .split(' ')
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' ');
-      }
+            fetch(`${baseUrl}/${id}/edit`, {
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(data => {
 
-      function formatDate(dateString) {
-          const date = new Date(dateString);
+                jabatanId.value = data.id;
+                document.getElementById('namaJabatan').value = data.nama_jabatan;
+                document.getElementById('deskripsi').value = data.deskripsi ?? '';
+                document.getElementById('urutan').value = data.urutan ?? '';
+                document.getElementById('is_active').value = data.is_active ? 'true' : 'false';
 
-          // Nama hari, tanggal, bulan, tahun
-          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-          const formattedDate = new Intl.DateTimeFormat('id-ID', options).format(date);
+                btnSubmit.innerText = "Update Jabatan";
+                btnSubmit.classList.remove('btn-primary');
+                btnSubmit.classList.add('btn-success');
+                    updateRowNumbers();
 
-          // Jam & menit
-          const hours = date.getHours().toString().padStart(2, '0');
-          const minutes = date.getMinutes().toString().padStart(2, '0');
+            });
 
-          return `${formattedDate} pada pukul ${hours}:${minutes} WIB`;
-      }
+        }
 
-      document.addEventListener("DOMContentLoaded", function() {
-        // kalau ada pesan sukses dari session
-        @if(session('success'))
-            let successAlert = document.getElementById('successAlert');
-            successAlert.style.display = 'block';
-            successAlert.classList.add('show');
-
-            setTimeout(() => {
-                successAlert.classList.remove('show');
-                successAlert.style.display = 'none';
-            }, 3000);
-        @endif
-
-        // kalau ada pesan error dari validator
-        @if($errors->any())
-            let errorAlert = document.getElementById('errorAlert');
-            errorAlert.style.display = 'block';
-            errorAlert.classList.add('show');
-
-            setTimeout(() => {
-                errorAlert.classList.remove('show');
-                errorAlert.style.display = 'none';
-            }, 3000);
-        @endif
     });
 
-    $(document).ready(function () {
-      // pakai event delegation supaya tetap jalan meski tombol diganti lewat loadDetail
-      $(document).on('click', '.btn-terima', function (e) {
-          e.preventDefault();
-          let id = $(this).data('id');
-          let btn = $(this);
 
-          $.ajax({
-              url: "{{ route('terima.opd') }}",
-              type: "POST",
-              data: {
-                  _token: "{{ csrf_token() }}",
-                  id: id
-              },
+    // ================= DELETE =================
+    document.addEventListener('click', function(e){
 
-              success: function (res) {
-                  if (res.success) {
-                      btn.hide();
-                      btn.siblings('form').hide();
-                      $('#btnTangani').show();
+        if(e.target.classList.contains('deleteBtn')){
 
-                      $('#successAlert').html(res.message).show().addClass('show');
-                      setTimeout(function () {
-                          $('#successAlert').fadeOut();
-                      }, 3000);
+            if(!confirm('Yakin hapus?')) return;
 
-                      // ==== Refresh daftar pelapor ====
-                      let listGroup = $('.list-group.list-group-flush');
-                      listGroup.empty();
+            let id = e.target.dataset.id;
 
-                      if (res.penanganans.length === 0) {
-                          // kosong → tampilkan pesan di kanan, bukan hapus seluruh container
-                          $('#pelapor').text('');
-                          $('#aduan-body').text('');
-                          $('#aduan-time').text('');
-                          $('#bukti-container').html(`
-                              <div class="alert alert-primary" role="alert">
-                                  Tidak ada disposisi aduan yang diterima.
-                              </div>
-                          `);
-                      } else {
-                          res.penanganans.forEach(function(p, index) {
-                              listGroup.append(`
-                                  <li class="list-group-item aduan-item ${index === 0 ? 'active' : ''}"
-                                      data-id="${p.whatsapp_message.id}">
-                                      ${p.whatsapp_message.nama}
-                                  </li>
-                              `);
-                          });
+            fetch(`${baseUrl}/${id}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrf,
+                    'Accept': 'application/json'
+                },
+                body: new URLSearchParams({
+                    _method: 'DELETE'
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
 
-                          // rebind klik event
-                          $('.aduan-item').off('click').on('click', function() {
-                              $('.aduan-item').removeClass('active');
-                              $(this).addClass('active');
-                              let id = $(this).data('id');
-                              loadDetail(id);
-                          });
-
-                          // otomatis tampilkan detail item pertama
-                          let firstId = res.penanganans[0].whatsapp_message.id;
-                          console.log("load 1:"+firstId);
-                          loadDetail(firstId);
-                      }
-                  }
-              },
-
-              error: function (xhr) {
-                  let msg = "Terjadi kesalahan!";
-                  if (xhr.responseJSON && xhr.responseJSON.message) {
-                      msg = xhr.responseJSON.message;
-                  }
-                  $('#errorAlert').html(msg).show().addClass('show');
+                if(data.success){
+                  document.getElementById(`row-${id}`).remove();
+                  updateRowNumbers();
+                  showAlert('success', 'Data berhasil dihapus!');
               }
-          });
-        });
+
+
+            });
+
+        }
+
     });
 
-    </script> --}}
+
+    // ================= RESET FORM =================
+    function resetForm(){
+        form.reset();
+        jabatanId.value = '';
+        btnSubmit.innerText = "Tambah Jabatan";
+        btnSubmit.classList.remove('btn-success');
+        btnSubmit.classList.add('btn-primary');
+    }
+
+    function showAlert(type, message) {
+
+      const container = document.getElementById('alert-container');
+
+      container.innerHTML = `
+          <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+              ${message}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+      `;
+
+      // Auto hilang setelah 3 detik
+      setTimeout(() => {
+          container.innerHTML = '';
+      }, 3000);
+  }
+
+
+  </script>
 
 </body>
 

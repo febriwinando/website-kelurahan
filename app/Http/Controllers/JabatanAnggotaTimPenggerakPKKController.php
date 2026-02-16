@@ -14,7 +14,8 @@ class JabatanAnggotaTimPenggerakPKKController extends Controller
      */
     public function index()
     {
-        return view('admin.jabatananggota');
+        $jabatans = Jabatan::orderBy('urutan')->get();
+        return view('admin.jabatananggota', compact('jabatans'));
     }
 
     /**
@@ -29,38 +30,61 @@ class JabatanAnggotaTimPenggerakPKKController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
+//     public function store(Request $request)
+// {
+//     try {
+
+//         $validated = $request->validate([
+//             'nama_jabatan' => 'required|string|max:255',
+//             'deskripsi' => 'nullable|string',
+//             'urutan' => 'nullable|integer',
+//             'is_active' => 'required'
+//         ]);
+
+//         $jabatan = Jabatan::create([
+//             'kode_jabatan' => Str::upper(Str::slug($validated['nama_jabatan'], '_')),
+//             'nama_jabatan' => $validated['nama_jabatan'],
+//             'deskripsi' => $validated['deskripsi'] ?? null,
+//             'urutan' => $validated['urutan'] ?? null,
+//             'is_active' => $validated['is_active'] === 'true' ? 1 : 0,
+//         ]);
+
+//         return response()->json([
+//             'success' => true,
+//             'message' => 'Jabatan berhasil ditambahkan.'
+//         ]);
+
+//     } catch (\Exception $e) {
+
+//         return response()->json([
+//             'success' => false,
+//             'message' => 'Terjadi kesalahan saat menyimpan data.'
+//         ], 500);
+
+//     }
+// }
+
+public function store(Request $request)
 {
-    try {
+    $request->validate([
+        'nama_jabatan' => 'required|string|max:255',
+        'deskripsi' => 'nullable|string',
+        'urutan' => 'nullable|integer',
+        'is_active' => 'required'
+    ]);
 
-        $validated = $request->validate([
-            'nama_jabatan' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'urutan' => 'nullable|integer',
-            'is_active' => 'required'
-        ]);
+    $jabatan = Jabatan::create([
+        'kode_jabatan' => Str::upper(Str::slug($request->nama_jabatan, '_')),
+        'nama_jabatan' => $request->nama_jabatan,
+        'deskripsi' => $request->deskripsi,
+        'urutan' => $request->urutan,
+        'is_active' => $request->is_active === 'true' ? 1 : 0,
+    ]);
 
-        $jabatan = Jabatan::create([
-            'kode_jabatan' => Str::upper(Str::slug($validated['nama_jabatan'], '_')),
-            'nama_jabatan' => $validated['nama_jabatan'],
-            'deskripsi' => $validated['deskripsi'] ?? null,
-            'urutan' => $validated['urutan'] ?? null,
-            'is_active' => $validated['is_active'] === 'true' ? 1 : 0,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Jabatan berhasil ditambahkan.'
-        ]);
-
-    } catch (\Exception $e) {
-
-        return response()->json([
-            'success' => false,
-            'message' => 'Terjadi kesalahan saat menyimpan data.'
-        ], 500);
-
-    }
+    return response()->json([
+        'success' => true,
+        'data' => $jabatan
+    ]);
 }
 
 
@@ -97,24 +121,48 @@ class JabatanAnggotaTimPenggerakPKKController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Jabatan $jabatanAnggotaTimPenggerakPKK)
+    public function edit($id)
     {
-        //
+        $jabatan = Jabatan::findOrFail($id);
+        return response()->json($jabatan);
     }
+
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Jabatan $jabatanAnggotaTimPenggerakPKK)
+   public function update(Request $request, $id)
     {
-        //
+        $jabatan = Jabatan::findOrFail($id);
+
+        $jabatan->update([
+            'nama_jabatan' => $request->nama_jabatan,
+            'deskripsi' => $request->deskripsi,
+            'urutan' => $request->urutan,
+            'is_active' => $request->is_active === 'true' ? 1 : 0,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $jabatan
+        ]);
+
     }
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Jabatan $jabatanAnggotaTimPenggerakPKK)
+    public function destroy($id)
     {
-        //
+        Jabatan::destroy($id);
+
+        return response()->json([
+            'success' => true
+        ]);
+
     }
+
 }
