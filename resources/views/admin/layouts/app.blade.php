@@ -39,7 +39,7 @@
               <span class="hide-menu">TIM Anggota PKK</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="form-anggota" aria-expanded="false">
+              <a class="sidebar-link" href="anggota" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
@@ -66,7 +66,7 @@
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">KOLOM ADUAN</span>
             </li>
-            @if(in_array(Auth::user()->level, ['administrator', 'admin_kota']))
+            {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
             <li class="sidebar-item">
               <a class="sidebar-link" href="/laporan-masuk" aria-expanded="false">
                 <span>
@@ -75,7 +75,7 @@
                 <span class="hide-menu">Aduan Diterima</span>
               </a>
             </li>
-            @endif
+            {{-- @endif --}}
             <!-- <li class="sidebar-item">
               <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
                 <span>
@@ -84,7 +84,7 @@
                 <span class="hide-menu"></span>
               </a>
             </li> -->
-            @if(in_array(Auth::user()->level, ['administrator', 'admin_opd']))
+            {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_opd'])) --}}
             <li class="sidebar-item">
               <a class="sidebar-link" href="/diterima-opd" aria-expanded="false">
                 <span>
@@ -101,8 +101,8 @@
                 <span class="hide-menu">Proses Penanganan</span>
               </a>
             </li>
-            @endif
-            @if(in_array(Auth::user()->level, ['administrator', 'admin_opd', 'admin_kota']))
+            {{-- @endif
+            @if(in_array(Auth::user()->level, ['administrator', 'admin_opd', 'admin_kota'])) --}}
 
             <li class="sidebar-item">
               <a class="sidebar-link" href="/selesai-opd" aria-expanded="false">
@@ -112,7 +112,7 @@
                 <span class="hide-menu">Selesai</span>
               </a>
             </li>
-            @endif
+            {{-- @endif --}}
             <li class="sidebar-item">
               <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
                 <span>
@@ -183,7 +183,9 @@
                     {{-- <a href="#" target="_blank"
                         class="btn btn-primary me-2"><span class="d-none d-md-block">Check Pro Version</span> <span class="d-block d-md-none">Pro</span></a>--}}
                     <a target="_blank"
-                        class="btn btn-success"><span class="d-none d-md-block">{{ Auth::user()->opd?->opd }} ({{ Auth::user()->name }})</span></a> 
+                        class="btn btn-success"><span class="d-none d-md-block">
+                          {{-- {{ Auth::user()->opd?->opd }} ({{ Auth::user()->name }}) --}}
+                        </span></a> 
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -305,22 +307,22 @@
         })
         .catch(async error => {
 
-      let response = await error.response?.json?.();
+          let response = await error.response?.json?.();
 
-      if(response && response.errors){
+          if(response && response.errors){
 
-          let pesan = '';
-          Object.values(response.errors).forEach(err => {
-              pesan += err[0] + '<br>';
-          });
+              let pesan = '';
+              Object.values(response.errors).forEach(err => {
+                  pesan += err[0] + '<br>';
+              });
 
-          showAlert('danger', pesan);
+              showAlert('danger', pesan);
 
-      } else {
-          showAlert('danger', 'Terjadi kesalahan server!');
-      }
+          } else {
+              showAlert('danger', 'Terjadi kesalahan server!');
+          }
 
-  });
+      });
 
     });
 
@@ -425,8 +427,57 @@
       }, 3000);
   }
 
-
   </script>
+
+  <script>
+    $(document).ready(function(){
+
+        $('#formTambahAnggota').on('submit', function(e){
+            e.preventDefault();
+
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: "{{ route('anggota.store') }}",
+                type: "POST",
+                data: formData,
+                success: function(response){
+
+                    if(response.success){
+                        
+                        // Reset form
+                        $('#formTambahAnggota')[0].reset();
+
+                        // Alert sukses
+                        $('#alert-container').html(`
+                            <div class="alert alert-success alert-dismissible fade show">
+                                Data berhasil ditambahkan!
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        `);
+
+                        // Kalau mau langsung tambah ke tabel tanpa refresh
+                        // tambahKeTabel(response.data);
+                    }
+                },
+                error: function(xhr){
+                    let errors = xhr.responseJSON.errors;
+                    let errorMessage = '<div class="alert alert-danger"><ul>';
+
+                    $.each(errors, function(key, value){
+                        errorMessage += '<li>' + value[0] + '</li>';
+                    });
+
+                    errorMessage += '</ul></div>';
+
+                    $('#alert-container').html(errorMessage);
+                }
+            });
+        });
+
+    });
+    </script>
+
 
 </body>
 

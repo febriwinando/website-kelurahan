@@ -1,0 +1,128 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Anggota;
+use Illuminate\Http\Request;
+use App\Models\Kecamatan;
+use App\Models\Kabupaten;
+use App\Models\Jabatan;
+
+class AnggotaController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $anggotas = Anggota::with('jabatan')->latest()->get();
+        // $kecamatans = Kecamatan::with('kabupaten.provinsi')->get();
+        $kecamatans = Kabupaten::with('provinsi')->get();
+        $jabatans = Jabatan::get();
+        return view('admin.tambahanggota', compact('anggotas', 'kecamatans', 'jabatans'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+{
+    try {
+
+        $validated = $request->validate([
+            'nama' => 'required',
+            'jabatan_id' => 'required|exists:jabatans,id',
+            'jenis_kelamin' => 'required',
+            'status_perkawinan' => 'required',
+        ]);
+
+        $jabatan = Jabatan::find($request->jabatan_id);
+
+        $anggota = Anggota::create([
+            'nama' => $request->nama,
+            'jabatan_id' => $jabatan->id,
+            'nama_jabatan' => $jabatan->nama_jabatan,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'status_perkawinan' => $request->status_perkawinan,
+            'alamat' => $request->alamat,
+            'pendidikan' => $request->pendidikan,
+            'pekerjaan' => $request->pekerjaan,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $anggota
+        ]);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+
+        return response()->json([
+            'success' => false,
+            'errors' => $e->errors()
+        ], 422);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $anggota = Anggota::with('jabatan')->findOrFail($id);
+        return response()->json($anggota);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $anggota = Anggota::findOrFail($id);
+
+        $jabatan = Jabatan::find($request->jabatan_id);
+
+        $anggota->update([
+            'nama' => $request->nama,
+            'jabatan_id' => $jabatan->id,
+            'nama_jabatan' => $jabatan->nama_jabatan,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'status_perkawinan' => $request->status_perkawinan,
+            'alamat' => $request->alamat,
+            'pendidikan' => $request->pendidikan,
+            'pekerjaan' => $request->pekerjaan,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $anggota
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        Anggota::findOrFail($id)->delete();
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+}

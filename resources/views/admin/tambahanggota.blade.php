@@ -27,13 +27,13 @@
                 </div>
             @else --}}
             <div class="row">
-                <div class="col-lg-9" id="informasi-container">
+                <div class="col-lg-12" id="informasi-container">
                     <div class="card">
                         <div class="card-body">
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-semibold mb-0">Informasi Aduan</h5>
+                                        <h5 class="card-title fw-semibold mb-0">Tambah Anggota</h5>
                                         <div>
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 Teruskan
@@ -44,112 +44,135 @@
                                 </div>
                             </div>
 
-                            <div class="card-text mb-3 fs-5 mt-2">
-                                <span id="pelapor"></span>
-                            </div>
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Pesan Aduan: </h5>
-
+                                <h5 class="card-title fw-semibold card-header">Form Anggota </h5>
                                 <div class="card-body">
-                                    <form >
+                                    <form id="formTambahAnggota">
                                         @csrf
                                         <div class="mb-3">
-                                            <label for="namaLengkap" class="form-label">Nama Lengkap</label>
-                                            <input type="text" class="form-control" id="namaLengkap" aria-describedby="namaLengkap" name="name">
-                                            <div id="namaLengkap" class="form-text">isi berdasarkan data Kartu Tanda Penduduk (KTP)</div>
+                                            <label class="form-label">Nama Lengkap</label>
+                                            <input type="text" class="form-control rounded-pill" name="nama">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="exampleInputPassword1" class="form-label">Password</label>
-                                            <input type="password" class="form-control" id="exampleInputPassword1">
+                                            <label>Jabatan</label>
+                                            <select name="jabatan_id" class="form-control rounded-pill">
+                                                <option value="">-- Pilih Jabatan --</option>
+                                                @foreach($jabatans as $jabatan)
+                                                    <option value="{{ $jabatan->id }}">
+                                                        {{ $jabatan->nama_jabatan }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                         <div class="mb-3">
+                                            <label>Jabatan</label>
+                                            <select name="nama_jabatan" class="form-control rounded-pill">
+                                                <option value="">-- NAMA Jabatan --</option>
+                                                @foreach($jabatans as $jabatan)
+                                                    <option value="{{ $jabatan->nama_jabatan }}">
+                                                        {{ $jabatan->nama_jabatan }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Jenis Kelamin</label>
+                                            <div class="d-flex gap-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" 
+                                                        name="jenis_kelamin" value="Perempuan" checked>
+                                                    <label class="form-check-label">Perempuan</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" 
+                                                        name="jenis_kelamin" value="Laki-laki">
+                                                    <label class="form-check-label">Laki-laki</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="tempatLahir" class="form-label">Tempat Lahir:</label>
+                                            <select id="tempatLahir" name="tempat_lahir" class="selectpicker form-control" data-live-search="true" title="pilih tempat kelahiran">
+                                                @foreach($kecamatans as $kecamatan)
+                                                    <option value="{{ $kecamatan->id }}" data-name="{{ $kecamatan->nama }}">
+                                                        {{ $kecamatan->nama }}- {{ $kecamatan->provinsi->nama }}
+                                                    </option>
+                                                @endforeach   
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Tanggal Lahir</label>
+                                            <input type="date" class="form-control rounded-pill" name="tanggal_lahir">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Status Perkawinan</label>
+                                            <div class="d-flex gap-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" 
+                                                        name="status_perkawinan" value="Kawin" checked>
+                                                    <label class="form-check-label">Kawin</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" 
+                                                        name="status_perkawinan" value="Tidak Kawin">
+                                                    <label class="form-check-label">Tidak Kawin</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Alamat</label>
+                                            <input type="text" class="form-control rounded-pill" name="alamat">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="pendidikan">Pendidikan</label>
+                                            <select name="pendidikan" id="pendidikan" class="form-select rounded-pill">
+                                                <option value="">-- Pilih Pendidikan --</option>
+                                                <option value="SD">SD</option>
+                                                <option value="SMP">SMP</option>
+                                                <option value="SMA/SMK">SMA/SMK</option>
+                                                <option value="S1">S1</option>
+                                                <option value="S2">S2</option>
+                                                <option value="S3">S3</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="pekerjaan">Pekerjaan</label>
+                                            <select name="pekerjaan" id="pekerjaan" class="form-select rounded-pill">
+                                                <option value="">-- Pilih Pekerjaan --</option>
+                                                <option value="asn">ASN/PNS</option>
+                                                <option value="tni_polri">TNI/Polri</option>
+                                                <option value="pegawai_swasta">Pegawai Swasta</option>
+                                                <option value="wiraswasta">Wiraswasta</option>
+                                                <option value="petani">Petani</option>
+                                                <option value="nelayan">Nelayan</option>
+                                                <option value="guru_dosen">Guru/Dosen</option>
+                                                <option value="tenaga_kesehatan">Tenaga Kesehatan</option>
+                                                <option value="pelajar_mahasiswa">Pelajar/Mahasiswa</option>
+                                                <option value="ibu_rumah_tangga">Ibu Rumah Tangga</option>
+                                                <option value="tidak_bekerja">Tidak Bekerja</option>
+                                                <option value="lainnya">Lainnya</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label>Keterangan</label>
+                                            <textarea class="form-control" name="keterangan"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Tambah</button>
                                     </form>
                                 </div>
             
                             </div>
 
-                            <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Bukti Aduan:</h5>
-                                <div class="card-body">
-                                    <div class="row" id="bukti-container">
-                                    
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
-                </div>
-                <div class="py-6 px-6 text-center">
-                <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
-                    class="pe-1 text-primary text-decoration-underline">AdminMart.com</a>Distributed by <a href="https://themewagon.com/" target="_blank"
-                    class="pe-1 text-primary text-decoration-underline">ThemeWagon</a></p>
                 </div>
             </div>
             {{-- @endif --}}
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    {{-- <form id="formTeruskan" method="post" action="{{ route('penanganan.store') }}">
-                        @csrf --}}
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Teruskan laporan ke OPD terkait</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <input type="hidden" name="whatsapp_message_id" id="whatsapp_message_id" value="">
-                                <input type="hidden" name="aksesaduan_id" id="aksesaduan_id" value="">
-                                <input type="text" name="opd_selected" id="opd_selected" value="">
-
-                                <label for="opd" class="form-label">Silahkan pilih OPD:</label>
-                                <select id="opd" name="opd" class="selectpicker form-control" data-live-search="true" title="Cari atau pilih OPD...">
-                                    {{-- @foreach($opds as $opd)
-                                        <option value="{{ $opd->id }}" data-name="{{ $opd->opd }}">
-                                            {{ $opd->opd }}
-                                        </option>
-                                    @endforeach    --}}
-                                </select>
-
-                                <h5 class="mt-4">Data Terpilih:</h5>
-                                <div id="selectedList" class="mt-2"></div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Kirim</button>
-                            </div>
-                        </div>
-                    {{-- </form> --}}
-                </div>
-            </div>
-
-
-            <!-- Model Foto -->
-            <div class="modal fade" id="modalBukti" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-
-                <div class="modal-content">
-                    <div class="modal-header">
-                    {{-- <h1 class="modal-title fs-5" id="exampleModalLabel">Teruskan laporan ke OPD terkait</h1> --}}
-                        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
-                    </div>
-                    <div class="modal-body p-0">
-                        <img src="" id="modalBuktiImg" class="img-fluid w-100" alt="bukti">
-                    </div>
-                    <div class="modal-footer">
-                        {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button> --}}
-                    </div>
-                </div>
-            </div>
-            </div>
-
         @endsection
-
-        {{-- @section('scripts')
-            <script src="{{ asset('storage/assets/js/scriptlapor.js') }}"></script>
-        @endsection --}}

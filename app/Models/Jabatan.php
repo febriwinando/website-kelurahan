@@ -17,8 +17,9 @@ class Jabatan extends Model
         'is_active',
     ];
 
-    // public function anggotaTim()
-    // {
-    //     return $this->hasMany(AnggotaTimPenggerakPKK::class, 'jabatan_id');
-    // }
+    public function anggotas()
+    {
+        return $this->hasMany(Anggota::class);
+    }
+
 }

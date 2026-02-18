@@ -60,40 +60,7 @@
                                 <h5 class="card-title fw-semibold card-header">Tambah Jabatan</h5>
 
                                 <div class="card-body">
-                                    {{-- <form id="formTambahJabatan">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="namaJabatan" class="form-label">Nama Jabatan</label>
-                                            <input type="text" class="form-control" id="namaJabatan" aria-describedby="namaJabatan" name="nama_jabatan">
-                                            <div id="namaJabatan" class="form-text">isi nama jabatan berdasarkan struktur organisasi</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="deskripsi" class="form-label">Deskripsi Jabatan</label>
-                                            <div class="form-floating">
-                                            <textarea class="form-control" placeholder="Leave a comment here" id="deskripsi" name="deskripsi"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="hirarkiJabatan" class="form-label">Hierarki Jabatan</label>
-                                            <select id="hirarkiJabatan" class="form-select" name="urutan">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="hirarkiJabatan" class="form-label">Status</label>
-                                            <select id="hirarkiJabatan" class="form-select" name="is_active">
-                                                <option value="true">Aktif</option>
-                                                <option value="false">Tidak Aktif</option>
-
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Tambah Jabatan</button>
-                                    </form> --}}
+                
                                     <form id="formTambahJabatan">
                                         @csrf
 
@@ -182,61 +149,6 @@
             </div>
             {{-- @endif --}}
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>
-
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    {{-- <form id="formTeruskan" method="post" action="{{ route('penanganan.store') }}">
-                        @csrf --}}
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Teruskan laporan ke OPD terkait</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <input type="hidden" name="whatsapp_message_id" id="whatsapp_message_id" value="">
-                                <input type="hidden" name="aksesaduan_id" id="aksesaduan_id" value="">
-                                <input type="text" name="opd_selected" id="opd_selected" value="">
-
-                                <label for="opd" class="form-label">Silahkan pilih OPD:</label>
-                                <select id="opd" name="opd" class="selectpicker form-control" data-live-search="true" title="Cari atau pilih OPD...">
-                                    {{-- @foreach($opds as $opd)
-                                        <option value="{{ $opd->id }}" data-name="{{ $opd->opd }}">
-                                            {{ $opd->opd }}
-                                        </option>
-                                    @endforeach    --}}
-                                </select>
-
-                                <h5 class="mt-4">Data Terpilih:</h5>
-                                <div id="selectedList" class="mt-2"></div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Kirim</button>
-                            </div>
-                        </div>
-                    {{-- </form> --}}
-                </div>
-            </div>
-
-
-            <!-- Model Foto -->
-            <div class="modal fade" id="modalBukti" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-
-                <div class="modal-content">
-                    <div class="modal-header">
-                    {{-- <h1 class="modal-title fs-5" id="exampleModalLabel">Teruskan laporan ke OPD terkait</h1> --}}
-                        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
-                    </div>
-                    <div class="modal-body p-0">
-                        <img src="" id="modalBuktiImg" class="img-fluid w-100" alt="bukti">
-                    </div>
-                    <div class="modal-footer">
-                        {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button> --}}
-                    </div>
-                </div>
-            </div>
-            </div>
 
         @endsection
 
