@@ -20,6 +20,15 @@ return new class extends Migration
             $table->string('tempat_penyimpanan')->nullable();
             $table->text('keterangan')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->foreignId('created_by')
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete();
+
+            $table->foreignId('updated_by')
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete();
             $table->timestamps();
         });
     }

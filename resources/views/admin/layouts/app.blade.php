@@ -71,7 +71,7 @@
             </li>
             {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/laporan-masuk" aria-expanded="false">
+              <a class="sidebar-link" href="/inventaris" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
@@ -79,7 +79,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/laporan-masuk" aria-expanded="false">
+              <a class="sidebar-link" href="/inventaris" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
                 </span>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Inventaris;
 
 class InventarisController extends Controller
 {
@@ -22,7 +24,15 @@ class InventarisController extends Controller
             'jumlah' => 'required|integer|min:1',
         ]);
 
-        Inventaris::create($request->all());
+        Inventaris::create([
+            'nama_barang' => $request->nama_barang,
+            'diterima_dari' => $request->diterima_dari,
+            'tanggal_penerimaan' => $request->tanggal_penerimaan,
+            'jumlah' => $request->jumlah,
+            'tempat_penyimpanan' => $request->tempat_penyimpanan,
+            'keterangan' => $request->keterangan,
+            'created_by' => Auth::id(), // 🔥 session user
+        ]);
 
         return response()->json([
             'success' => true,
@@ -39,13 +49,22 @@ class InventarisController extends Controller
             'jumlah' => 'required|integer|min:1',
         ]);
 
-        $inventaris->update($request->all());
+        $inventaris->update([
+            'nama_barang' => $request->nama_barang,
+            'diterima_dari' => $request->diterima_dari,
+            'tanggal_penerimaan' => $request->tanggal_penerimaan,
+            'jumlah' => $request->jumlah,
+            'tempat_penyimpanan' => $request->tempat_penyimpanan,
+            'keterangan' => $request->keterangan,
+            'updated_by' => Auth::id(), // 🔥 session user
+        ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Data inventaris berhasil diupdate'
         ]);
     }
+
 
     // 🔥 Tidak hapus permanen, hanya nonaktifkan
     public function destroy($id)

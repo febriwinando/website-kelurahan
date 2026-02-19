@@ -18,7 +18,7 @@ Route::resource('anggota', AnggotaController::class);
 
 Route::get('/daftar-anggota', [AnggotaController::class, 'list'])->name('list');
 
-Route::resource('inventaris', InventarisController::class);
+Route::resource('/inventaris', InventarisController::class);
 
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
