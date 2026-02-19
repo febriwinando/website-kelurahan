@@ -19,11 +19,26 @@ return new class extends Migration
             $table->integer('jumlah')->default(1);
             $table->string('tempat_penyimpanan')->nullable();
             $table->text('keterangan')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->enum('status', [
+                'tersedia',
+                'dipinjam',
+                'perbaikan',
+                'dihapus'
+            ])->default('tersedia');
+
+            
+            $table->enum('kondisi', [
+                'baik',
+                'kurang_baik',
+                'rusak_ringan',
+                'rusak_berat'
+            ])->default('baik');
             $table->foreignId('created_by')
                 ->nullable()
                 ->constrained('users')
                 ->nullOnDelete();
+
+            $table->string('foto_inventaris')->nullable();
 
             $table->foreignId('updated_by')
                 ->nullable()

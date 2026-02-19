@@ -10,13 +10,17 @@ class InventarisController extends Controller
 {
     public function index()
     {
-        $inventaris = Inventaris::where('is_active', true)
-                        ->latest()
-                        ->get();
+        $inventaris = Inventaris::latest()->get();
 
-        return view('inventaris.index', compact('inventaris'));
+        return view('admin.tambahinventaris', compact('inventaris'));
     }
 
+        public function create()
+        {
+            $inventaris = Inventaris::latest()->get();
+
+            return view('admin.tambahinventaris', compact('inventaris'));
+        }
     public function store(Request $request)
     {
         $validated = $request->validate([
