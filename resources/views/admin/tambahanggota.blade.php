@@ -192,7 +192,7 @@
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" 
-                                                        name="status" value="Tidak Aktif" {{ isset($anggota) && $anggota->status == 'Tidak Aktif' ? 'checked' : '' }}>
+                                                        name="status" value="Nonaktif" {{ isset($anggota) && $anggota->status == 'Nonaktif' ? 'checked' : '' }}>
                                                     <label class="form-check-label">Tidak Aktif</label>
                                                 </div>
                                             </div>

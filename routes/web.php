@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AnggotaTimPenggerakPKKController;
 use App\Http\Controllers\JabatanAnggotaTimPenggerakPKKController;
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\InventarisController;
 
 Route::get('/', [BerandaController::class, 'index']);
 Route::get('/masuk', [AnggotaTimPenggerakPKKController::class, 'index']);
@@ -16,6 +17,8 @@ Route::resource('/jabatan-anggota', JabatanAnggotaTimPenggerakPKKController::cla
 Route::resource('anggota', AnggotaController::class);
 
 Route::get('/daftar-anggota', [AnggotaController::class, 'list'])->name('list');
+
+Route::resource('inventaris', InventarisController::class);
 
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');

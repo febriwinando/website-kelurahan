@@ -96,7 +96,7 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $anggota->nama }}</td>
                                             <td>{{ $anggota->nama_jabatan }}</td>
-                                            <td>{{ $anggota->status ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                            <td>{{ $anggota->status }}</td>
                                             <td>
                                                 <a href="{{ route('anggota.edit', $anggota->id) }}" 
                                                     class="btn btn-warning btn-sm">
@@ -104,7 +104,7 @@
                                                     </a>
 
                                                 {{-- <button class="btn btn-warning btn-sm editAnggota" data-id="{{ $anggota->id }}">Edit</button> --}}
-                                                <button class="btn btn-danger btn-sm deleteAnggota" data-id="{{ $anggota->id }}">Delete</button>
+                                                <button class="btn btn-danger btn-sm deleteAnggota" data-id="{{ $anggota->id }}">Nonaktifkan</button>
                                             </td>
                                         </tr>
                                         @endforeach

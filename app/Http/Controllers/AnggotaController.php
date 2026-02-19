@@ -217,21 +217,36 @@ class AnggotaController extends Controller
     //     ]);
     // }
 
+    // public function destroy($id)
+    // {
+    //     $anggota = Anggota::findOrFail($id);
+
+    //     // 🔥 Hapus foto jika ada
+    //     if ($anggota->foto_profil && Storage::disk('public')->exists($anggota->foto_profil)) {
+    //         Storage::disk('public')->delete($anggota->foto_profil);
+    //     }
+
+    //     $anggota->delete();
+
+    //     return response()->json([
+    //         'success' => true
+    //     ]);
+    // }
+
+
     public function destroy($id)
-{
+    {
         $anggota = Anggota::findOrFail($id);
 
-        // 🔥 Hapus foto jika ada
-        if ($anggota->foto_profil && Storage::disk('public')->exists($anggota->foto_profil)) {
-            Storage::disk('public')->delete($anggota->foto_profil);
-        }
-
-        $anggota->delete();
+        $anggota->update([
+            'status' => 'Nonaktif'
+        ]);
 
         return response()->json([
             'success' => true
-        ]);
+        ], 200);
     }
+
     // public function destroy($id)
     // {
     //     Anggota::findOrFail($id)->delete();

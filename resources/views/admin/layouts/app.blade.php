@@ -67,7 +67,7 @@
             </li>
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
-              <span class="hide-menu">KOLOM ADUAN</span>
+              <span class="hide-menu">Inventaris</span>
             </li>
             {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
             <li class="sidebar-item">
@@ -75,7 +75,15 @@
                 <span>
                   <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
-                <span class="hide-menu">Aduan Diterima</span>
+                <span class="hide-menu">Tambah Inventaris</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/laporan-masuk" aria-expanded="false">
+                <span>
+                  <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
+                </span>
+                <span class="hide-menu">Daftar Inventaris</span>
               </a>
             </li>
             {{-- @endif --}}
@@ -608,11 +616,8 @@ $(document).ready(function(){
     document.addEventListener('click', function(e){
 
     if(e.target.classList.contains('deleteAnggota')){
-
         let id = e.target.dataset.id;
-
-        if(!confirm('Yakin ingin menghapus data ini?')) return;
-
+        if(!confirm('Apakah anda yakin akan menonaktifkan anggota tersebut?')) return;
         fetch(`/anggota/${id}`, {
             method: 'DELETE',
             headers: {
@@ -621,7 +626,8 @@ $(document).ready(function(){
             }
         })
         .then(response => {
-
+          console.log(response.status); // 🔥 lihat statusnya
+              return response.json();
             if(!response.ok){
                 throw new Error('Gagal menghapus data');
             }
