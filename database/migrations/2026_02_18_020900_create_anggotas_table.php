@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->foreignId('jabatan_id')
-                ->constrained('jabatans')
-                ->onDelete('cascade');
+                    ->constrained('jabatans')
+                    ->restrictOnDelete();
             $table->string('nama_jabatan');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('tempat_lahir')->nullable();
@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('pendidikan')->nullable();
             $table->string('pekerjaan')->nullable();
             $table->text('keterangan')->nullable();
+            $table->enum('status', ['Aktif', 'Nonaktif'])->default('Aktif');
+            $table->string('foto_profil')->nullable();
             $table->timestamps();
         });
     }

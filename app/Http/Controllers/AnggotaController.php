@@ -30,6 +30,12 @@ class AnggotaController extends Controller
         //
     }
 
+    public function list(){
+        $anggotas = Anggota::with('jabatan')->latest()->get();
+        return view('admin.daftaranggota', compact('anggotas'));
+    
+    }
+
     /**
      * Store a newly created resource in storage.
      */

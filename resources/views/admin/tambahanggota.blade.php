@@ -26,19 +26,40 @@
                     Tidak aduan yang diterima.
                 </div>
             @else --}}
+            <!-- Modal Alert -->
+            <div class="modal fade modal-sm" id="globalAlertModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-sm">
+                    <div class="modal-content">
+                    <div class="modal-header align-middle" id="modalHeader">
+                        <h5 class="modal-title text-center" id="modalTitle">Notifikasi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" id="modalMessage">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Tutup
+                        </button>
+                    </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-12" id="informasi-container">
+                {{-- <div id="alert-container"></div> --}}
+
                     <div class="card">
                         <div class="card-body">
                             <div class="row" >
                                 <div class="col-md-12">
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h5 class="card-title fw-semibold mb-0">Tambah Anggota</h5>
                                         <div>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 Teruskan
-                                            </button>
-                                            <a href="#" class="btn btn-danger">Tolak</a>
+                                            </button> --}}
+                                            <a href="/daftar-anggota" class="btn btn-info">Daftar Anggota</a>
                                         </div>
                                     </div>
                                 </div>
@@ -157,11 +178,44 @@
                                                 <option value="lainnya">Lainnya</option>
                                             </select>
                                         </div>
-                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Status Anggota</label>
+                                            <div class="d-flex gap-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" 
+                                                        name="status" value="Aktif" checked>
+                                                    <label class="form-check-label">Aktif</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" 
+                                                        name="status" value="Tidak Aktif">
+                                                    <label class="form-check-label">Tidak Aktif</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="mb-3">
                                             <label>Keterangan</label>
                                             <textarea class="form-control" name="keterangan"></textarea>
                                         </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Upload Foto</label>
+
+                                            <input type="file"
+                                                class="form-control"
+                                                id="imageInput"
+                                                name="foto"
+                                                accept="image/*">
+
+                                            <!-- Preview -->
+                                            <div class="mt-3">
+                                                <img id="imagePreview"
+                                                    src=""
+                                                    alt="Preview Gambar"
+                                                    class="img-thumbnail d-none"
+                                                    style="max-height: 300px;">
+                                            </div>
+                                        </div>
+
                                         <button type="submit" class="btn btn-primary">Tambah</button>
                                     </form>
                                 </div>

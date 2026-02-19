@@ -47,7 +47,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+              <a class="sidebar-link" href="/daftar-anggota" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
@@ -299,7 +299,7 @@
               }
 
               updateRowNumbers(); // ✅ letakkan di sini
-              showAlert('success', 'Data berhasil disimpan!');
+              showAlert('success', 'Jabatan berhasil ditambah');
               resetForm();
           }
 
@@ -390,7 +390,7 @@
                 if(data.success){
                   document.getElementById(`row-${id}`).remove();
                   updateRowNumbers();
-                  showAlert('success', 'Data berhasil dihapus!');
+                  showAlert('success', 'Jabatan berhasil dihapus!');
               }
 
 
@@ -410,22 +410,75 @@
         btnSubmit.classList.add('btn-primary');
     }
 
-    function showAlert(type, message) {
+  //   function showAlert(type, message) {
 
-      const container = document.getElementById('alert-container');
+  //     const container = document.getElementById('alert-container');
 
-      container.innerHTML = `
-          <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-              ${message}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          </div>
-      `;
+  //     container.innerHTML = `
+  //         <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+  //             ${message}
+  //             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  //         </div>
+  //     `;
 
-      // Auto hilang setelah 3 detik
-      setTimeout(() => {
-          container.innerHTML = '';
-      }, 3000);
-  }
+  //     // Auto hilang setelah 3 detik
+  //     setTimeout(() => {
+  //         container.innerHTML = '';
+  //     }, 3000);
+  // }
+
+  function showAlert(type, message) {
+
+    const modalEl = document.getElementById('globalAlertModal');
+    const modal = new bootstrap.Modal(modalEl);
+
+    const header = document.getElementById('modalHeader');
+    const title = document.getElementById('modalTitle');
+    const body = document.getElementById('modalMessage');
+
+    // Reset class warna
+    header.className = 'modal-header';
+
+    // let soundId = '';
+
+    switch(type) {
+        case 'success':
+            header.classList.add('.bg-light', 'text-white');
+            title.innerText = 'Berhasil';
+            // soundId = 'sound-success';
+            break;
+
+        case 'error':
+        case 'danger':
+            header.classList.add('bg-danger', 'text-white');
+            title.innerText = 'Gagal';
+            // soundId = 'sound-error';
+            break;
+
+        case 'warning':
+            header.classList.add('bg-warning');
+            title.innerText = 'Peringatan';
+            // soundId = 'sound-warning';
+            break;
+
+        default:
+            title.innerText = 'Informasi';
+    }
+
+    body.innerHTML = message;
+
+    // Play sound
+    // if (soundId) {
+    //     const sound = document.getElementById(soundId);
+    //     if (sound) {
+    //         sound.currentTime = 0;
+    //         sound.play().catch(e => console.log('Autoplay blocked'));
+    //     }
+    // }
+
+    modal.show();
+}
+
 
   </script>
 
@@ -456,6 +509,8 @@
                             </div>
                         `);
 
+                        showAlert('success', 'Anggota PKK berhasil ditambah');
+
                         // Kalau mau langsung tambah ke tabel tanpa refresh
                         // tambahKeTabel(response.data);
                     }
@@ -477,6 +532,40 @@
 
     });
     </script>
+    <script>
+      document.getElementById('imageInput').addEventListener('change', function(event) {
+
+          const input = event.target;
+          const preview = document.getElementById('imagePreview');
+
+          if (input.files && input.files[0]) {
+
+              const file = input.files[0];
+
+              // Validasi hanya gambar
+              if (!file.type.startsWith('image/')) {
+                  alert('File harus berupa gambar');
+                  input.value = '';
+                  preview.classList.add('d-none');
+                  return;
+              }
+
+              const reader = new FileReader();
+
+              reader.onload = function(e) {
+                  preview.src = e.target.result;
+                  preview.classList.remove('d-none');
+              };
+
+              reader.readAsDataURL(file);
+
+          } else {
+              preview.src = '';
+              preview.classList.add('d-none');
+          }
+      });
+      </script>
+
 
 
 </body>

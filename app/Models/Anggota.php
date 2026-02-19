@@ -18,6 +18,8 @@ class Anggota extends Model
         'pendidikan',
         'pekerjaan',
         'keterangan',
+        'status',      
+        'foto_profil', 
     ];
 
     // Relasi ke Jabatan

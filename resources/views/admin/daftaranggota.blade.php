@@ -76,55 +76,6 @@
                             <div class="card-text mb-3 fs-5 mt-2">
                                 <span id="pelapor"></span>
                             </div>
-                            <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Tambah Jabatan</h5>
-
-                                <div class="card-body">
-                
-                                    <form id="formTambahJabatan">
-                                        @csrf
-
-                                        <!-- ID untuk mode edit -->
-                                        <input type="hidden" id="jabatan_id">
-
-                                        <div class="mb-3">
-                                            <label class="form-label">Nama Jabatan</label>
-                                            <input type="text" class="form-control" id="namaJabatan" name="nama_jabatan">
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="form-label">Deskripsi Jabatan</label>
-                                            <textarea class="form-control" id="deskripsi" name="deskripsi"></textarea>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="form-label">Hierarki Jabatan</label>
-                                            <select class="form-select" id="urutan" name="urutan">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="form-label">Status</label>
-                                            <select class="form-select" id="is_active" name="is_active">
-                                                <option value="true">Aktif</option>
-                                                <option value="false">Tidak Aktif</option>
-                                            </select>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary" id="btnSubmit">
-                                            Tambah Jabatan
-                                        </button>
-                                    </form>
-
-                                </div>
-            
-                            </div>
 
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Bukti Aduan:</h5>
@@ -140,15 +91,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($jabatans as $key => $jabatan)
-                                        <tr id="row-{{ $jabatan->id }}">
+                                        @foreach($anggotas as $key => $anggota)
+                                        <tr id="row-{{ $anggota->id }}">
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $jabatan->nama_jabatan }}</td>
-                                            <td>{{ $jabatan->urutan }}</td>
-                                            <td>{{ $jabatan->is_active ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                            <td>{{ $anggota->nama }}</td>
+                                            <td>{{ $anggota->nama_jabatan }}</td>
+                                            <td>{{ $anggota->is_active ? 'Aktif' : 'Tidak Aktif' }}</td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm editBtn" data-id="{{ $jabatan->id }}">Edit</button>
-                                                <button class="btn btn-danger btn-sm deleteBtn" data-id="{{ $jabatan->id }}">Delete</button>
+                                                <button class="btn btn-warning btn-sm editBtn" data-id="{{ $anggota->id }}">Edit</button>
+                                                <button class="btn btn-danger btn-sm deleteBtn" data-id="{{ $anggota->id }}">Delete</button>
                                             </td>
                                         </tr>
                                         @endforeach

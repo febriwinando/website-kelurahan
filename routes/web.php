@@ -10,9 +10,12 @@ use App\Http\Controllers\AnggotaController;
 
 Route::get('/', [BerandaController::class, 'index']);
 Route::get('/masuk', [AnggotaTimPenggerakPKKController::class, 'index']);
+
 Route::resource('/form-anggota', AnggotaTimPenggerakPKKController::class);
 Route::resource('/jabatan-anggota', JabatanAnggotaTimPenggerakPKKController::class);
 Route::resource('anggota', AnggotaController::class);
+
+Route::get('/daftar-anggota', [AnggotaController::class, 'list'])->name('list');
 
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
