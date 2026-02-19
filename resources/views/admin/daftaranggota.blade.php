@@ -67,6 +67,9 @@
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="card-title fw-semibold mb-0">Anggota PKK</h5>
+                                        <div>
+                                            <a href="/anggota" class="btn btn-info">Tambah Anggota</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -92,10 +95,15 @@
                                         <tr id="row-{{ $anggota->id }}">
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $anggota->nama }}</td>
-                                            <td>{{ $anggota->urutan }}</td>
+                                            <td>{{ $anggota->nama_jabatan }}</td>
                                             <td>{{ $anggota->status ? 'Aktif' : 'Tidak Aktif' }}</td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm editAnggota" data-id="{{ $anggota->id }}">Edit</button>
+                                                <a href="{{ route('anggota.edit', $anggota->id) }}" 
+                                                    class="btn btn-warning btn-sm">
+                                                    Edit
+                                                    </a>
+
+                                                {{-- <button class="btn btn-warning btn-sm editAnggota" data-id="{{ $anggota->id }}">Edit</button> --}}
                                                 <button class="btn btn-danger btn-sm deleteAnggota" data-id="{{ $anggota->id }}">Delete</button>
                                             </td>
                                         </tr>

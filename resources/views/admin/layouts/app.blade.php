@@ -550,7 +550,7 @@
       </script>
 
 <script>
-document.addEventListener('click', function(e){
+    document.addEventListener('click', function(e){
 
     if(e.target.classList.contains('deleteAnggota')){
 

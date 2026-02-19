@@ -31,6 +31,20 @@ class AnggotaController extends Controller
         //
     }
 
+    public function edit($id)
+        {
+            $anggota = Anggota::findOrFail($id);
+            $jabatans = Jabatan::all();
+            $kecamatans = Kabupaten::with('provinsi')->get();
+
+            return view('admin.tambahanggota', compact(
+                'anggota',
+                'jabatans',
+                'kecamatans'
+            ));
+        }
+
+
     public function list(){
         $anggotas = Anggota::with('jabatan')->latest()->get();
         return view('admin.daftaranggota', compact('anggotas'));
@@ -108,31 +122,56 @@ class AnggotaController extends Controller
         return response()->json($anggota);
     }
 
+
     public function update(Request $request, $id)
     {
         $anggota = Anggota::findOrFail($id);
 
-        $jabatan = Jabatan::find($request->jabatan_id);
+        $data = $request->all();
 
-        $anggota->update([
-            'nama' => $request->nama,
-            'jabatan_id' => $jabatan->id,
-            'nama_jabatan' => $jabatan->nama_jabatan,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'status_perkawinan' => $request->status_perkawinan,
-            'alamat' => $request->alamat,
-            'pendidikan' => $request->pendidikan,
-            'pekerjaan' => $request->pekerjaan,
-            'keterangan' => $request->keterangan,
-        ]);
+        if ($request->hasFile('foto')) {
+
+            // hapus foto lama jika ada
+            if($anggota->foto){
+                Storage::disk('public')->delete($anggota->foto);
+            }
+
+            $data['foto'] = $request->file('foto')
+                                    ->store('anggota', 'public');
+        }
+
+        $anggota->update($data);
 
         return response()->json([
-            'success' => true,
-            'data' => $anggota
+            'success' => true
         ]);
     }
+
+    // public function update(Request $request, $id)
+    // {
+    //     $anggota = Anggota::findOrFail($id);
+
+    //     $jabatan = Jabatan::find($request->jabatan_id);
+
+    //     $anggota->update([
+    //         'nama' => $request->nama,
+    //         'jabatan_id' => $jabatan->id,
+    //         'nama_jabatan' => $jabatan->nama_jabatan,
+    //         'jenis_kelamin' => $request->jenis_kelamin,
+    //         'tempat_lahir' => $request->tempat_lahir,
+    //         'tanggal_lahir' => $request->tanggal_lahir,
+    //         'status_perkawinan' => $request->status_perkawinan,
+    //         'alamat' => $request->alamat,
+    //         'pendidikan' => $request->pendidikan,
+    //         'pekerjaan' => $request->pekerjaan,
+    //         'keterangan' => $request->keterangan,
+    //     ]);
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'data' => $anggota
+    //     ]);
+    // }
 
     public function destroy($id)
 {
