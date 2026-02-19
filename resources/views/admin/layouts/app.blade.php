@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title', 'Aplikasi Absensi')</title>
-  <link rel="shortcut icon" type="image/png" href="{{ asset('storage/assets/images/logos/logo.png') }}" />
+  <link rel="shortcut icon" type="image/png" href="{{ asset('storage/assets/images/logos/siap.png') }}" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('storage/assets/css/styles.min.css') }}" />
@@ -42,7 +42,7 @@
               <span class="hide-menu">TIM Anggota PKK</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="anggota" aria-expanded="false">
+              <a class="sidebar-link" href="/anggota" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
@@ -468,14 +468,69 @@
 
 
   </script>
+<script>
+$(document).ready(function(){
 
-  <script>
+    $('#formTambahAnggota').on('submit', function(e){
+        e.preventDefault();
+
+        let id = $('#anggota_id').val();
+        let formData = new FormData(this);
+
+        let url = id ? "/anggota/" + id : "{{ route('anggota.store') }}";
+
+        if(id){
+            formData.append('_method', 'PUT'); // spoof method
+        }
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response){
+
+                if(response.success){
+
+                    showAlert('success', id 
+                        ? 'Anggota berhasil diupdate'
+                        : 'Anggota berhasil ditambah'
+                    );
+
+                    if(!id){
+                        $('#formTambahAnggota')[0].reset();
+                        $('#imagePreview').attr('src', '').addClass('d-none');
+                    }
+                }
+            },
+            error: function(xhr){
+
+                let errors = xhr.responseJSON.errors;
+                let html = '<div class="alert alert-danger"><ul>';
+
+                $.each(errors, function(key, value){
+                    html += '<li>' + value[0] + '</li>';
+                });
+
+                html += '</ul></div>';
+
+                $('#alert-container').html(html);
+            }
+        });
+
+    });
+
+});
+</script>
+
+  {{-- <script>
     $(document).ready(function(){
 
     $('#formTambahAnggota').on('submit', function(e){
         e.preventDefault();
 
-        let formData = new FormData(this); // ✅ BUKAN serialize()
+        let formData = new FormData(this);
 
         $.ajax({
             url: "{{ route('anggota.store') }}",
@@ -512,7 +567,7 @@
 
 });
 
-    </script>
+    </script> --}}
     <script>
       document.getElementById('imageInput').addEventListener('change', function(event) {
 
