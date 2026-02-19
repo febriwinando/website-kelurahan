@@ -2,17 +2,20 @@
 <html lang="en">
 
 <head>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title', 'Aplikasi Absensi')</title>
   <link rel="shortcut icon" type="image/png" href="{{ asset('storage/assets/images/logos/logo.png') }}" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('storage/assets/css/styles.min.css') }}" />
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.2/dist/bootstrap-table.min.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
 </head>
 
 <body>
@@ -257,7 +260,8 @@
 
         let url = id ? `${baseUrl}/${id}` : baseUrl;
         let method = id ? 'PUT' : 'POST';
-
+        
+        
         fetch(url, {
             method: 'POST', // tetap POST (Laravel spoof method)
             headers: {
@@ -410,23 +414,6 @@
         btnSubmit.classList.add('btn-primary');
     }
 
-  //   function showAlert(type, message) {
-
-  //     const container = document.getElementById('alert-container');
-
-  //     container.innerHTML = `
-  //         <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-  //             ${message}
-  //             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-  //         </div>
-  //     `;
-
-  //     // Auto hilang setelah 3 detik
-  //     setTimeout(() => {
-  //         container.innerHTML = '';
-  //     }, 3000);
-  // }
-
   function showAlert(type, message) {
 
     const modalEl = document.getElementById('globalAlertModal');
@@ -485,52 +472,46 @@
   <script>
     $(document).ready(function(){
 
-        $('#formTambahAnggota').on('submit', function(e){
-            e.preventDefault();
+    $('#formTambahAnggota').on('submit', function(e){
+        e.preventDefault();
 
-            let formData = $(this).serialize();
+        let formData = new FormData(this); // ✅ BUKAN serialize()
 
-            $.ajax({
-                url: "{{ route('anggota.store') }}",
-                type: "POST",
-                data: formData,
-                success: function(response){
+        $.ajax({
+            url: "{{ route('anggota.store') }}",
+            type: "POST",
+            data: formData,
+            processData: false, // ✅ wajib
+            contentType: false, // ✅ wajib
+            success: function(response){
 
-                    if(response.success){
-                        
-                        // Reset form
-                        $('#formTambahAnggota')[0].reset();
+                if(response.success){
 
-                        // Alert sukses
-                        $('#alert-container').html(`
-                            <div class="alert alert-success alert-dismissible fade show">
-                                Data berhasil ditambahkan!
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        `);
+                    $('#formTambahAnggota')[0].reset();
 
-                        showAlert('success', 'Anggota PKK berhasil ditambah');
+                    $('#imagePreview').attr('src', '').addClass('d-none');
 
-                        // Kalau mau langsung tambah ke tabel tanpa refresh
-                        // tambahKeTabel(response.data);
-                    }
-                },
-                error: function(xhr){
-                    let errors = xhr.responseJSON.errors;
-                    let errorMessage = '<div class="alert alert-danger"><ul>';
-
-                    $.each(errors, function(key, value){
-                        errorMessage += '<li>' + value[0] + '</li>';
-                    });
-
-                    errorMessage += '</ul></div>';
-
-                    $('#alert-container').html(errorMessage);
+                    showAlert('success', 'Anggota PKK berhasil ditambah');
                 }
-            });
-        });
+            },
+            error: function(xhr){
 
+                let errors = xhr.responseJSON.errors;
+                let errorMessage = '<div class="alert alert-danger"><ul>';
+
+                $.each(errors, function(key, value){
+                    errorMessage += '<li>' + value[0] + '</li>';
+                });
+
+                errorMessage += '</ul></div>';
+
+                $('#alert-container').html(errorMessage);
+            }
+        });
     });
+
+});
+
     </script>
     <script>
       document.getElementById('imageInput').addEventListener('change', function(event) {
@@ -564,8 +545,71 @@
               preview.classList.add('d-none');
           }
       });
+
+      
       </script>
 
+<script>
+document.addEventListener('click', function(e){
+
+    if(e.target.classList.contains('deleteAnggota')){
+
+        let id = e.target.dataset.id;
+
+        if(!confirm('Yakin ingin menghapus data ini?')) return;
+
+        fetch(`/anggota/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+
+            if(!response.ok){
+                throw new Error('Gagal menghapus data');
+            }
+
+            return response.json();
+        })
+        .then(data => {
+
+            if(data.success){
+
+                // Hapus baris tabel
+                const row = document.getElementById(`row-${id}`);
+                if(row){
+                    row.remove();
+                }
+
+                updateRowNumbers();
+
+                showAlert('success', 'Data anggota berhasil dihapus.');
+
+            } else {
+                showAlert('error', 'Gagal menghapus data.');
+            }
+
+        })
+        .catch(error => {
+            console.error(error);
+            showAlert('error', 'Terjadi kesalahan saat menghapus.');
+        });
+
+    }
+
+});
+
+
+// Update nomor urut setelah delete
+function updateRowNumbers() {
+    const rows = document.querySelectorAll('#tabelJabatan tbody tr');
+    rows.forEach((row, index) => {
+        row.children[0].innerText = index + 1;
+    });
+}
+</script>
 
 
 </body>

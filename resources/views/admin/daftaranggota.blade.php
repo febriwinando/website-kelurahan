@@ -63,12 +63,10 @@
             @else --}}
             <div class="row">
                 <div class="col-lg-12" id="informasi-container">
-                    <div class="card">
-                        <div class="card-body">
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-semibold mb-0">Daftar Jabatan Anggota Tim Penggerak PKK</h5>
+                                        <h5 class="card-title fw-semibold mb-0">Anggota PKK</h5>
                                     </div>
                                 </div>
                             </div>
@@ -76,16 +74,15 @@
                             <div class="card-text mb-3 fs-5 mt-2">
                                 <span id="pelapor"></span>
                             </div>
-
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Bukti Aduan:</h5>
+                                <h5 class="card-title fw-semibold card-header">Daftar Anggota</h5>
                                 <div class="card-body">
                                     <table class="table mt-4" id="tabelJabatan">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama</th>
-                                                <th>Urutan</th>
+                                                <th>Jabatan</th>
                                                 <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -95,11 +92,11 @@
                                         <tr id="row-{{ $anggota->id }}">
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $anggota->nama }}</td>
-                                            <td>{{ $anggota->nama_jabatan }}</td>
-                                            <td>{{ $anggota->is_active ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                            <td>{{ $anggota->urutan }}</td>
+                                            <td>{{ $anggota->status ? 'Aktif' : 'Tidak Aktif' }}</td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm editBtn" data-id="{{ $anggota->id }}">Edit</button>
-                                                <button class="btn btn-danger btn-sm deleteBtn" data-id="{{ $anggota->id }}">Delete</button>
+                                                <button class="btn btn-warning btn-sm editAnggota" data-id="{{ $anggota->id }}">Edit</button>
+                                                <button class="btn btn-danger btn-sm deleteAnggota" data-id="{{ $anggota->id }}">Delete</button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -109,8 +106,6 @@
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
                 </div>
                 <div class="py-6 px-6 text-center">
                 <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"

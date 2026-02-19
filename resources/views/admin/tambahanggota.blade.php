@@ -68,7 +68,7 @@
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Form Anggota </h5>
                                 <div class="card-body">
-                                    <form id="formTambahAnggota">
+                                    <form id="formTambahAnggota" enctype="multipart/form-data">
                                         @csrf
                                         <div class="mb-3">
                                             <label class="form-label">Nama Lengkap</label>

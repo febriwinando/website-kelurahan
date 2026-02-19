@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Kecamatan;
 use App\Models\Kabupaten;
 use App\Models\Jabatan;
+use Illuminate\Support\Facades\Storage;
 
 class AnggotaController extends Controller
 {
@@ -48,9 +49,17 @@ class AnggotaController extends Controller
             'jabatan_id' => 'required|exists:jabatans,id',
             'jenis_kelamin' => 'required',
             'status_perkawinan' => 'required',
+            'status' => 'required',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $jabatan = Jabatan::find($request->jabatan_id);
+
+        $fotoPath = null;
+
+        if ($request->hasFile('foto')) {
+            $fotoPath = $request->file('foto')->store('foto_anggota', 'public');
+        }
 
         $anggota = Anggota::create([
             'nama' => $request->nama,
@@ -64,6 +73,8 @@ class AnggotaController extends Controller
             'pendidikan' => $request->pendidikan,
             'pekerjaan' => $request->pekerjaan,
             'keterangan' => $request->keterangan,
+            'status' => $request->status,
+            'foto_profil' => $fotoPath,
         ]);
 
         return response()->json([
@@ -124,11 +135,26 @@ class AnggotaController extends Controller
     }
 
     public function destroy($id)
-    {
-        Anggota::findOrFail($id)->delete();
+{
+        $anggota = Anggota::findOrFail($id);
+
+        // 🔥 Hapus foto jika ada
+        if ($anggota->foto_profil && Storage::disk('public')->exists($anggota->foto_profil)) {
+            Storage::disk('public')->delete($anggota->foto_profil);
+        }
+
+        $anggota->delete();
 
         return response()->json([
             'success' => true
         ]);
     }
+    // public function destroy($id)
+    // {
+    //     Anggota::findOrFail($id)->delete();
+
+    //     return response()->json([
+    //         'success' => true
+    //     ]);
+    // }
 }

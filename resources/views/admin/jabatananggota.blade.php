@@ -23,22 +23,21 @@
                 </div>
             @endif
 
-            {{-- <div id="alert-container"></div> --}}
+            <div id="alert-container"></div>
 
             <!-- Modal Alert -->
             <div class="modal fade modal-sm" id="globalAlertModal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered modal-sm">
                     <div class="modal-content">
-                    <div class="modal-header align-middle" id="modalHeader">
-                        <h5 class="modal-title text-center" id="modalTitle">Notifikasi</h5>
+                    <div class="modal-header" id="modalHeader">
+                        <h5 class="modal-title" id="modalTitle">Notifikasi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body" id="modalMessage">
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Tutup
+                        Tutup
                         </button>
                     </div>
                     </div>
@@ -63,8 +62,7 @@
             @else --}}
             <div class="row">
                 <div class="col-lg-12" id="informasi-container">
-                    <div class="card">
-                        <div class="card-body">
+
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
@@ -127,7 +125,7 @@
                             </div>
 
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Bukti Aduan:</h5>
+                                <h5 class="card-title fw-semibold card-header">Daftar Jabatan</h5>
                                 <div class="card-body">
                                     <table class="table mt-4" id="tabelJabatan">
                                         <thead>
@@ -157,9 +155,6 @@
                                     </table>
                                 </div>
                             </div>
-
-                        </div>
-                    </div>
                 </div>
                 <div class="py-6 px-6 text-center">
                 <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
