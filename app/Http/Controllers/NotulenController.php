@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notulen;
+use App\Models\Anggota;
 use Illuminate\Http\Request;
 
 class NotulenController extends Controller
@@ -12,7 +13,7 @@ class NotulenController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.tambahnotulen');
     }
 
     /**
@@ -20,7 +21,9 @@ class NotulenController extends Controller
      */
     public function create()
     {
-        //
+
+        $anggotas = Anggota::with('jabatan')->latest()->get();
+        return view('admin.tambahnotulen', compact('anggotas'));
     }
 
     /**

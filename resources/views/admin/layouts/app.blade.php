@@ -97,7 +97,7 @@
             </li>
             {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/inventaris/create" aria-expanded="false">
+              <a class="sidebar-link" href="/notulen/create" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/addnotulen.svg') }}">
                 </span>

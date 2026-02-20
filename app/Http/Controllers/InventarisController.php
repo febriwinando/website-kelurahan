@@ -16,7 +16,7 @@ class InventarisController extends Controller
     }
 
     public function create()
-        {
+    {
             $inventariss = Inventaris::latest()->get();
 
             return view('admin.tambahinventaris', compact('inventariss'));
