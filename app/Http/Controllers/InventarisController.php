@@ -10,23 +10,39 @@ class InventarisController extends Controller
 {
     public function index()
     {
-        $inventaris = Inventaris::latest()->get();
+        $inventariss = Inventaris::latest()->get();
 
-        return view('admin.tambahinventaris', compact('inventaris'));
+        return view('admin.daftarinventaris', compact('inventariss'));
     }
 
-        public function create()
+    public function create()
         {
-            $inventaris = Inventaris::latest()->get();
+            $inventariss = Inventaris::latest()->get();
 
-            return view('admin.tambahinventaris', compact('inventaris'));
+            return view('admin.tambahinventaris', compact('inventariss'));
+    }
+
+    public function edit($id)
+        {
+            $inventaris = Inventaris::findOrFail($id);
+
+            return view('admin.tambahinventaris', compact(
+                'inventaris',
+            ));
         }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nama_barang' => 'required',
             'jumlah' => 'required|integer|min:1',
         ]);
+
+        $fotoPath = null;
+
+        if ($request->hasFile('foto_inventaris')) {
+            $fotoPath = $request->file('foto_inventaris')->store('foto_inventaris', 'public');
+        }
 
         Inventaris::create([
             'nama_barang' => $request->nama_barang,
@@ -35,7 +51,10 @@ class InventarisController extends Controller
             'jumlah' => $request->jumlah,
             'tempat_penyimpanan' => $request->tempat_penyimpanan,
             'keterangan' => $request->keterangan,
-            'created_by' => Auth::id(), // 🔥 session user
+            'status' => $request->status,
+            'kondisi' => $request->kondisi,
+            'foto_inventaris' => $fotoPath,
+            'created_by' => Auth::id(),
         ]);
 
         return response()->json([

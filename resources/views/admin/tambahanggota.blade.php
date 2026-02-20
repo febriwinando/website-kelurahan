@@ -83,13 +83,22 @@
                                                 
                                                 @foreach($jabatans as $jabatan)
                                                     <option value="{{ $jabatan->id }}"
+                                                        data-nama="{{ $jabatan->nama_jabatan }}"
                                                         {{ isset($anggota) && $anggota->jabatan_id == $jabatan->id ? 'selected' : '' }}>
                                                         {{ $jabatan->nama_jabatan }}
                                                     </option>
                                                 @endforeach
+                                                {{-- @foreach($jabatans as $jabatan)
+                                                    <option value="{{ $jabatan->id }}"
+                                                        {{ isset($anggota) && $anggota->jabatan_id == $jabatan->id ? 'selected' : '' }}>
+                                                        {{ $jabatan->nama_jabatan }}
+                                                    </option>
+                                                @endforeach --}}
                                             </select>
                                         </div>
-                                         <div class="mb-3">
+                                        <input type="hidden" name="nama_jabatan" id="nama_jabatan"
+                                            value="{{ $anggota->nama_jabatan ?? '' }}">
+                                         {{-- <div class="mb-3">
                                             <label>Jabatan</label>
                                             <select name="nama_jabatan" class="form-control rounded-pill">
                                                 <option value="">-- Pilih jabatan --</option>
@@ -99,7 +108,7 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="mb-3">
                                             <label class="form-label">Jenis Kelamin</label>

@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title', 'Aplikasi Absensi')</title>
   <link rel="shortcut icon" type="image/png" href="{{ asset('storage/assets/images/logos/siap.png') }}" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> --}}
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('storage/assets/css/styles.min.css') }}" />
 
@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.2/dist/bootstrap-table.min.css">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
+  
 </head>
 
 <body>
@@ -39,30 +40,34 @@
           <ul id="sidebarnav">
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
-              <span class="hide-menu">TIM Anggota PKK</span>
+              <span class="hide-menu">TIM PKK</span>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="/anggota" aria-expanded="false">
                 <span>
-                  <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
+                  <img src="{{ asset('storage/assets/svg/addpeople.svg') }}">
+                  {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
                 </span>
-                <span class="hide-menu">Tambah Angota</span>
+                <span class="hide-menu">Tambah Anggota Baru</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="/daftar-anggota" aria-expanded="false">
                 <span>
-                  <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
+                  <img src="{{ asset('storage/assets/svg/daftaranggota.svg') }}">
+                  {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
                 </span>
-                <span class="hide-menu">Daftar Anggota</span>
+                <span class="hide-menu">Data Anggota</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="/jabatan-anggota" aria-expanded="false">
                 <span>
-                  <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
+                  <img src="{{ asset('storage/assets/svg/jabatan.svg') }}">
+
+                  {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
                 </span>
-                <span class="hide-menu">Daftar Jabatan</span>
+                <span class="hide-menu">Struktur Jabatan</span>
               </a>
             </li>
             <li class="nav-small-cap">
@@ -73,98 +78,64 @@
             <li class="sidebar-item">
               <a class="sidebar-link" href="/inventaris/create" aria-expanded="false">
                 <span>
-                  <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
+                  <img src="{{ asset('storage/assets/svg/addinventory.svg') }}">
                 </span>
-                <span class="hide-menu">Tambah Inventaris</span>
+                <span class="hide-menu">Tambah Barang</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="/inventaris" aria-expanded="false">
                 <span>
-                  <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
+                  <img src="{{ asset('storage/assets/svg/inventory.svg') }}">
                 </span>
-                <span class="hide-menu">Daftar Inventaris</span>
+                <span class="hide-menu">Data Barang</span>
               </a>
             </li>
-            {{-- @endif --}}
-            <!-- <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
-                <span>
-                  <iconify-icon icon="solar:danger-circle-bold-duotone" class="fs-6"></iconify-icon>
-                </span>
-                <span class="hide-menu"></span>
-              </a>
-            </li> -->
-            {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_opd'])) --}}
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+              <span class="hide-menu">Notulen</span>
+            </li>
+            {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/diterima-opd" aria-expanded="false">
+              <a class="sidebar-link" href="/inventaris/create" aria-expanded="false">
                 <span>
-                  <iconify-icon icon="solar:bookmark-square-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
+                  <img src="{{ asset('storage/assets/svg/addnotulen.svg') }}">
                 </span>
-                <span class="hide-menu">Disposisi Aduan</span>
+                <span class="hide-menu">Buat Catatan Rapat</span>
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/proses-opd" aria-expanded="false">
+              <a class="sidebar-link" href="/inventaris" aria-expanded="false">
                 <span>
-                  <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
+                  <img src="{{ asset('storage/assets/svg/notulen.svg') }}">
                 </span>
-                <span class="hide-menu">Proses Penanganan</span>
+                <span class="hide-menu">Arsip Notulen</span>
               </a>
             </li>
-            {{-- @endif
-            @if(in_array(Auth::user()->level, ['administrator', 'admin_opd', 'admin_kota'])) --}}
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="/selesai-opd" aria-expanded="false">
-                <span>
-                  <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
-                </span>
-                <span class="hide-menu">Selesai</span>
-              </a>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+              <span class="hide-menu">Keuangan</span>
             </li>
-            {{-- @endif --}}
+            {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+              <a class="sidebar-link" href="/inventaris/create" aria-expanded="false">
                 <span>
-                  <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
+                  <img src="{{ asset('storage/assets/svg/addfinancial.svg') }}">
                 </span>
-                <span class="hide-menu">Aduan Ditolak</span>
-              </a>
-            </li>
-            <!-- <li class="nav-small-cap">
-              <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4" class="fs-6"></iconify-icon>
-              <span class="hide-menu">EXTRA</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
-                <span>
-                  <iconify-icon icon="solar:sticker-smile-circle-2-bold-duotone" class="fs-6"></iconify-icon>
-                </span>
-                <span class="hide-menu">Icons</span>
+                <span class="hide-menu">Tambah Transaksi</span>
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
+              <a class="sidebar-link" href="/inventaris" aria-expanded="false">
                 <span>
-                  <iconify-icon icon="solar:planet-3-bold-duotone" class="fs-6"></iconify-icon>
+                  <img src="{{ asset('storage/assets/svg/financial.svg') }}">
                 </span>
-                <span class="hide-menu">Sample Page</span>
+                <span class="hide-menu">Laporan Keuangan</span>
               </a>
-            </li> -->
+            </li>
+            
           </ul>
-          <!-- <div class="unlimited-access hide-menu bg-primary-subtle position-relative mb-7 mt-7 rounded-3"> 
-            <div class="d-flex">
-              <div class="unlimited-access-title me-3">
-                <h6 class="fw-semibold fs-4 mb-6 text-dark w-75">Upgrade to pro</h6>
-                <a href="#" target="_blank"
-                  class="btn btn-primary fs-2 fw-semibold lh-sm">Buy Pro</a>
-              </div>
-              <div class="unlimited-access-img">
-                <img src="{{ asset('storage/assets/images/backgrounds/rocket.png') }}" alt="" class="img-fluid">
-              </div>
-            </div>
-          </div> -->
+
         </nav>
         <!-- End Sidebar navigation -->
       </div>
@@ -250,6 +221,11 @@
     <script src="{{ asset('storage/assets/js/bootstrap-table.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap-select.min.js') }}"></script>
     <script>
+        window.csrfToken = "{{ csrf_token() }}";
+        window.baseUrlJabatan = "{{ url('jabatan-anggota') }}";
+    </script>
+    <script src="{{ asset('storage/assets/js/app-custom.js') }}"></script>
+    {{-- <script>
 
     const csrf = '{{ csrf_token() }}';
     const baseUrl = "{{ url('jabatan-anggota') }}";
@@ -462,15 +438,6 @@
 
     body.innerHTML = message;
 
-    // Play sound
-    // if (soundId) {
-    //     const sound = document.getElementById(soundId);
-    //     if (sound) {
-    //         sound.currentTime = 0;
-    //         sound.play().catch(e => console.log('Autoplay blocked'));
-    //     }
-    // }
-
     modal.show();
 }
 
@@ -532,50 +499,61 @@ $(document).ready(function(){
 });
 </script>
 
-  {{-- <script>
-    $(document).ready(function(){
+<script>
+$(document).ready(function(){
 
-    $('#formTambahAnggota').on('submit', function(e){
+    $('#formTambahInventaris').on('submit', function(e){
         e.preventDefault();
 
+        let id = $('#inventaris_id').val();
         let formData = new FormData(this);
 
+        let url = id ? "/inventaris/" + id : "{{ route('inventaris.store') }}";
+
+        if(id){
+            formData.append('_method', 'PUT'); // spoof method
+        }
+
         $.ajax({
-            url: "{{ route('anggota.store') }}",
+            url: url,
             type: "POST",
             data: formData,
-            processData: false, // ✅ wajib
-            contentType: false, // ✅ wajib
+            processData: false,
+            contentType: false,
             success: function(response){
 
                 if(response.success){
 
-                    $('#formTambahAnggota')[0].reset();
+                    showAlert('success', id 
+                        ? 'Inventaris berhasil diupdate'
+                        : 'Inventaris berhasil ditambah'
+                    );
 
-                    $('#imagePreview').attr('src', '').addClass('d-none');
-
-                    showAlert('success', 'Anggota PKK berhasil ditambah');
+                    if(!id){
+                        $('#formTambahInventaris')[0].reset();
+                        $('#imagePreview').attr('src', '').addClass('d-none');
+                    }
                 }
             },
             error: function(xhr){
 
                 let errors = xhr.responseJSON.errors;
-                let errorMessage = '<div class="alert alert-danger"><ul>';
+                let html = '<div class="alert alert-danger"><ul>';
 
                 $.each(errors, function(key, value){
-                    errorMessage += '<li>' + value[0] + '</li>';
+                    html += '<li>' + value[0] + '</li>';
                 });
 
-                errorMessage += '</ul></div>';
+                html += '</ul></div>';
 
-                $('#alert-container').html(errorMessage);
+                $('#alert-container').html(html);
             }
         });
+
     });
 
 });
-
-    </script> --}}
+</script>
     <script>
       document.getElementById('imageInput').addEventListener('change', function(event) {
 
@@ -612,66 +590,84 @@ $(document).ready(function(){
       
       </script>
 
-<script>
-    document.addEventListener('click', function(e){
+  <script>
+      document.addEventListener('click', function(e){
 
-    if(e.target.classList.contains('deleteAnggota')){
-        let id = e.target.dataset.id;
-        if(!confirm('Apakah anda yakin akan menonaktifkan anggota tersebut?')) return;
-        fetch(`/anggota/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => {
-          console.log(response.status); // 🔥 lihat statusnya
+      if(e.target.classList.contains('deleteAnggota')){
+          let id = e.target.dataset.id;
+          if(!confirm('Apakah anda yakin akan menonaktifkan anggota tersebut?')) return;
+          fetch(`/anggota/${id}`, {
+              method: 'DELETE',
+              headers: {
+                  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                  'Accept': 'application/json'
+              }
+          })
+          .then(response => {
+            console.log(response.status); // 🔥 lihat statusnya
+                return response.json();
+              if(!response.ok){
+                  throw new Error('Gagal menghapus data');
+              }
+
               return response.json();
-            if(!response.ok){
-                throw new Error('Gagal menghapus data');
-            }
+          })
+          .then(data => {
 
-            return response.json();
-        })
-        .then(data => {
+              if(data.success){
 
-            if(data.success){
+                  // Hapus baris tabel
+                  const row = document.getElementById(`row-${id}`);
+                  if(row){
+                      row.remove();
+                  }
 
-                // Hapus baris tabel
-                const row = document.getElementById(`row-${id}`);
-                if(row){
-                    row.remove();
-                }
+                  updateRowNumbers();
 
-                updateRowNumbers();
+                  showAlert('success', 'Data anggota berhasil dihapus.');
 
-                showAlert('success', 'Data anggota berhasil dihapus.');
+              } else {
+                  showAlert('error', 'Gagal menghapus data.');
+              }
 
-            } else {
-                showAlert('error', 'Gagal menghapus data.');
-            }
+          })
+          .catch(error => {
+              console.error(error);
+              showAlert('error', 'Terjadi kesalahan saat menghapus.');
+          });
 
-        })
-        .catch(error => {
-            console.error(error);
-            showAlert('error', 'Terjadi kesalahan saat menghapus.');
-        });
+      }
 
-    }
-
-});
+  });
 
 
-// Update nomor urut setelah delete
-function updateRowNumbers() {
-    const rows = document.querySelectorAll('#tabelJabatan tbody tr');
-    rows.forEach((row, index) => {
-        row.children[0].innerText = index + 1;
+  // Update nomor urut setelah delete
+  function updateRowNumbers() {
+      const rows = document.querySelectorAll('#tabelJabatan tbody tr');
+      rows.forEach((row, index) => {
+          row.children[0].innerText = index + 1;
+      });
+  }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const selectJabatan = document.querySelector('select[name="jabatan_id"]');
+        const inputNamaJabatan = document.getElementById('nama_jabatan');
+
+        function updateNamaJabatan() {
+            const selectedOption = selectJabatan.options[selectJabatan.selectedIndex];
+            const nama = selectedOption.getAttribute('data-nama') || '';
+            inputNamaJabatan.value = nama;
+        }
+
+        // Saat user ganti pilihan
+        selectJabatan.addEventListener('change', updateNamaJabatan);
+
+        // Saat halaman edit pertama kali load
+        updateNamaJabatan();
     });
-}
-</script>
-
+  </script> --}}
 
 </body>
 

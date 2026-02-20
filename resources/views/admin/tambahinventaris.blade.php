@@ -65,37 +65,37 @@
                                 <div class="card-body">
                                     <form id="formTambahInventaris" enctype="multipart/form-data">
                                         @csrf
-                                        @if(isset($anggota))
-                                            <input type="hidden" id="anggota_id" value="{{ $anggota->id }}">
+                                        @if(isset($inventaris))
+                                            <input type="hidden" id="inventaris_id" value="{{ $inventaris->id }}">
                                         @endif
 
                                         <div class="mb-3">
                                             <label class="form-label">Nama Barang</label>
-                                            <input type="text" class="form-control rounded-pill" name="nama_barang" value="{{ $anggota->nama_barang ?? '' }}">
+                                            <input type="text" class="form-control rounded-pill" name="nama_barang" value="{{ $inventaris->nama_barang ?? '' }}">
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label class="form-label">Diterima/Dibeli dari:</label>
-                                            <input type="text" class="form-control rounded-pill" name="diterima_dari" value="{{ $anggota->diterima_dari ?? '' }}">
+                                            <input type="text" class="form-control rounded-pill" name="diterima_dari" value="{{ $inventaris->diterima_dari ?? '' }}">
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Tanggal Penerimaan/Pembelian</label>
-                                            <input type="date" class="form-control rounded-pill" name="tanggal_penerimaan" value="{{ $anggota->tanggal_penerimaan ?? '' }}" >
+                                            <input type="date" class="form-control rounded-pill" name="tanggal_penerimaan" value="{{ $inventaris->tanggal_penerimaan ?? '' }}" >
                                         </div>
-
+                                        {{-- {{ $inventaris->tanggal_penerimaan }} --}}
                                         <div class="mb-3">
                                             <label class="form-label">Jumlah</label>
-                                            <input type="number" class="form-control rounded-pill" name="jumlah" value="{{ $anggota->jumlah ?? '' }}" >
+                                            <input type="number" class="form-control rounded-pill" name="jumlah" value="{{ $inventaris->jumlah ?? '' }}" >
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="tempat_penyimpanan">Tempat Penyimpanan</label>
                                             <select name="tempat_penyimpanan" id="tempat_penyimpanan" class="form-select rounded-pill">
                                                 <option value="">-- Pilih tempat penyimpanan --</option>
-                                                <option value="Tempat 1" {{ isset($anggota) && $anggota->tempat_penyimpanan == 'Tempat 1' ? 'selected' : '' }}>Tempat 1</option>
-                                                <option value="Tempat 2" {{ isset($anggota) && $anggota->tempat_penyimpanan == 'Tempat 2' ? 'selected' : '' }}>Tempat 2</option>
-                                                <option value="Tempat 3" {{ isset($anggota) && $anggota->tempat_penyimpanan == 'Tempat 3' ? 'selected' : '' }}>Tempat 3</option>
+                                                <option value="Tempat 1" {{ isset($inventaris) && $inventaris->tempat_penyimpanan == 'Tempat 1' ? 'selected' : '' }}>Tempat 1</option>
+                                                <option value="Tempat 2" {{ isset($inventaris) && $inventaris->tempat_penyimpanan == 'Tempat 2' ? 'selected' : '' }}>Tempat 2</option>
+                                                <option value="Tempat 3" {{ isset($inventaris) && $inventaris->tempat_penyimpanan == 'Tempat 3' ? 'selected' : '' }}>Tempat 3</option>
                                             </select>
                                         </div>
                                         
@@ -103,10 +103,10 @@
                                             <label for="kondisi">Kondisi</label>
                                             <select name="kondisi" id="kondisi" class="form-select rounded-pill">
                                                 <option value="">-- Kondisi Inventaris --</option>
-                                                <option value="Baik" {{ isset($anggota) && $anggota->kondisi == 'Baik' ? 'selected' : '' }}>Baik</option>
-                                                <option value="Kurang Baik" {{ isset($anggota) && $anggota->kondisi == 'Kurang Baik' ? 'selected' : '' }}>Kurang Baik</option>
-                                                <option value="Rusak Ringan" {{ isset($anggota) && $anggota->kondisi == 'Rusak Ringan' ? 'selected' : '' }}>Rusak Ringan</option>
-                                                <option value="Rusak Berat" {{ isset($anggota) && $anggota->kondisi == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat</option>
+                                                <option value="Baik" {{ isset($inventaris) && $inventaris->kondisi == 'Baik' ? 'selected' : '' }}>Baik</option>
+                                                <option value="Kurang Baik" {{ isset($inventaris) && $inventaris->kondisi == 'Kurang Baik' ? 'selected' : '' }}>Kurang Baik</option>
+                                                <option value="Rusak Ringan" {{ isset($inventaris) && $inventaris->kondisi == 'Rusak Ringan' ? 'selected' : '' }}>Rusak Ringan</option>
+                                                <option value="Rusak Berat" {{ isset($inventaris) && $inventaris->kondisi == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat</option>
                                         
                                             </select>
                                         </div>
@@ -115,17 +115,17 @@
                                             <label for="status">Status</label>
                                             <select name="status" id="status" class="form-select rounded-pill">
                                                 <option value="">-- Status Inventaris --</option>
-                                                <option value="Tersedia" {{ isset($anggota) && $anggota->status == 'Tersedia' ? 'selected' : '' }}>Tersedia</option>
-                                                <option value="Dipinjam" {{ isset($anggota) && $anggota->status == 'Dipinjam' ? 'selected' : '' }}>Dipinjam</option>
-                                                <option value="Perbaikan" {{ isset($anggota) && $anggota->status == 'Perbaikan' ? 'selected' : '' }}>Perbaikan</option>
-                                                <option value="Dihapus" {{ isset($anggota) && $anggota->status == 'Dihapus' ? 'selected' : '' }}>Dihapus</option>
+                                                <option value="Tersedia" {{ isset($inventaris) && $inventaris->status == 'Tersedia' ? 'selected' : '' }}>Tersedia</option>
+                                                <option value="Dipinjam" {{ isset($inventaris) && $inventaris->status == 'Dipinjam' ? 'selected' : '' }}>Dipinjam</option>
+                                                <option value="Perbaikan" {{ isset($inventaris) && $inventaris->status == 'Perbaikan' ? 'selected' : '' }}>Perbaikan</option>
+                                                <option value="Dihapus" {{ isset($inventaris) && $inventaris->status == 'Dihapus' ? 'selected' : '' }}>Dihapus</option>
                                         
                                             </select>
                                         </div>
 
                                         <div class="mb-3">
                                             <label>Keterangan</label>
-                                            <textarea class="form-control" name="keterangan" >{{ $anggota->keterangan ?? '' }}</textarea>
+                                            <textarea class="form-control" name="keterangan" >{{ $inventaris->keterangan ?? '' }}</textarea>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Upload Foto Inventaris</label>
@@ -139,14 +139,14 @@
                                             <!-- Preview -->
                                             <div class="mt-3">
                                                 <img id="imagePreview"
-                                                    src="{{ isset($anggota) && $anggota->foto_inventaris ? asset('storage/'.$anggota->foto_inventaris) : '' }}"
+                                                    src="{{ isset($inventaris) && $inventaris->foto_inventaris ? asset('storage/'.$inventaris->foto_inventaris) : '' }}"
                                                     alt="Preview Gambar"
-                                                    class="img-thumbnail {{ isset($anggota) && $anggota->foto_inventaris ? '' : 'd-none' }}"
+                                                    class="img-thumbnail {{ isset($inventaris) && $inventaris->foto_inventaris ? '' : 'd-none' }}"
                                                     style="max-height: 300px;">
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary">
-                                            {{ isset($anggota) ? 'Update' : 'Tambah' }}
+                                            {{ isset($inventaris) ? 'Update' : 'Tambah' }}
                                         </button>
 
                                         {{-- <button type="submit" class="btn btn-primary">Tambah</button> --}}

@@ -25,9 +25,9 @@ class Inventaris extends Model
         'updated_by',
     ];
 
-    protected $casts = [
-        'tanggal_penerimaan' => 'date',
-    ];
+    // protected $casts = [
+    //     'tanggal_penerimaan' => 'date',
+    // ];
 
     public function creator()
     {

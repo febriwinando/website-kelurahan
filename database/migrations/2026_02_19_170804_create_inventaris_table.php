@@ -20,18 +20,18 @@ return new class extends Migration
             $table->string('tempat_penyimpanan')->nullable();
             $table->text('keterangan')->nullable();
             $table->enum('status', [
-                'tersedia',
-                'dipinjam',
-                'perbaikan',
-                'dihapus'
-            ])->default('tersedia');
+                'Tersedia',
+                'Dipinjam',
+                'Perbaikan',
+                'Dihapus'
+            ])->default('Tersedia');
 
             
             $table->enum('kondisi', [
-                'baik',
-                'kurang_baik',
-                'rusak_ringan',
-                'rusak_berat'
+                'Baik',
+                'Kurang Baik',
+                'Rusak Ringan',
+                'Rusak Berat'
             ])->default('baik');
             $table->foreignId('created_by')
                 ->nullable()
