@@ -13,7 +13,9 @@ class NotulenController extends Controller
      */
     public function index()
     {
-        return view('admin.tambahnotulen');
+
+        $notulens = Inventaris::latest()->get();
+        return view('admin.tambahnotulen', compact('notulens'));
     }
 
     /**
@@ -23,6 +25,7 @@ class NotulenController extends Controller
     {
 
         $anggotas = Anggota::with('jabatan')->latest()->get();
+        
         return view('admin.tambahnotulen', compact('anggotas'));
     }
 

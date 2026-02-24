@@ -25,8 +25,6 @@ return new class extends Migration
                 'Perbaikan',
                 'Dihapus'
             ])->default('Tersedia');
-
-            
             $table->enum('kondisi', [
                 'Baik',
                 'Kurang Baik',

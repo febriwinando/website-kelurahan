@@ -10,7 +10,7 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\NotulenController;
 
-Route::get('/', [BerandaController::class, 'index']);
+// Route::get('/', [BerandaController::class, 'index']);
 Route::get('/masuk', [AnggotaTimPenggerakPKKController::class, 'index']);
 
 Route::resource('/form-anggota', AnggotaTimPenggerakPKKController::class);
@@ -23,6 +23,6 @@ Route::resource('/inventaris', InventarisController::class);
 Route::resource('/notulen', NotulenController::class);
 
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

@@ -177,7 +177,7 @@
                                             <label for="pekerjaan">Pekerjaan</label>
                                             <select name="pekerjaan" id="pekerjaan" class="form-select rounded-pill">
                                                 <option value="">-- Pilih Pekerjaan --</option>
-                                                <option value="aASN/PNSsn" {{ isset($anggota) && $anggota->pekerjaan == 'ASN/PNS' ? 'selected' : '' }}>ASN/PNS</option>
+                                                <option value="ASN/PNS" {{ isset($anggota) && $anggota->pekerjaan == 'ASN/PNS' ? 'selected' : '' }}>ASN/PNS</option>
                                                 <option value="TNI/Polri" {{ isset($anggota) && $anggota->pekerjaan == 'TNI/Polri' ? 'selected' : '' }}>TNI/Polri</option>
                                                 <option value="Pegawai Swasta" {{ isset($anggota) && $anggota->pekerjaan == 'Pegawai Swasta' ? 'selected' : '' }}>Pegawai Swasta</option>
                                                 <option value="Wiraswasta" {{ isset($anggota) && $anggota->pekerjaan == 'Wiraswasta' ? 'selected' : '' }}>Wiraswasta</option>

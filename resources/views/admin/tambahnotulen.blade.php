@@ -66,34 +66,34 @@
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Form Notulen </h5>
                                 <div class="card-body">
-                                    <form id="formTambahAnggota" enctype="multipart/form-data">
+                                    <form id="formTambahNotulen" enctype="multipart/form-data">
                                         @csrf
                                         @if(isset($anggota))
-                                            <input type="hidden" id="anggota_id" value="{{ $anggota->id }}">
+                                            <input type="hidden" id="notulen_id" value="{{ $notulen->id }}">
                                         @endif
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal</label>
-                                                    <input type="date" class="form-control rounded-pill" name="tanggal" value="{{ $anggota->tanggal ?? '' }}" >
+                                                    <input type="date" class="form-control rounded-pill" name="tanggal" value="{{ $notulen->tanggal ?? '' }}" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Waktu</label>
-                                                    <input type="time" class="form-control rounded-pill" name="waktu" value="{{ $anggota->waktu ?? '' }}" >
+                                                    <input type="time" class="form-control rounded-pill" name="waktu" value="{{ $notulen->waktu ?? '' }}" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Tempat</label>
-                                                    <input type="text" class="form-control rounded-pill" name="tempat" value="{{ $anggota->tempat ?? '' }}" >
+                                                    <input type="text" class="form-control rounded-pill" name="tempat" value="{{ $notulen->tempat ?? '' }}" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Macam</label>
-                                                    <input type="text" class="form-control rounded-pill" name="macam" value="{{ $anggota->macam ?? '' }}" >
+                                                    <input type="text" class="form-control rounded-pill" name="macam" value="{{ $notulen->macam ?? '' }}" >
                                                 </div>
                                             </div>
                                             <hr>
@@ -114,43 +114,43 @@
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jumlah Yang Diundang</label>
-                                                    <input type="number" class="form-control rounded-pill" name="jumlah_diundang" value="{{ $anggota->jumlah_diundang ?? '' }}">
+                                                    <input type="number" class="form-control rounded-pill" name="jumlah_diundang" value="{{ $notulen->jumlah_diundang ?? '' }}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jumlah Hadir</label>
-                                                    <input type="number" class="form-control rounded-pill" name="jumlah_hadir" value="{{ $anggota->jumlah_hadir ?? '' }}">
+                                                    <input type="number" class="form-control rounded-pill" name="jumlah_hadir" value="{{ $notulen->jumlah_hadir ?? '' }}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jumlah Tidak Hadir</label>
-                                                    <input type="number" class="form-control rounded-pill" name="jumlah_tidak_hadir" value="{{ $anggota->jumlah_tidak_hadir ?? '' }}">
+                                                    <input type="number" class="form-control rounded-pill" name="jumlah_tidak_hadir" value="{{ $notulen->jumlah_tidak_hadir ?? '' }}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Susunan Acara</label>
-                                                    <textarea class="form-control" name="susunan_acara" style="height: 200px">{{ $anggota->susunan_acara ?? '' }}</textarea>
+                                                    <textarea class="form-control" name="susunan_acara" style="height: 200px">{{ $notulen->susunan_acara ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                              <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Keputusan</label>
-                                                    <textarea class="form-control" name="keputusan" style="height: 200px">{{ $anggota->keputusan ?? '' }}</textarea>
+                                                    <textarea class="form-control" name="keputusan" style="height: 200px">{{ $notulen->keputusan ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Lain-lain</label>
-                                                    <textarea class="form-control" name="lain_lain" style="height: 200px">{{ $anggota->lain_lain ?? '' }}</textarea>
+                                                    <textarea class="form-control" name="lain_lain" style="height: 200px">{{ $notulen->lain_lain ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Penutup</label>
-                                                    <textarea class="form-control" name="penutup" style="height: 200px">{{ $anggota->penutup ?? '' }}</textarea>
+                                                    <textarea class="form-control" name="penutup" style="height: 200px">{{ $notulen->penutup ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                             <hr>
@@ -169,9 +169,9 @@
                                                     <!-- Preview -->
                                                     <div class="mt-3">
                                                         <img id="imagePreview"
-                                                            src="{{ isset($anggota) && $anggota->foto_profil ? asset('storage/'.$anggota->foto_profil) : '' }}"
+                                                            src="{{ isset($notulen) && $notulen->foto_profil ? asset('storage/'.$notulen->foto_profil) : '' }}"
                                                             alt="Preview Gambar"
-                                                            class="img-thumbnail {{ isset($anggota) && $anggota->foto_profil ? '' : 'd-none' }}"
+                                                            class="img-thumbnail {{ isset($notulen) && $notulen->foto_profil ? '' : 'd-none' }}"
                                                             style="max-height: 300px;">
                                                     </div>
                                                 </div>

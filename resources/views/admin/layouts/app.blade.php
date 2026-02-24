@@ -220,12 +220,12 @@
     <script src="{{ asset('storage/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap-table.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap-select.min.js') }}"></script>
-    <script>
+    <!-- <script>
         window.csrfToken = "{{ csrf_token() }}";
         window.baseUrlJabatan = "{{ url('jabatan-anggota') }}";
     </script>
-    <script src="{{ asset('storage/assets/js/app-custom.js') }}"></script>
-    {{-- <script>
+    <script src="{{ asset('storage/assets/js/app-custom.js') }}"></script> -->
+    <script>
 
     const csrf = '{{ csrf_token() }}';
     const baseUrl = "{{ url('jabatan-anggota') }}";
@@ -261,54 +261,54 @@
         .then(data => {
             if(data.success){
 
-              if(id){
-                  let row = document.getElementById(`row-${id}`);
+                if(id){
+                    let row = document.getElementById(`row-${id}`);
 
-                  row.children[1].innerText = data.data.nama_jabatan;
-                  row.children[2].innerText = data.data.urutan ?? '';
-                  row.children[3].innerText = data.data.is_active ? 'Aktif' : 'Tidak Aktif';
-              } else {
+                    row.children[1].innerText = data.data.nama_jabatan;
+                    row.children[2].innerText = data.data.urutan ?? '';
+                    row.children[3].innerText = data.data.is_active ? 'Aktif' : 'Tidak Aktif';
+                } else {
 
-                  let row = `
-                  <tr id="row-${data.data.id}">
-                      <td></td>
-                      <td>${data.data.nama_jabatan}</td>
-                      <td>${data.data.urutan ?? ''}</td>
-                      <td>${data.data.is_active ? 'Aktif' : 'Tidak Aktif'}</td>
-                      <td>
-                          <button class="btn btn-warning btn-sm editBtn" data-id="${data.data.id}">Edit</button>
-                          <button class="btn btn-danger btn-sm deleteBtn" data-id="${data.data.id}">Delete</button>
-                      </td>
-                  </tr>
-                  `;
+                    let row = `
+                    <tr id="row-${data.data.id}">
+                        <td></td>
+                        <td>${data.data.nama_jabatan}</td>
+                        <td>${data.data.urutan ?? ''}</td>
+                        <td>${data.data.is_active ? 'Aktif' : 'Tidak Aktif'}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm editBtn" data-id="${data.data.id}">Edit</button>
+                            <button class="btn btn-danger btn-sm deleteBtn" data-id="${data.data.id}">Delete</button>
+                        </td>
+                    </tr>
+                    `;
 
-                  document.querySelector('#tabelJabatan tbody')
-                          .insertAdjacentHTML('beforeend', row);
-              }
+                    document.querySelector('#tabelJabatan tbody')
+                            .insertAdjacentHTML('beforeend', row);
+                }
 
-              updateRowNumbers(); // ✅ letakkan di sini
-              showAlert('success', 'Jabatan berhasil ditambah');
-              resetForm();
+                updateRowNumbers(); // ✅ letakkan di sini
+                showAlert('success', 'Jabatan berhasil ditambah');
+                resetForm();
           }
 
 
         })
         .catch(async error => {
 
-          let response = await error.response?.json?.();
+            let response = await error.response?.json?.();
 
-          if(response && response.errors){
+            if(response && response.errors){
 
-              let pesan = '';
-              Object.values(response.errors).forEach(err => {
-                  pesan += err[0] + '<br>';
-              });
+                let pesan = '';
+                    Object.values(response.errors).forEach(err => {
+                    pesan += err[0] + '<br>';
+                    });
 
-              showAlert('danger', pesan);
+                showAlert('danger', pesan);
 
-          } else {
-              showAlert('danger', 'Terjadi kesalahan server!');
-          }
+            } else {
+                showAlert('danger', 'Terjadi kesalahan server!');
+            }
 
       });
 
@@ -667,8 +667,63 @@ $(document).ready(function(){
         // Saat halaman edit pertama kali load
         updateNamaJabatan();
     });
-  </script> --}}
+  </script>
 
+    <script>
+        $(document).ready(function(){
+
+            $('#formTambahNotulen').on('submit', function(e){
+                e.preventDefault();
+
+                let id = $('#notulen_id').val();
+                let formData = new FormData(this);
+
+                let url = id ? "/notulen/" + id : "{{ route('notulen.store') }}";
+
+                if(id){
+                    formData.append('_method', 'PUT'); // spoof method
+                }
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+
+                        if(response.success){
+
+                            showAlert('success', id 
+                                ? 'Notulen berhasil diupdate'
+                                : 'Notulen berhasil ditambah'
+                            );
+
+                            if(!id){
+                                $('#formTambahNotulen')[0].reset();
+                                $('#imagePreview').attr('src', '').addClass('d-none');
+                            }
+                        }
+                    },
+                    error: function(xhr){
+
+                        let errors = xhr.responseJSON.errors;
+                        let html = '<div class="alert alert-danger"><ul>';
+
+                        $.each(errors, function(key, value){
+                            html += '<li>' + value[0] + '</li>';
+                        });
+
+                        html += '</ul></div>';
+
+                        $('#alert-container').html(html);
+                    }
+                });
+
+            });
+
+        });
+    </script>
 </body>
 
 </html>

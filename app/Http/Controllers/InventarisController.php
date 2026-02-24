@@ -23,7 +23,7 @@ class InventarisController extends Controller
     }
 
     public function edit($id)
-        {
+    {
             $inventaris = Inventaris::findOrFail($id);
 
             return view('admin.tambahinventaris', compact(
@@ -79,6 +79,8 @@ class InventarisController extends Controller
             'jumlah' => $request->jumlah,
             'tempat_penyimpanan' => $request->tempat_penyimpanan,
             'keterangan' => $request->keterangan,
+            'status' => $request->status,
+            'kondisi' => $request->kondisi,
             'updated_by' => Auth::id(), // 🔥 session user
         ]);
 
