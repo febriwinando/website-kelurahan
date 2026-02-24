@@ -88,12 +88,6 @@
                                                         {{ $jabatan->nama_jabatan }}
                                                     </option>
                                                 @endforeach
-                                                {{-- @foreach($jabatans as $jabatan)
-                                                    <option value="{{ $jabatan->id }}"
-                                                        {{ isset($anggota) && $anggota->jabatan_id == $jabatan->id ? 'selected' : '' }}>
-                                                        {{ $jabatan->nama_jabatan }}
-                                                    </option>
-                                                @endforeach --}}
                                             </select>
                                         </div>
                                         <input type="hidden" name="nama_jabatan" id="nama_jabatan"

@@ -104,12 +104,14 @@
                                                     <select id="pimpinanRapat" name="pimpinan_rapat" class="selectpicker form-control" data-live-search="true" title="pilih pemimpin rapat">
                                                         @foreach($anggotas as $anggota)
                                                             <option value="{{ $anggota->id }}" data-name="{{ $anggota->nama }}">
-                                                                {{ $anggota->nama }} - {{ $anggota->nama_jabatan }}
+                                                                {{ $anggota->nama }}
                                                             </option>
                                                         @endforeach   
                                                     </select>
-                                                    
                                                 </div>
+
+                                                <input type="hidden" name="pimpinan_rapat_nama" id="pimpinan_rapat_nama"
+                                                    value="{{ $anggota->pimpinan_rapat ?? '' }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">

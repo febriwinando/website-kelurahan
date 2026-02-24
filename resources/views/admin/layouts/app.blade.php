@@ -286,7 +286,7 @@
                             .insertAdjacentHTML('beforeend', row);
                 }
 
-                updateRowNumbers(); // ✅ letakkan di sini
+                updateRowNumbers(); 
                 showAlert('success', 'Jabatan berhasil ditambah');
                 resetForm();
           }
@@ -654,7 +654,7 @@ $(document).ready(function(){
 
         const selectJabatan = document.querySelector('select[name="jabatan_id"]');
         const inputNamaJabatan = document.getElementById('nama_jabatan');
-
+        console.log("nama_jabatan");
         function updateNamaJabatan() {
             const selectedOption = selectJabatan.options[selectJabatan.selectedIndex];
             const nama = selectedOption.getAttribute('data-nama') || '';
@@ -722,6 +722,16 @@ $(document).ready(function(){
 
             });
 
+        });
+    </script>
+
+    <script>
+        document.getElementById('pimpinanRapat').addEventListener('change', function() {
+
+            let selectedOption = this.options[this.selectedIndex];
+            let nama = selectedOption.getAttribute('data-name');
+
+            document.getElementById('pimpinan_rapat_nama').value = nama;
         });
     </script>
 </body>
