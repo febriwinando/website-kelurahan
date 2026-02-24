@@ -32,12 +32,16 @@
             <img src="{{ asset('storage/assets/images/logos/siap.png') }}" alt="" style="width:200px;margin-top:10px;" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-            <i class="ti ti-x fs-8"></i>
+            <img src="{{ asset('storage/assets/svg/close.svg') }}">
           </div>
         </div>
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
           <ul id="sidebarnav">
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+              <span class="hide-menu">Home</span>
+            </li>
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">TIM PKK</span>
@@ -150,7 +154,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item d-block d-xl-none">
                     <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-                        <i class="ti ti-menu-2"></i>
+                        <img src="{{ asset('storage/assets/svg/menu.svg') }}">
                     </a>
                     </li>
                     <li class="nav-item">
@@ -207,7 +211,7 @@
         </div>
     </div>
 
-    {{-- <script src="{{ asset('storage/assets/libs/jquery/dist/jquery.min.js') }}"></script> --}}
+    <script src="{{ asset('storage/assets/libs/jquery/dist/jquery.min.js') }}"></script> 
     <script src="{{ asset('storage/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('storage/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('storage/assets/libs/simplebar/dist/simplebar.js') }}"></script>
@@ -215,7 +219,7 @@
     <script src="{{ asset('storage/assets/js/app.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/dashboard.js') }}"></script>
     <script src="{{ asset('storage/assets/js/iconify-icon.min.js') }}"></script>
-    <script src="{{ asset('storage/assets/libs/jquery/dist/jquery-3.6.0.min.js') }}"></script>
+    <!-- <script src="{{ asset('storage/assets/libs/jquery/dist/jquery-3.6.0.min.js') }}"></script> -->
     <script src="{{ asset('storage/assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap-table.min.js') }}"></script>
