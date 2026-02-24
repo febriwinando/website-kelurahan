@@ -35,6 +35,7 @@ class NotulenController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all(), $request->file('foto_dokumentasi'));
         try {
             $request->validate([
                 'tanggal' => 'required|date',
@@ -136,63 +137,86 @@ class NotulenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $notulen = Notulen::findOrFail($id);
+        try {
 
-        $request->validate([
-            'tanggal' => 'required|date',
-            'waktu' => 'required',
-            'tempat' => 'required|string|max:255',
-            'macam' => 'nullable|string|max:255',
-            'pimpinan_rapat' => 'required|exists:anggotas,id',
-            'jumlah_diundang' => 'nullable|integer|min:0',
-            'jumlah_hadir' => 'nullable|integer|min:0',
-            'jumlah_tidak_hadir' => 'nullable|integer|min:0',
-            'susunan_acara' => 'nullable|string',
-            'keputusan' => 'nullable|string',
-            'lain_lain' => 'nullable|string',
-            'penutup' => 'nullable|string',
-            'foto_dokumentasi.*' => 'image|mimes:jpg,jpeg,png|max:2048'
+            $notulen = Notulen::findOrFail($id);
 
-        ]);
+            $validated = $request->validate([
+                'tanggal' => 'required|date',
+                'waktu' => 'required',
+                'tempat' => 'required',
+                'macam' => 'required',
+                'pimpinan_rapat' => 'required',
+                'foto_dokumentasi.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            ]);
 
-        $data = $request->only([
-            'tanggal',
-            'waktu',
-            'tempat',
-            'macam',
-            'pimpinan_rapat',
-            'jumlah_diundang',
-            'jumlah_hadir',
-            'jumlah_tidak_hadir',
-            'susunan_acara',
-            'keputusan',
-            'lain_lain',
-            'penutup',
-        ]);
+            $data = $request->except(['foto_dokumentasi','old_photos']);
 
-        $data['diubah_oleh'] = Auth::id();
-
-        if ($request->hasFile('foto_dokumentasi')) {
-
-            $oldPhotos = $notulen->foto_dokumentasi ?? [];
+            $oldPhotos = $request->old_photos ?? [];
 
             $newPhotos = [];
 
-            foreach ($request->file('foto_dokumentasi') as $file) {
-                $filename = time().'_'.$file->getClientOriginalName();
-                $newPhotos[] = $file->storeAs('notulen', $filename, 'public');
+            // Upload foto baru
+            if ($request->hasFile('foto_dokumentasi')) {
+
+                foreach ($request->file('foto_dokumentasi') as $file) {
+
+                    $filename = time().'_'.$file->getClientOriginalName();
+
+                    $newPhotos[] = $file->storeAs('notulen', $filename, 'public');
+                }
             }
 
-            // Gabungkan lama + baru
-            $data['foto_dokumentasi'] = array_merge($oldPhotos, $newPhotos);
+            // Gabungkan foto lama yg dipertahankan + foto baru
+            $finalPhotos = array_merge($oldPhotos, $newPhotos);
+
+            // Hapus foto yang tidak dipakai lagi
+            if ($notulen->foto_dokumentasi) {
+
+                foreach ($notulen->foto_dokumentasi as $foto) {
+
+                    if (!in_array($foto, $oldPhotos)) {
+
+                        Storage::disk('public')->delete($foto);
+                    }
+                }
+            }
+
+            // $data['foto_dokumentasi'] = $finalPhotos;
+
+            /*
+            ==============================
+            UPDATE DATA
+            ==============================
+            */
+
+            $notulen->update([
+                'tanggal' => $request->tanggal,
+                'waktu' => $request->waktu,
+                'tempat' => $request->tempat,
+                'macam' => $request->macam,
+                'pimpinan_rapat' => $request->pimpinan_rapat,
+                'pimpinan_rapat_nama' => $request->pimpinan_rapat_nama,
+                'jumlah_diundang' => $request->jumlah_diundang,
+                'jumlah_hadir' => $request->jumlah_hadir,
+                'jumlah_tidak_hadir' => $request->jumlah_tidak_hadir,
+                'susunan_acara' => $request->susunan_acara,
+                'keputusan' => $request->keputusan,
+                'lain_lain' => $request->lain_lain,
+                'penutup' => $request->penutup,
+                'foto_dokumentasi' => $finalPhotos,
+                // 'foto_dokumentasi' => array_merge($remainingPhotos, $newPhotos),
+                'updated_by' => auth()->id(),
+            ]);
+
+            return response()->json(['success' => true]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        $notulen->update($data);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Data inventaris berhasil diupdate'
-        ]);
     }
 
     /**

@@ -87,7 +87,7 @@
                                                     <input type="time"
                                                         name="waktu"
                                                         class="form-control rounded-pill"
-                                                        value="{{ old('waktu', isset($notulen) ? $notulen->waktu?->format('Y-m-d') : '') }}">
+                                                        value="{{ old('waktu', isset($notulen) ? $notulen->waktu?->format('H:i') : '') }}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
@@ -168,20 +168,39 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Upload Foto</label>
 
-                                                    <input type="file"
+                                                   <input type="file"
                                                         class="form-control"
                                                         id="imageInputMulti"
                                                         multiple
                                                         name="foto_dokumentasi[]"
                                                         accept="image/*">
 
+                                                    <small id="fileCountText" class="text-muted"></small>
                                                     <!-- Preview -->
-                                                    <div class="mt-3">
-                                                        <img id="imagePreviewContainer"
-                                                            src="{{ isset($notulen) && $notulen->foto_dokumentasi ? asset('storage/'.$notulen->foto_dokumentasi) : '' }}"
-                                                            alt="Preview Gambar"
-                                                            class="img-thumbnail {{ isset($notulen) && $notulen->foto_dokumentasi ? '' : 'd-none' }}"
-                                                            style="max-height: 300px;">
+
+                                                    <div class="row mt-3" id="imagePreviewContainer">
+
+                                                        {{-- FOTO LAMA (EDIT MODE) --}}
+                                                        @if(isset($notulen) && $notulen->foto_dokumentasi)
+                                                            @foreach($notulen->foto_dokumentasi as $foto)
+                                                                <div class="col-md-4 mb-3 preview-item old-photo">
+                                                                    <div class="position-relative">
+                                                                        <img src="{{ asset('storage/'.$foto) }}"
+                                                                            class="img-thumbnail w-100"
+                                                                            style="height:150px; object-fit:cover;">
+
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 remove-old"
+                                                                            data-path="{{ $foto }}">
+                                                                            ×
+                                                                        </button>
+
+                                                                        <input type="hidden" name="old_photos[]" value="{{ $foto }}">
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        @endif
+
                                                     </div>
                                                 </div>
                                             </div>

@@ -670,29 +670,30 @@ $(document).ready(function(){
   </script>
 
     <script>
-        $(document).ready(function(){
+        
+        $('#formTambahNotulen').on('submit', function(e){
 
-            $('#formTambahNotulen').on('submit', function(e){
-                e.preventDefault();
+            e.preventDefault();
 
-                let id = $('#notulen_id').val();
-                let formData = new FormData(this);
+            let formData = new FormData(this);
+            let id = $('#notulen_id').val();
 
-                let url = id ? "/notulen/" + id : "{{ route('notulen.store') }}";
+            let url = id ? `/notulen/${id}` : `/notulen`;
+            let method = id ? 'POST' : 'POST';
 
-                if(id){
-                    formData.append('_method', 'PUT'); // spoof method
-                }
+            if(id){
+                formData.append('_method', 'PUT');
+            }
 
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response){
+            $.ajax({
+                url: url,
+                type: method,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response){
 
-                        if(response.success){
+                    if(response.success){
 
                             showAlert('success', id 
                                 ? 'Notulen berhasil diupdate'
@@ -703,11 +704,10 @@ $(document).ready(function(){
                                 $('#formTambahNotulen')[0].reset();
                                 $('#imagePreview').attr('src', '').addClass('d-none');
                             }
-                        }
-                    },
-                    error: function(xhr){
-
-                        let errors = xhr.responseJSON.errors;
+                    }
+                },
+                error: function(xhr){
+                    let errors = xhr.responseJSON.errors;
                         let html = '<div class="alert alert-danger"><ul>';
 
                         $.each(errors, function(key, value){
@@ -717,9 +717,7 @@ $(document).ready(function(){
                         html += '</ul></div>';
 
                         $('#alert-container').html(html);
-                    }
-                });
-
+                }
             });
 
         });
@@ -736,44 +734,156 @@ $(document).ready(function(){
     </script>
 
     <script>
-        document.getElementById('imageInputMulti').addEventListener('change', function(event) {
+document.addEventListener('DOMContentLoaded', function () {
 
-            const input = event.target;
+    const input = document.getElementById('imageInputMulti');
+    const previewContainer = document.getElementById('imagePreviewContainer');
+    const fileCountText = document.getElementById('fileCountText');
+
+    input.addEventListener('change', function () {
+
+        previewContainer.innerHTML = '';
+        fileCountText.textContent = '';
+
+        if (input.files.length > 0) {
+
+            fileCountText.textContent = input.files.length + ' file dipilih';
+
+            Array.from(input.files).forEach(file => {
+
+                if (!file.type.startsWith('image/')) {
+                    alert('File harus berupa gambar');
+                    input.value = '';
+                    previewContainer.innerHTML = '';
+                    fileCountText.textContent = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+
+                    const col = document.createElement('div');
+                    col.classList.add('col-md-4', 'mb-3');
+
+                    col.innerHTML = `
+                        <div class="position-relative">
+                            <img src="${e.target.result}"
+                                class="img-thumbnail w-100"
+                                style="height:150px; object-fit:cover;">
+                        </div>
+                    `;
+
+                    previewContainer.appendChild(col);
+                };
+
+                reader.readAsDataURL(file);
+            });
+
+        } else {
+            fileCountText.textContent = 'Tidak ada file dipilih';
+        }
+    });
+
+});
+
+document.addEventListener('click', function(e){
+
+    if(e.target.classList.contains('remove-old')){
+
+        if(confirm('Hapus foto ini?')){
+
+            const previewItem = e.target.closest('.preview-item');
+
+            // Hapus seluruh preview
+            previewItem.remove();
+        }
+    }
+
+});
+</script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const input = document.getElementById('imageInputMulti');
             const previewContainer = document.getElementById('imagePreviewContainer');
 
-            // Kosongkan preview lama
-            previewContainer.innerHTML = '';
+            let dt = new DataTransfer(); // penampung file dinamis
 
-            if (input.files.length > 0) {
+            // Saat pilih file
+            input.addEventListener('change', function (e) {
 
-                Array.from(input.files).forEach(file => {
+                Array.from(e.target.files).forEach(file => {
 
-                    // Validasi hanya gambar
                     if (!file.type.startsWith('image/')) {
-                        alert('Semua file harus berupa gambar');
-                        input.value = '';
-                        previewContainer.innerHTML = '';
+                        alert('File harus berupa gambar');
                         return;
                     }
 
-                    const reader = new FileReader();
-
-                    reader.onload = function(e) {
-
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.classList.add('img-thumbnail', 'me-2', 'mb-2');
-                        img.style.maxHeight = '150px';
-
-                        previewContainer.appendChild(img);
-                    };
-
-                    reader.readAsDataURL(file);
+                    dt.items.add(file);
+                    renderPreview(file);
                 });
 
+                input.files = dt.files; // update file input
+                input.value = ''; // reset supaya bisa pilih file sama lagi
+            });
+
+            // Render preview
+            function renderPreview(file) {
+
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+
+                    const col = document.createElement('div');
+                    col.classList.add('col-md-4', 'mb-3', 'preview-item');
+
+                    col.innerHTML = `
+                        <div class="position-relative">
+                            <img src="${e.target.result}"
+                                class="img-thumbnail w-100"
+                                style="height:150px; object-fit:cover;">
+
+                            <button type="button"
+                                class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 remove-new">
+                                ×
+                            </button>
+                        </div>
+                    `;
+
+                    previewContainer.appendChild(col);
+
+                    // tombol hapus file baru
+                    col.querySelector('.remove-new').addEventListener('click', function () {
+
+                        const index = Array.from(previewContainer.children).indexOf(col);
+
+                        dt.items.remove(index - countOldPhotos());
+                        input.files = dt.files;
+
+                        col.remove();
+                    });
+                };
+
+                reader.readAsDataURL(file);
             }
+
+            // Hapus foto lama (edit mode)
+            previewContainer.addEventListener('click', function (e) {
+
+                if (e.target.classList.contains('remove-old')) {
+
+                    e.target.closest('.preview-item').remove();
+                }
+            });
+
+            // Hitung jumlah foto lama
+            function countOldPhotos() {
+                return document.querySelectorAll('.old-photo').length;
+            }
+
         });
-    </script>
+        </script> -->
 </body>
 
 </html>
