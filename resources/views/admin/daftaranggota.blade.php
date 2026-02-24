@@ -79,47 +79,51 @@
                             </div>
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Daftar Anggota</h5>
-                                <div class="card-body">
-                                    <table class="table mt-4" id="tabelJabatan">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Nama</th>
-                                                <th>Jabatan</th>
-                                                <th>Status</th>
-                                                <th>Aksi</th>
+                                
+
+                                @if($anggotas->isEmpty())
+                                    <h4 class="text-center mt-5 mb-5">
+                                            Tidak ada anggota aktif yang terdaftar ...
+                                    </h4>
+                                @else
+                                    <div class="card-body">
+                                        <table class="table mt-4" id="tabelJabatan">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama</th>
+                                                    <th>Jabatan</th>
+                                                    <th>Status</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($anggotas as $key => $anggota)
+                                            <tr id="row-{{ $anggota->id }}">
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $anggota->nama }}</td>
+                                                <td>{{ $anggota->nama_jabatan }}</td>
+                                                <td>{{ $anggota->status }}</td>
+                                                <td>
+                                                    <a href="{{ route('anggota.edit', $anggota->id) }}" 
+                                                        class="btn btn-warning btn-sm">
+                                                        Edit
+                                                        </a>
+
+                                                    {{-- <button class="btn btn-warning btn-sm editAnggota" data-id="{{ $anggota->id }}">Edit</button> --}}
+                                                    <button class="btn btn-danger btn-sm deleteAnggota" data-id="{{ $anggota->id }}">Nonaktifkan</button>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($anggotas as $key => $anggota)
-                                        <tr id="row-{{ $anggota->id }}">
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $anggota->nama }}</td>
-                                            <td>{{ $anggota->nama_jabatan }}</td>
-                                            <td>{{ $anggota->status }}</td>
-                                            <td>
-                                                <a href="{{ route('anggota.edit', $anggota->id) }}" 
-                                                    class="btn btn-warning btn-sm">
-                                                    Edit
-                                                    </a>
+                                            @endforeach
+                                            </tbody>
 
-                                                {{-- <button class="btn btn-warning btn-sm editAnggota" data-id="{{ $anggota->id }}">Edit</button> --}}
-                                                <button class="btn btn-danger btn-sm deleteAnggota" data-id="{{ $anggota->id }}">Nonaktifkan</button>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                        </tbody>
-
-                                    </table>
-                                </div>
+                                        </table>
+                                    </div>
+                                @endif
                             </div>
 
                 </div>
-                <div class="py-6 px-6 text-center">
-                <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
-                    class="pe-1 text-primary text-decoration-underline">AdminMart.com</a>Distributed by <a href="https://themewagon.com/" target="_blank"
-                    class="pe-1 text-primary text-decoration-underline">ThemeWagon</a></p>
-                </div>
+                
             </div>
             {{-- @endif --}}
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>

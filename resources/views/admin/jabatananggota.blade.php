@@ -54,12 +54,6 @@
                     </ul>
                 @endif
             </div>
-
-            {{-- @if($messages->isEmpty())
-                <div class="alert alert-primary" role="alert">
-                    Tidak aduan yang diterima.
-                </div>
-            @else --}}
             <div class="row">
                 <div class="col-lg-12" id="informasi-container">
 
@@ -126,41 +120,43 @@
 
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Daftar Jabatan</h5>
-                                <div class="card-body">
-                                    <table class="table mt-4" id="tabelJabatan">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Nama</th>
-                                                <th>Urutan</th>
-                                                <th>Status</th>
-                                                <th>Aksi</th>
+                                @if($jabatans->isEmpty())
+                                    <h4 class="text-center mt-5 mb-5">
+                                        Struktur jabatan belum tersedia ...
+                                    </h4>
+                                @else
+                                    <div class="card-body">
+                                        <table class="table mt-4" id="tabelJabatan">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama</th>
+                                                    <th>Urutan</th>
+                                                    <th>Status</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($jabatans as $key => $jabatan)
+                                            <tr id="row-{{ $jabatan->id }}">
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $jabatan->nama_jabatan }}</td>
+                                                <td>{{ $jabatan->urutan }}</td>
+                                                <td>{{ $jabatan->is_active ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                                <td>
+                                                    <button class="btn btn-warning btn-sm editBtn" data-id="{{ $jabatan->id }}">Edit</button>
+                                                    <button class="btn btn-danger btn-sm deleteBtn" data-id="{{ $jabatan->id }}">Delete</button>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($jabatans as $key => $jabatan)
-                                        <tr id="row-{{ $jabatan->id }}">
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $jabatan->nama_jabatan }}</td>
-                                            <td>{{ $jabatan->urutan }}</td>
-                                            <td>{{ $jabatan->is_active ? 'Aktif' : 'Tidak Aktif' }}</td>
-                                            <td>
-                                                <button class="btn btn-warning btn-sm editBtn" data-id="{{ $jabatan->id }}">Edit</button>
-                                                <button class="btn btn-danger btn-sm deleteBtn" data-id="{{ $jabatan->id }}">Delete</button>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                        </tbody>
+                                            @endforeach
+                                            </tbody>
 
-                                    </table>
-                                </div>
+                                        </table>
+                                    </div>
+                                @endif
                             </div>
                 </div>
-                <div class="py-6 px-6 text-center">
-                <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
-                    class="pe-1 text-primary text-decoration-underline">AdminMart.com</a>Distributed by <a href="https://themewagon.com/" target="_blank"
-                    class="pe-1 text-primary text-decoration-underline">ThemeWagon</a></p>
-                </div>
+
             </div>
             {{-- @endif --}}
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>

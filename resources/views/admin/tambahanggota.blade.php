@@ -71,171 +71,186 @@
 
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Form Anggota </h5>
+                                @if($jabatans->isEmpty())
+                                    <h4 class="text-center mt-5 mb-5">
+                                        Isi daftar jabatan terlebih dahulu ...
+                                    </h4>
+                                @else
                                 <div class="card-body">
                                     <form id="formTambahAnggota" enctype="multipart/form-data">
                                         @csrf
-                                        @if(isset($anggota))
-                                            <input type="hidden" id="anggota_id" value="{{ $anggota->id }}">
-                                        @endif
+                                        <div class="row">
 
-                                        <div class="mb-3">
-                                            <label class="form-label">Nama Lengkap</label>
-                                            <input type="text" class="form-control rounded-pill" name="nama" value="{{ $anggota->nama ?? '' }}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>Jabatan</label>
-                                            <select name="jabatan_id" class="form-control rounded-pill">
-                                                <option value="">-- Pilih jabatan --</option>
-                                                
-                                                @foreach($jabatans as $jabatan)
-                                                    <option value="{{ $jabatan->id }}"
-                                                        data-nama="{{ $jabatan->nama_jabatan }}"
-                                                        {{ isset($anggota) && $anggota->jabatan_id == $jabatan->id ? 'selected' : '' }}>
-                                                        {{ $jabatan->nama_jabatan }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <input type="hidden" name="nama_jabatan" id="nama_jabatan"
-                                            value="{{ $anggota->nama_jabatan ?? '' }}">
-                                         {{-- <div class="mb-3">
-                                            <label>Jabatan</label>
-                                            <select name="nama_jabatan" class="form-control rounded-pill">
-                                                <option value="">-- Pilih jabatan --</option>
-                                                @foreach($jabatans as $jabatan)
-                                                    <option value="{{ $jabatan->nama_jabatan }}" {{ isset($anggota) && $anggota->nama_jabatan == $jabatan->nama_jabatan ? 'selected' : '' }}>
-                                                        {{ $jabatan->nama_jabatan }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div> --}}
-
-                                        <div class="mb-3">
-                                            <label class="form-label">Jenis Kelamin</label>
-                                            <div class="d-flex gap-3">
-                                                <div class="d-flex gap-3">
-                                                    <input class="form-check-input" type="radio" name="jenis_kelamin" value="Perempuan"
-                                                        {{ isset($anggota) ? ($anggota->jenis_kelamin == 'Perempuan' ? 'checked' : '') : 'checked' }}> Perempuan
-
-                                                    <input class="form-check-input" type="radio" name="jenis_kelamin" value="Laki-laki"
-                                                        {{ isset($anggota) && $anggota->jenis_kelamin == 'Laki-laki' ? 'checked' : '' }}> Laki-laki
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    @if(isset($anggota))
+                                                        <input type="hidden" id="anggota_id" value="{{ $anggota->id }}">
+                                                    @endif
+                                                    <label class="form-label">Nama Lengkap</label>
+                                                    <input type="text" class="form-control rounded-pill" name="nama" value="{{ $anggota->nama ?? '' }}">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="tempatLahir" class="form-label">Tempat Lahir:</label>
-                                            <select id="tempatLahir" name="tempat_lahir" class="selectpicker form-control" data-live-search="true" title="pilih tempat kelahiran">
-                                                @foreach($kecamatans as $kecamatan)
-                                                    <option value="{{ $kecamatan->id }}" data-name="{{ $kecamatan->nama }}" {{ isset($anggota) && $anggota->tempat_lahir == $kecamatan->id ? 'selected' : '' }}>
-                                                        {{ $kecamatan->nama }}- {{ $kecamatan->provinsi->nama }}
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Jabatan</label>
+                                                    <select name="jabatan_id" class="form-control rounded-pill">
+                                                        <option value="">-- Pilih jabatan --</option>
                                                         
-                            
-                                                    </option>
-                                                @endforeach   
-                                            </select>
-                                            
-                                        </div>
-                                        
-                                        <div class="mb-3">
-                                            <label class="form-label">Tanggal Lahir</label>
-                                            <input type="date" class="form-control rounded-pill" name="tanggal_lahir" value="{{ $anggota->tanggal_lahir ?? '' }}" >
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="form-label">Status Perkawinan</label>
-                                            <div class="d-flex gap-3">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" 
-                                                        name="status_perkawinan" value="Kawin" {{ isset($anggota) ? ($anggota->status_perkawinan == 'Kawin' ? 'checked' : '') : 'checked' }}>
-                                                    <label class="form-check-label">Kawin</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" 
-                                                        name="status_perkawinan" value="Tidak Kawin" {{ isset($anggota) && $anggota->status_perkawinan == 'Tidak Kawin' ? 'checked' : '' }}>
-                                                    <label class="form-check-label">Tidak Kawin</label>
+                                                        @foreach($jabatans as $jabatan)
+                                                            <option value="{{ $jabatan->id }}"
+                                                                data-nama="{{ $jabatan->nama_jabatan }}"
+                                                                {{ isset($anggota) && $anggota->jabatan_id == $jabatan->id ? 'selected' : '' }}>
+                                                                {{ $jabatan->nama_jabatan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <input type="hidden" name="nama_jabatan" id="nama_jabatan"
+                                                value="{{ $anggota->nama_jabatan ?? '' }}">
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Jenis Kelamin</label>
+                                                    <div class="d-flex gap-3 mt-2">
+                                                        <div class="d-flex gap-3">
+                                                            <input class="form-check-input" type="radio" name="jenis_kelamin" value="Perempuan"
+                                                                {{ isset($anggota) ? ($anggota->jenis_kelamin == 'Perempuan' ? 'checked' : '') : 'checked' }}> Perempuan
 
-                                        <div class="mb-3">
-                                            <label class="form-label">Alamat</label>
-                                            <input type="text" class="form-control rounded-pill" name="alamat" value="{{ $anggota->alamat ?? '' }}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="pendidikan">Pendidikan</label>
-                                            <select name="pendidikan" id="pendidikan" class="form-select rounded-pill">
-                                                <option value="">-- Pilih Pendidikan --</option>
-                                                <option value="SD" {{ isset($anggota) && $anggota->pendidikan == 'SD' ? 'selected' : '' }}>SD</option>
-                                                <option value="SMP" {{ isset($anggota) && $anggota->pendidikan == 'SMP' ? 'selected' : '' }}>SMP</option>
-                                                <option value="SMA/SMK" {{ isset($anggota) && $anggota->pendidikan == 'SMA/SMK' ? 'selected' : '' }}>SMA/SMK</option>
-                                                <option value="S1" {{ isset($anggota) && $anggota->pendidikan == 'S1' ? 'selected' : '' }}>S1</option>
-                                                <option value="S2" {{ isset($anggota) && $anggota->pendidikan == 'S2' ? 'selected' : '' }}>S2</option>
-                                                <option value="S3" {{ isset($anggota) && $anggota->pendidikan == 'S3' ? 'selected' : '' }}>S3</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="pekerjaan">Pekerjaan</label>
-                                            <select name="pekerjaan" id="pekerjaan" class="form-select rounded-pill">
-                                                <option value="">-- Pilih Pekerjaan --</option>
-                                                <option value="ASN/PNS" {{ isset($anggota) && $anggota->pekerjaan == 'ASN/PNS' ? 'selected' : '' }}>ASN/PNS</option>
-                                                <option value="TNI/Polri" {{ isset($anggota) && $anggota->pekerjaan == 'TNI/Polri' ? 'selected' : '' }}>TNI/Polri</option>
-                                                <option value="Pegawai Swasta" {{ isset($anggota) && $anggota->pekerjaan == 'Pegawai Swasta' ? 'selected' : '' }}>Pegawai Swasta</option>
-                                                <option value="Wiraswasta" {{ isset($anggota) && $anggota->pekerjaan == 'Wiraswasta' ? 'selected' : '' }}>Wiraswasta</option>
-                                                <option value="Petani" {{ isset($anggota) && $anggota->pekerjaan == 'Petani' ? 'selected' : '' }}>Petani</option>
-                                                <option value="Nelayan" {{ isset($anggota) && $anggota->pekerjaan == 'Nelayan' ? 'selected' : '' }}>Nelayan</option>
-                                                <option value="Guru/Dosen" {{ isset($anggota) && $anggota->pekerjaan == 'Guru/Dosen' ? 'selected' : '' }}>Guru/Dosen</option>
-                                                <option value="Tenaga Kesehatan" {{ isset($anggota) && $anggota->pekerjaan == 'Tenaga Kesehatan' ? 'selected' : '' }}>Tenaga Kesehatan</option>
-                                                <option value="Pelajar/Mahasiswa" {{ isset($anggota) && $anggota->pekerjaan == 'Pelajar/Mahasiswa' ? 'selected' : '' }}>Pelajar/Mahasiswa</option>
-                                                <option value="Ibu Rumah Tangga" {{ isset($anggota) && $anggota->pekerjaan == 'Ibu Rumah Tangga' ? 'selected' : '' }}>Ibu Rumah Tangga</option>
-                                                <option value="Tidak Bekerja" {{ isset($anggota) && $anggota->pekerjaan == 'Tidak Bekerja' ? 'selected' : '' }}>Tidak Bekerja</option>
-                                                <option value="Lainnya" {{ isset($anggota) && $anggota->pekerjaan == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Status Anggota</label>
-                                            <div class="d-flex gap-3">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" 
-                                                        name="status" value="Aktif" {{ isset($anggota) ? ($anggota->status == 'Aktif' ? 'checked' : '') : 'checked' }}>
-                                                    <label class="form-check-label">Aktif</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" 
-                                                        name="status" value="Nonaktif" {{ isset($anggota) && $anggota->status == 'Nonaktif' ? 'checked' : '' }}>
-                                                    <label class="form-check-label">Tidak Aktif</label>
+                                                            <input class="form-check-input" type="radio" name="jenis_kelamin" value="Laki-laki"
+                                                                {{ isset($anggota) && $anggota->jenis_kelamin == 'Laki-laki' ? 'checked' : '' }}> Laki-laki
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>Keterangan</label>
-                                            <textarea class="form-control" name="keterangan" >{{ $anggota->keterangan ?? '' }}</textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Upload Foto</label>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="tempatLahir" class="form-label">Tempat Lahir:</label>
+                                                    <select id="tempatLahir" name="tempat_lahir" class="selectpicker form-control" data-live-search="true" title="pilih tempat kelahiran">
+                                                        @foreach($kecamatans as $kecamatan)
+                                                            <option value="{{ $kecamatan->id }}" data-name="{{ $kecamatan->nama }}" {{ isset($anggota) && $anggota->tempat_lahir == $kecamatan->id ? 'selected' : '' }}>
+                                                                {{ $kecamatan->nama }}- {{ $kecamatan->provinsi->nama }}   
+                                                            </option>
+                                                        @endforeach   
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Tanggal Lahir</label>
+                                                <input type="date" class="form-control rounded-pill" name="tanggal_lahir" value="{{ $anggota->tanggal_lahir ?? '' }}" >
+                                            </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status Perkawinan</label>
+                                                    <div class="d-flex gap-3 mt-2">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" 
+                                                                name="status_perkawinan" value="Kawin" {{ isset($anggota) ? ($anggota->status_perkawinan == 'Kawin' ? 'checked' : '') : 'checked' }}>
+                                                            <label class="form-check-label">Kawin</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" 
+                                                                name="status_perkawinan" value="Tidak Kawin" {{ isset($anggota) && $anggota->status_perkawinan == 'Tidak Kawin' ? 'checked' : '' }}>
+                                                            <label class="form-check-label">Tidak Kawin</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Alamat</label>
+                                                    <input type="text" class="form-control rounded-pill" name="alamat" value="{{ $anggota->alamat ?? '' }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="pendidikan" class="form-label">Pendidikan</label>
+                                                    <select name="pendidikan" id="pendidikan" class="form-select rounded-pill">
+                                                        <option value="">-- Pilih Pendidikan --</option>
+                                                        <option value="SD" {{ isset($anggota) && $anggota->pendidikan == 'SD' ? 'selected' : '' }}>SD</option>
+                                                        <option value="SMP" {{ isset($anggota) && $anggota->pendidikan == 'SMP' ? 'selected' : '' }}>SMP</option>
+                                                        <option value="SMA/SMK" {{ isset($anggota) && $anggota->pendidikan == 'SMA/SMK' ? 'selected' : '' }}>SMA/SMK</option>
+                                                        <option value="S1" {{ isset($anggota) && $anggota->pendidikan == 'S1' ? 'selected' : '' }}>S1</option>
+                                                        <option value="S2" {{ isset($anggota) && $anggota->pendidikan == 'S2' ? 'selected' : '' }}>S2</option>
+                                                        <option value="S3" {{ isset($anggota) && $anggota->pendidikan == 'S3' ? 'selected' : '' }}>S3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="pekerjaan" class="form-label">Pekerjaan</label>
+                                                    <select name="pekerjaan" id="pekerjaan" class="form-select rounded-pill">
+                                                        <option value="">-- Pilih Pekerjaan --</option>
+                                                        <option value="ASN/PNS" {{ isset($anggota) && $anggota->pekerjaan == 'ASN/PNS' ? 'selected' : '' }}>ASN/PNS</option>
+                                                        <option value="TNI/Polri" {{ isset($anggota) && $anggota->pekerjaan == 'TNI/Polri' ? 'selected' : '' }}>TNI/Polri</option>
+                                                        <option value="Pegawai Swasta" {{ isset($anggota) && $anggota->pekerjaan == 'Pegawai Swasta' ? 'selected' : '' }}>Pegawai Swasta</option>
+                                                        <option value="Wiraswasta" {{ isset($anggota) && $anggota->pekerjaan == 'Wiraswasta' ? 'selected' : '' }}>Wiraswasta</option>
+                                                        <option value="Petani" {{ isset($anggota) && $anggota->pekerjaan == 'Petani' ? 'selected' : '' }}>Petani</option>
+                                                        <option value="Nelayan" {{ isset($anggota) && $anggota->pekerjaan == 'Nelayan' ? 'selected' : '' }}>Nelayan</option>
+                                                        <option value="Guru/Dosen" {{ isset($anggota) && $anggota->pekerjaan == 'Guru/Dosen' ? 'selected' : '' }}>Guru/Dosen</option>
+                                                        <option value="Tenaga Kesehatan" {{ isset($anggota) && $anggota->pekerjaan == 'Tenaga Kesehatan' ? 'selected' : '' }}>Tenaga Kesehatan</option>
+                                                        <option value="Pelajar/Mahasiswa" {{ isset($anggota) && $anggota->pekerjaan == 'Pelajar/Mahasiswa' ? 'selected' : '' }}>Pelajar/Mahasiswa</option>
+                                                        <option value="Ibu Rumah Tangga" {{ isset($anggota) && $anggota->pekerjaan == 'Ibu Rumah Tangga' ? 'selected' : '' }}>Ibu Rumah Tangga</option>
+                                                        <option value="Tidak Bekerja" {{ isset($anggota) && $anggota->pekerjaan == 'Tidak Bekerja' ? 'selected' : '' }}>Tidak Bekerja</option>
+                                                        <option value="Lainnya" {{ isset($anggota) && $anggota->pekerjaan == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status Anggota</label>
+                                                    <div class="d-flex gap-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" 
+                                                                name="status" value="Aktif" {{ isset($anggota) ? ($anggota->status == 'Aktif' ? 'checked' : '') : 'checked' }}>
+                                                            <label class="form-check-label">Aktif</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" 
+                                                                name="status" value="Nonaktif" {{ isset($anggota) && $anggota->status == 'Nonaktif' ? 'checked' : '' }}>
+                                                            <label class="form-check-label">Tidak Aktif</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Keterangan</label>
+                                                    <textarea class="form-control" name="keterangan" >{{ $anggota->keterangan ?? '' }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Upload Foto</label>
 
-                                            <input type="file"
-                                                class="form-control"
-                                                id="imageInput"
-                                                name="foto"
-                                                accept="image/*">
+                                                    <input type="file"
+                                                        class="form-control"
+                                                        id="imageInput"
+                                                        name="foto"
+                                                        accept="image/*">
 
-                                            <!-- Preview -->
-                                            <div class="mt-3">
-                                                <img id="imagePreview"
-                                                    src="{{ isset($anggota) && $anggota->foto_profil ? asset('storage/'.$anggota->foto_profil) : '' }}"
-                                                    alt="Preview Gambar"
-                                                    class="img-thumbnail {{ isset($anggota) && $anggota->foto_profil ? '' : 'd-none' }}"
-                                                    style="max-height: 300px;">
+                                                    <!-- Preview -->
+                                                    <div class="mt-3">
+                                                        <img id="imagePreview"
+                                                            src="{{ isset($anggota) && $anggota->foto_profil ? asset('storage/'.$anggota->foto_profil) : '' }}"
+                                                            alt="Preview Gambar"
+                                                            class="img-thumbnail {{ isset($anggota) && $anggota->foto_profil ? '' : 'd-none' }}"
+                                                            style="max-height: 300px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ isset($anggota) ? 'Update' : 'Tambah' }}
+                                            </button>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ isset($anggota) ? 'Update' : 'Tambah' }}
-                                        </button>
-
-                                        {{-- <button type="submit" class="btn btn-primary">Tambah</button> --}}
                                     </form>
                                 </div>
-            
+                                @endif
                             </div>
 
                 </div>
