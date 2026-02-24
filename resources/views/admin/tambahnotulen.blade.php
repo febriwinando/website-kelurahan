@@ -100,7 +100,7 @@
                                             <h6>Uraian Jalannya Rapat</h6>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="pimpinanRapat" class="form-label">Tempat Lahir:</label>
+                                                    <label for="pimpinanRapat" class="form-label">Pemimpin Rapat:</label>
                                                     <select id="pimpinanRapat" name="pimpinan_rapat" class="selectpicker form-control" data-live-search="true" title="pilih pemimpin rapat">
                                                         @foreach($anggotas as $anggota)
                                                             <option value="{{ $anggota->id }}" data-name="{{ $anggota->nama }}">
