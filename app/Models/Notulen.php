@@ -32,6 +32,8 @@ class Notulen extends Model
         'foto_dokumentasi' => 'array', 
     ];
 
+
+
     // Relasi ke user pembuat
     public function pembuat()
     {

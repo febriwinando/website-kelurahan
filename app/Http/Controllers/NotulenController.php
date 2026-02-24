@@ -16,8 +16,8 @@ class NotulenController extends Controller
     public function index()
     {
 
-        $notulens = Inventaris::latest()->get();
-        return view('admin.tambahnotulen', compact('notulens'));
+        $notulens = Notulen::latest()->get();
+        return view('admin.daftarnotulen', compact('notulens'));
     }
 
     /**
@@ -27,7 +27,6 @@ class NotulenController extends Controller
     {
 
         $anggotas = Anggota::with('jabatan')->latest()->get();
-        
         return view('admin.tambahnotulen', compact('anggotas'));
     }
 
@@ -50,7 +49,7 @@ class NotulenController extends Controller
                 'keputusan' => 'nullable|string',
                 'lain_lain' => 'nullable|string',
                 'penutup' => 'nullable|string',
-                'foto_dokumentasi.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+                'foto_dokumentasi.*' => 'image|mimes:jpg,jpeg,png|max:2048'
             ]);
 
             $data = $request->only([
@@ -70,13 +69,15 @@ class NotulenController extends Controller
 
             $data['dibuat_oleh'] = Auth::id();
 
-            // Upload Multi Foto
+            
+            $paths = [];
+
             if ($request->hasFile('foto_dokumentasi')) {
 
-                $paths = [];
-
                 foreach ($request->file('foto_dokumentasi') as $file) {
+
                     $filename = time().'_'.$file->getClientOriginalName();
+
                     $paths[] = $file->storeAs('notulen', $filename, 'public');
                 }
 
@@ -84,6 +85,7 @@ class NotulenController extends Controller
             }
 
             $notulen = Notulen::create($data);
+            
 
 
             // return redirect()->back()->with('success', 'Notulen berhasil disimpan');
@@ -120,10 +122,14 @@ class NotulenController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Notulen $notulen)
+    public function edit($id)
     {
-        //
-    }
+            $notulen = Notulen::findOrFail($id);
+            $anggotas = Anggota::with('jabatan')->latest()->get();
+            return view('admin.tambahnotulen', compact(
+                'notulen', 'anggotas'
+            ));
+        }
 
     /**
      * Update the specified resource in storage.
@@ -145,7 +151,8 @@ class NotulenController extends Controller
             'keputusan' => 'nullable|string',
             'lain_lain' => 'nullable|string',
             'penutup' => 'nullable|string',
-            'foto_dokumentasi.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'foto_dokumentasi.*' => 'image|mimes:jpg,jpeg,png|max:2048'
+
         ]);
 
         $data = $request->only([
@@ -165,29 +172,27 @@ class NotulenController extends Controller
 
         $data['diubah_oleh'] = Auth::id();
 
-        // Jika upload foto baru
         if ($request->hasFile('foto_dokumentasi')) {
 
-            // Hapus foto lama
-            if ($notulen->foto_dokumentasi) {
-                foreach ($notulen->foto_dokumentasi as $oldFile) {
-                    Storage::disk('public')->delete($oldFile);
-                }
-            }
+            $oldPhotos = $notulen->foto_dokumentasi ?? [];
 
-            $paths = [];
+            $newPhotos = [];
 
             foreach ($request->file('foto_dokumentasi') as $file) {
                 $filename = time().'_'.$file->getClientOriginalName();
-                $paths[] = $file->storeAs('notulen', $filename, 'public');
+                $newPhotos[] = $file->storeAs('notulen', $filename, 'public');
             }
 
-            $data['foto_dokumentasi'] = $paths;
+            // Gabungkan lama + baru
+            $data['foto_dokumentasi'] = array_merge($oldPhotos, $newPhotos);
         }
 
         $notulen->update($data);
 
-        return redirect()->back()->with('success', 'Notulen berhasil diperbarui');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data inventaris berhasil diupdate'
+        ]);
     }
 
     /**

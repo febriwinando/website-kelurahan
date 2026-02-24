@@ -54,10 +54,7 @@
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h5 class="card-title fw-semibold mb-0">Notulen Rapat</h5>
                                         <div>
-                                            {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                Teruskan
-                                            </button> --}}
-                                            <a href="/daftar-anggota" class="btn btn-info">Arsip Notulen</a>
+                                            <a href="/notulen" class="btn btn-info">Arsip Notulen</a>
                                         </div>
                                     </div>
                                 </div>
@@ -68,20 +65,29 @@
                                 <div class="card-body">
                                     <form id="formTambahNotulen" enctype="multipart/form-data">
                                         @csrf
-                                        @if(isset($anggota))
-                                            <input type="hidden" id="notulen_id" value="{{ $notulen->id }}">
-                                        @endif
+
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
+                                                    @if(isset($notulen))
+                                                        <input type="hidden" id="notulen_id" value="{{ $notulen->id }}">
+                                                    @endif
                                                     <label class="form-label">Tanggal</label>
-                                                    <input type="date" class="form-control rounded-pill" name="tanggal" value="{{ $notulen->tanggal ?? '' }}" >
+                                                    <input type="date"
+                                                        name="tanggal"
+                                                        class="form-control rounded-pill"
+                                                        value="{{ old('tanggal', isset($notulen) ? $notulen->tanggal?->format('Y-m-d') : '') }}">
+
                                                 </div>
+                                                
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Waktu</label>
-                                                    <input type="time" class="form-control rounded-pill" name="waktu" value="{{ $notulen->waktu ?? '' }}" >
+                                                    <input type="time"
+                                                        name="waktu"
+                                                        class="form-control rounded-pill"
+                                                        value="{{ old('waktu', isset($notulen) ? $notulen->waktu?->format('Y-m-d') : '') }}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
@@ -164,16 +170,17 @@
 
                                                     <input type="file"
                                                         class="form-control"
-                                                        id="imageInput"
-                                                        name="foto"
+                                                        id="imageInputMulti"
+                                                        multiple
+                                                        name="foto_dokumentasi[]"
                                                         accept="image/*">
 
                                                     <!-- Preview -->
                                                     <div class="mt-3">
-                                                        <img id="imagePreview"
-                                                            src="{{ isset($notulen) && $notulen->foto_profil ? asset('storage/'.$notulen->foto_profil) : '' }}"
+                                                        <img id="imagePreviewContainer"
+                                                            src="{{ isset($notulen) && $notulen->foto_dokumentasi ? asset('storage/'.$notulen->foto_dokumentasi) : '' }}"
                                                             alt="Preview Gambar"
-                                                            class="img-thumbnail {{ isset($notulen) && $notulen->foto_profil ? '' : 'd-none' }}"
+                                                            class="img-thumbnail {{ isset($notulen) && $notulen->foto_dokumentasi ? '' : 'd-none' }}"
                                                             style="max-height: 300px;">
                                                     </div>
                                                 </div>

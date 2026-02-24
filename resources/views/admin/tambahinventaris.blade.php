@@ -83,7 +83,7 @@
                                             <label class="form-label">Tanggal Penerimaan/Pembelian</label>
                                             <input type="date" class="form-control rounded-pill" name="tanggal_penerimaan" value="{{ $inventaris->tanggal_penerimaan ?? '' }}" >
                                         </div>
-                                        {{-- {{ $inventaris->tanggal_penerimaan }} --}}
+                                        
                                         <div class="mb-3">
                                             <label class="form-label">Jumlah</label>
                                             <input type="number" class="form-control rounded-pill" name="jumlah" value="{{ $inventaris->jumlah ?? '' }}" >

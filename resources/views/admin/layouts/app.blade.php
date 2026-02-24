@@ -105,7 +105,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/inventaris" aria-expanded="false">
+              <a class="sidebar-link" href="/notulen" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/notulen.svg') }}">
                 </span>
@@ -732,6 +732,46 @@ $(document).ready(function(){
             let nama = selectedOption.getAttribute('data-name');
 
             document.getElementById('pimpinan_rapat_nama').value = nama;
+        });
+    </script>
+
+    <script>
+        document.getElementById('imageInputMulti').addEventListener('change', function(event) {
+
+            const input = event.target;
+            const previewContainer = document.getElementById('imagePreviewContainer');
+
+            // Kosongkan preview lama
+            previewContainer.innerHTML = '';
+
+            if (input.files.length > 0) {
+
+                Array.from(input.files).forEach(file => {
+
+                    // Validasi hanya gambar
+                    if (!file.type.startsWith('image/')) {
+                        alert('Semua file harus berupa gambar');
+                        input.value = '';
+                        previewContainer.innerHTML = '';
+                        return;
+                    }
+
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.classList.add('img-thumbnail', 'me-2', 'mb-2');
+                        img.style.maxHeight = '150px';
+
+                        previewContainer.appendChild(img);
+                    };
+
+                    reader.readAsDataURL(file);
+                });
+
+            }
         });
     </script>
 </body>
