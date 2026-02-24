@@ -444,56 +444,58 @@
 
   </script>
 <script>
-$(document).ready(function(){
+
 
     $('#formTambahAnggota').on('submit', function(e){
-        e.preventDefault();
+    e.preventDefault();
 
-        let id = $('#anggota_id').val();
-        let formData = new FormData(this);
+    let id = $('#anggota_id').val();
+    let formData = new FormData(this);
+    let url = id ? "/anggota/" + id : "{{ route('anggota.store') }}";
 
-        let url = id ? "/anggota/" + id : "{{ route('anggota.store') }}";
+    if(id){
+        formData.append('_method', 'PUT');
+    }
 
-        if(id){
-            formData.append('_method', 'PUT'); // spoof method
-        }
+    // 🔵 TAMPILKAN LOADING LAYAR
+    $('#loadingOverlay').removeClass('d-none');
 
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response){
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
 
-                if(response.success){
-
-                    showAlert('success', id 
-                        ? 'Anggota berhasil diupdate'
-                        : 'Anggota berhasil ditambah'
-                    );
-
-                    if(!id){
+        success: function(response){
+            if(response.success){
+                showAlert('success', id 
+                    ? 'Anggota berhasil diupdate'
+                    : 'Anggota berhasil ditambahkan'
+                );
+            }
+            if(!id){
                         $('#formTambahAnggota')[0].reset();
                         $('#imagePreview').attr('src', '').addClass('d-none');
                     }
-                }
-            },
-            error: function(xhr){
+        },
 
-                let errors = xhr.responseJSON.errors;
-                let html = '<div class="alert alert-danger"><ul>';
+        error: function(xhr){
+            let errors = xhr.responseJSON.errors;
+            let html = '<div class="alert alert-danger"><ul>';
 
-                $.each(errors, function(key, value){
-                    html += '<li>' + value[0] + '</li>';
-                });
+            $.each(errors, function(key, value){
+                html += '<li>' + value[0] + '</li>';
+            });
 
-                html += '</ul></div>';
+            html += '</ul></div>';
+            $('#alert-container').html(html);
+        },
 
-                $('#alert-container').html(html);
-            }
-        });
-
+        complete: function(){
+            // 🟢 HILANGKAN LOADING
+            $('#loadingOverlay').addClass('d-none');
+        }
     });
 
 });

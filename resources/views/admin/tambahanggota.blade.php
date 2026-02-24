@@ -45,6 +45,12 @@
                     </div>
                 </div>
             </div>
+            <div id="loadingOverlay" class="d-none">
+                <div class="loading-box text-center">
+                    <div class="spinner-border text-light mb-3" style="width:3rem; height:3rem;"></div>
+                    <div class="text-white fw-bold">Sedang memproses...</div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-12" id="informasi-container">
                 {{-- <div id="alert-container"></div> --}}

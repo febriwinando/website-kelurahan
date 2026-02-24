@@ -16,7 +16,7 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        $anggotas = Anggota::with('jabatan')->latest()->get();
+        // $anggotas = Anggota::with('jabatan')->latest()->get();
         // $kecamatans = Kecamatan::with('kabupaten.provinsi')->get();
         $kecamatans = Kabupaten::with('provinsi')->get();
         $jabatans = Jabatan::get();
@@ -46,7 +46,8 @@ class AnggotaController extends Controller
 
 
     public function list(){
-        $anggotas = Anggota::with('jabatan')->latest()->get();
+        // $anggotas = Anggota::with('jabatan')->latest()->get();
+        $anggotas = Anggota::with('jabatan')->where('status', 'Aktif')->latest()->get();
         return view('admin.daftaranggota', compact('anggotas'));
     
     }
