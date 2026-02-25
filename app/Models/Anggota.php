@@ -27,4 +27,9 @@ class Anggota extends Model
     {
         return $this->belongsTo(Jabatan::class);
     }
+
+    public function notulens()
+    {
+        return $this->hasMany(Notulen::class, 'anggota_id');
+    }
 }

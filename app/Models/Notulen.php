@@ -10,7 +10,8 @@ class Notulen extends Model
         'waktu',
         'tempat',
         'macam',
-        'pimpinan_rapat',
+        'anggota_id',
+        'nama_anggota',
         'jumlah_diundang',
         'jumlah_hadir',
         'jumlah_tidak_hadir',
@@ -44,5 +45,10 @@ class Notulen extends Model
     public function pengedit()
     {
         return $this->belongsTo(User::class, 'diubah_oleh');
+    }
+
+    public function anggota()
+    {
+        return $this->belongsTo(Anggota::class, 'anggota_id');
     }
 }

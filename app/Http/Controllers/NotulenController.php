@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Notulen;
 use App\Models\Anggota;
+use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,8 @@ class NotulenController extends Controller
     public function index()
     {
 
-        $notulens = Notulen::latest()->get();
+        // $notulens = Notulen::latest()->get();
+        $notulens = Notulen::with('anggota')->get();
         return view('admin.daftarnotulen', compact('notulens'));
     }
 
@@ -26,6 +28,7 @@ class NotulenController extends Controller
     public function create()
     {
 
+        
         $anggotas = Anggota::with('jabatan')->latest()->get();
         return view('admin.tambahnotulen', compact('anggotas'));
     }
@@ -125,7 +128,9 @@ class NotulenController extends Controller
      */
     public function edit($id)
     {
-            $notulen = Notulen::findOrFail($id);
+            // $notulen = Notulen::findOrFail($id);
+            $notulen = Notulen::with('anggota')->findOrFail($id);
+            $notulens = Notulen::with('anggota')->get();
             $anggotas = Anggota::with('jabatan')->latest()->get();
             return view('admin.tambahnotulen', compact(
                 'notulen', 'anggotas'

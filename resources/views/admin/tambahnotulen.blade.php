@@ -62,6 +62,11 @@
 
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Form Notulen </h5>
+                                @if($anggotas->isEmpty())
+                                    <h4 class="text-center mt-5 mb-5">
+                                        Daftarkan anggota PKK terlebih dahulu ...
+                                    </h4>
+                                @else
                                 <div class="card-body">
                                     <form id="formTambahNotulen" enctype="multipart/form-data">
                                         @csrf
@@ -214,6 +219,7 @@
                                         {{-- <button type="submit" class="btn btn-primary">Tambah</button> --}}
                                     </form>
                                 </div>
+                                @endif
             
                             </div>
 

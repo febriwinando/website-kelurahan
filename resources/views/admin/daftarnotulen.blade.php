@@ -79,6 +79,11 @@
                             </div>
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Daftar Arsip</h5>
+                                @if($notulens->isEmpty())
+                                    <h4 class="text-center mt-5 mb-5">
+                                        Belum ada arsip notulen ...
+                                    </h4>
+                                @else
                                 <div class="card-body">
                                     <table class="table mt-4" id="tabelJabatan">
                                         <thead>
@@ -117,6 +122,7 @@
 
                                     </table>
                                 </div>
+                                @endif
                             </div>
 
                 </div>

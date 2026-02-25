@@ -79,6 +79,11 @@
                             </div>
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Daftar Anggota</h5>
+                                @if($inventariss->isEmpty())
+                                    <h4 class="text-center mt-5 mb-5">
+                                        Belum ada data inventaris ...
+                                    </h4>
+                                @else
                                 <div class="card-body">
                                     <table class="table mt-4" id="tabelJabatan">
                                         <thead>
@@ -122,14 +127,11 @@
 
                                     </table>
                                 </div>
+                                @endif
                             </div>
 
                 </div>
-                <div class="py-6 px-6 text-center">
-                <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
-                    class="pe-1 text-primary text-decoration-underline">AdminMart.com</a>Distributed by <a href="https://themewagon.com/" target="_blank"
-                    class="pe-1 text-primary text-decoration-underline">ThemeWagon</a></p>
-                </div>
+
             </div>
             {{-- @endif --}}
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>

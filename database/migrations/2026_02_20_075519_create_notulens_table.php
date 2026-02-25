@@ -17,13 +17,12 @@ return new class extends Migration
             $table->date('tanggal');
             $table->time('waktu');
             $table->string('tempat');
-            $table->string('macam')->nullable();
-
+            $table->string('anggota_id')->nullable();
+            $table->foreignId('nama_anggota');
             $table->string('pimpinan_rapat')->nullable();
             $table->integer('jumlah_diundang')->nullable();
             $table->integer('jumlah_hadir')->nullable();
             $table->integer('jumlah_tidak_hadir')->nullable();
-
             $table->text('susunan_acara')->nullable();
             $table->text('keputusan')->nullable();
             $table->text('lain_lain')->nullable();
