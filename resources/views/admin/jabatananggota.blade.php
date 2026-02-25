@@ -120,11 +120,7 @@
 
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Daftar Jabatan</h5>
-                                @if($jabatans->isEmpty())
-                                    <h4 class="text-center mt-5 mb-5">
-                                        Struktur jabatan belum tersedia ...
-                                    </h4>
-                                @else
+
                                     <div class="card-body">
                                         <table class="table mt-4" id="tabelJabatan">
                                             <thead>
@@ -153,6 +149,11 @@
 
                                         </table>
                                     </div>
+                                @if($jabatans->isEmpty())
+                                    <h4 class="text-center mt-5 mb-5">
+                                        Struktur jabatan belum tersedia ...
+                                    </h4>
+                            
                                 @endif
                             </div>
                 </div>

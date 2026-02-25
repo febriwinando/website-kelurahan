@@ -56,62 +56,62 @@ class AnggotaController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    try {
+    {
+        try {
 
-        $validated = $request->validate([
-            'nama' => 'required',
-            'jabatan_id' => 'required|exists:jabatans,id',
-            'jenis_kelamin' => 'required',
-            'status_perkawinan' => 'required',
-            'status' => 'required',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+            $validated = $request->validate([
+                'nama' => 'required',
+                'jabatan_id' => 'required|exists:jabatans,id',
+                'jenis_kelamin' => 'required',
+                'status_perkawinan' => 'required',
+                'status' => 'required',
+                'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            ]);
 
-        $jabatan = Jabatan::find($request->jabatan_id);
+            $jabatan = Jabatan::find($request->jabatan_id);
 
-        $fotoPath = null;
+            $fotoPath = null;
 
-        if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('foto_anggota', 'public');
+            if ($request->hasFile('foto')) {
+                $fotoPath = $request->file('foto')->store('foto_anggota', 'public');
+            }
+
+            $anggota = Anggota::create([
+                'nama' => $request->nama,
+                'jabatan_id' => $jabatan->id,
+                'nama_jabatan' => $jabatan->nama_jabatan,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'status_perkawinan' => $request->status_perkawinan,
+                'alamat' => $request->alamat,
+                'pendidikan' => $request->pendidikan,
+                'pekerjaan' => $request->pekerjaan,
+                'keterangan' => $request->keterangan,
+                'status' => $request->status,
+                'foto_profil' => $fotoPath,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $anggota
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+
+            return response()->json([
+                'success' => false,
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        $anggota = Anggota::create([
-            'nama' => $request->nama,
-            'jabatan_id' => $jabatan->id,
-            'nama_jabatan' => $jabatan->nama_jabatan,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'status_perkawinan' => $request->status_perkawinan,
-            'alamat' => $request->alamat,
-            'pendidikan' => $request->pendidikan,
-            'pekerjaan' => $request->pekerjaan,
-            'keterangan' => $request->keterangan,
-            'status' => $request->status,
-            'foto_profil' => $fotoPath,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'data' => $anggota
-        ]);
-
-    } catch (\Illuminate\Validation\ValidationException $e) {
-
-        return response()->json([
-            'success' => false,
-            'errors' => $e->errors()
-        ], 422);
-
-    } catch (\Exception $e) {
-
-        return response()->json([
-            'success' => false,
-            'message' => $e->getMessage()
-        ], 500);
     }
-}
 
 
     /**
