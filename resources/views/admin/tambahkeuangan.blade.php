@@ -53,9 +53,9 @@
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h5 class="card-title fw-semibold mb-0">Tambah Inventaris</h5>
-                                        <!-- <div>
-                                            <a href="/inventaris" class="btn btn-info">Daftar Inventaris</a>
-                                        </div> -->
+                                        <div>
+                                            <a href="/keuangan" class="btn btn-info">Laporan Keuangan</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Form Inventaris</h5>
                                 <div class="card-body">
-                                    <form action="{{ route('keuangan.storeMultiple') }}" method="POST"> 
+                                    <form action="{{ route('keuangan.storeMultiple') }}" method="POST">
                                         @csrf 
                                         <input type="hidden" name="kegiatan_id"> 
                                         <table class="table" id="transaksiTable"> 
@@ -86,17 +86,17 @@
                                                         </select> 
                                                     </td>
                                                     <td>
-                                                        <input type="date" class="form-control rounded-pill" name="tanggal" >
+                                                        <input type="date" class="form-control rounded-pill" name="tanggal[]" >
                                                     </td> 
                                                     <td>
-                                                        <input type="text" class="form-control rounded-pill" name="nomor_bukti" >
+                                                        <input type="text" class="form-control rounded-pill" name="invoice[]">
 
                                                     </td>
                                                     <td> 
                                                         <input type="text" name="uraian[]" class="form-control rounded-pill"> 
                                                     </td> 
                                                     <td> 
-                                                            <input type="number" name="jumlah[]" class="form-control rounded-pill"> 
+                                                        <input type="number" name="jumlah[]" class="form-control rounded-pill"> 
                                                     </td> 
                                                     <td> 
                                                             <button type="button" class="btn btn-danger" onclick="hapusBaris(this)">

@@ -66,9 +66,9 @@
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-semibold mb-0">Anggota PKK</h5>
+                                        <h5 class="card-title fw-semibold mb-0">Arsip Notulen</h5>
                                         <div>
-                                            <a href="/inventaris/create" class="btn btn-info">Tambah Barang</a>
+                                            <a href="/keuangan/create" class="btn btn-info">Tambah Transaksi</a>
                                         </div>
                                     </div>
                                 </div>
@@ -78,48 +78,44 @@
                                 <span id="pelapor"></span>
                             </div>
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Daftar Anggota</h5>
-                                @if($inventariss->isEmpty())
+                                <h5 class="card-title fw-semibold card-header">Daftar Arsip</h5>
+                                @if($keuangans->isEmpty())
                                     <h4 class="text-center mt-5 mb-5">
-                                        Belum ada data inventaris ...
+                                        Belum ada arsip notulen ...
                                     </h4>
                                 @else
                                 <div class="card-body">
-                                    <table class="table mt-4" id="tabelJabatan">
+                                    <table class="table mt-4" id="tabelTransaksi">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama</th>
-                                                <th>Diterima/Dibeli dari</th>
-                                                <th>Tanggal Penerimaan/Pembelian</th>
-                                                <th>Jumlah</th>
-                                                <th>Tempat Penyimpanan</th>
-                                                <th>Kondisi</th>
-                                                <th>Status</th>
-                                                <th>Keterangan</th>
+                                                <th>Transaksi</th>
+                                                <th>Tanggal</th>
+                                                <th>Invoice</th>
+                                                <th>Nilai (Rp)</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($inventariss as $key => $inventaris)
-                                        <tr id="row-{{ $inventaris->id }}">
+                                        @foreach($keuangans as $key => $keuangan)
+                                        <tr id="row-{{ $keuangan->id }}">
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $inventaris->nama_barang }}</td>
-                                            <td>{{ $inventaris->diterima_dari }}</td>
-                                            <td>{{ $inventaris->tanggal_penerimaan }}</td>
-                                            <td>{{ $inventaris->jumlah }}</td>
-                                            <td>{{ $inventaris->tempat_penyimpanan }}</td>
-                                            <td>{{ $inventaris->kondisi }}</td>
-                                            <td>{{ $inventaris->status }}</td>
-                                            <td>{{ $inventaris->keterangan }}</td>
+                                            <td>{{ $keuangan->jenis }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($keuangan->tanggal)->format('d-m-Y') }}</td>
+                                            <td>{{ $keuangan->invoice }}</td>
+                                            <td>Rp {{ number_format($keuangan->jumlah, 0, ',', '.') }}</td>
                                             <td>
-                                                <a href="{{ route('inventaris.edit', $inventaris->id) }}" 
-                                                    class="btn btn-warning btn-sm">
-                                                    Edit
-                                                    </a>
-
-                                                {{-- <button class="btn btn-warning btn-sm editinventaris" data-id="{{ $inventaris->id }}">Edit</button> --}}
-                                                {{-- <button class="btn btn-danger btn-sm deleteInventaris" data-id="{{ $inventaris->id }}">Nonaktifkan</button> --}}
+                                                <button 
+                                                        class="btn btn-warning btn-sm btnEdit"
+                                                        data-id="{{ $keuangan->id }}"
+                                                        data-jenis="{{ $keuangan->jenis }}"
+                                                        data-tanggal="{{ $keuangan->tanggal->format('Y-m-d') }}"
+                                                        data-invoice="{{ $keuangan->invoice }}"
+                                                        data-jumlah="{{ $keuangan->jumlah }}"
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                {{-- <button class="btn btn-danger btn-sm deleteInventaris" data-id="{{ $keuangan->id }}">Nonaktifkan</button> --}}
                                             </td>
                                         </tr>
                                         @endforeach
@@ -131,7 +127,57 @@
                             </div>
 
                 </div>
+                
+            </div>
+            <div class="modal fade" id="modalEdit" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formEdit">
+                            @csrf
+                            @method('PUT')
 
+                            <input type="hidden" id="edit_id">
+
+                            <div class="modal-header">
+                                <h5>Edit Transaksi</h5>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="mb-2">
+                                    <label>Jenis</label>
+                                    <select id="edit_jenis" class="form-control">
+                                        <option value="pemasukan">Pemasukan</option>
+                                        <option value="pengeluaran">Pengeluaran</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label>Tanggal</label>
+                                    <input type="date" id="edit_tanggal" class="form-control">
+                                </div>
+
+                                <div class="mb-2">
+                                    <label>Invoice</label>
+                                    <input type="text" id="edit_invoice" class="form-control">
+                                </div>
+
+                                <div class="mb-2">
+                                    <label>Jumlah</label>
+                                    <input type="number" id="edit_jumlah" class="form-control">
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    Simpan
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
             </div>
             {{-- @endif --}}
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>

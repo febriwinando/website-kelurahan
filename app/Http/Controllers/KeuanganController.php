@@ -14,8 +14,8 @@ class KeuanganController extends Controller
      */
     public function index()
     {
-        
-        return view('admin.tambahkeuangan');
+        $keuangans = Keuangan::get();
+        return view('admin.daftartransaksi', compact('keuangans'));
     }
 
 
@@ -26,39 +26,86 @@ class KeuanganController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tambahkeuangan');
     }
 
 
     public function storeMultiple(Request $request)
-{
-    $saldoTerakhir = Keuangan::latest()->value('saldo') ?? 0;
+    {
+        foreach($request->uraian as $i => $uraian){
 
-    foreach($request->uraian as $i => $uraian){
+            $jumlah = $request->jumlah[$i];
+            $jenis = $request->jenis[$i];
+            $invoice = $request->invoice[$i];
+            $tanggal = $request->tanggal[$i];
 
-        $jumlah = $request->jumlah[$i];
-        $jenis = $request->jenis[$i];
-
-        if($jenis == 'pemasukan'){
-            $saldoTerakhir += $jumlah;
-        }else{
-            $saldoTerakhir -= $jumlah;
+            Keuangan::create([
+                'kegiatan_id' => $request->kegiatan_id,
+                'tanggal' => $tanggal,
+                'jenis' => $jenis,
+                'invoice' => $invoice,
+                'uraian' => $uraian,
+                'jumlah' => $jumlah,
+                'dibuat_oleh' => auth()->id()
+            ]);
         }
 
-        Keuangan::create([
-            'kegiatan_id' => $request->kegiatan_id,
-            'tanggal' => now(),
-            'jenis' => $jenis,
-            'uraian' => $uraian,
-            'jumlah' => $jumlah,
-            'saldo' => $saldoTerakhir,
-            'dibuat_oleh' => auth()->id()
-        ]);
+        return redirect()->back()->with('success','Transaksi berhasil disimpan');
     }
 
-    return redirect()->back()->with('success','Transaksi berhasil disimpan');
-}
+    
+    /**
+     * Update the specified resource in storage.
+     */
 
+    // public function update(Request $request, Keuangan $keuangan)
+    // {
+    //     $request->validate([
+    //         'tanggal' => 'required|date',
+    //         'jenis' => 'required|in:pemasukan,pengeluaran',
+    //         'jumlah' => 'required|numeric|min:0',
+    //     ]);
+
+    //     $keuangan->update([
+    //         'tanggal' => $request->tanggal,
+    //         'jenis' => $request->jenis,
+    //         'invoice' => $request->invoice,
+    //         'jumlah' => $request->jumlah,
+    //         'diubah_oleh' => auth()->id()
+    //     ]);
+
+    //     return response()->json([
+    //         'success' => true
+    //     ]);
+    // }
+
+    public function update(Request $request, Keuangan $keuangan)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'jenis' => 'required|in:pemasukan,pengeluaran',
+            'jumlah' => 'required|numeric|min:0',
+        ]);
+
+        $keuangan->update([
+            'tanggal' => $request->tanggal,
+            'jenis' => $request->jenis,
+            'invoice' => $request->invoice,
+            'jumlah' => $request->jumlah,
+            'diubah_oleh' => auth()->id()
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'id' => $keuangan->id,
+                'jenis' => $keuangan->jenis,
+                'tanggal' => $keuangan->tanggal->format('d-m-Y'),
+                'invoice' => $keuangan->invoice,
+                'jumlah' => number_format($keuangan->jumlah, 0, ',', '.')
+            ]
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -83,13 +130,6 @@ class KeuanganController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Keuangan $keuangan)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

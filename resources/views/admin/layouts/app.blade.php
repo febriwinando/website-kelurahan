@@ -118,7 +118,7 @@
             </li>
             {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/keuangan" aria-expanded="false">
+              <a class="sidebar-link" href="/keuangan/create" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/addfinancial.svg') }}">
                 </span>
@@ -126,7 +126,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/inventaris" aria-expanded="false">
+              <a class="sidebar-link" href="/keuangan" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/financial.svg') }}">
                 </span>
@@ -220,301 +220,241 @@
     <script src="{{ asset('storage/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap-table.min.js') }}"></script>
     <script src="{{ asset('storage/assets/js/bootstrap-select.min.js') }}"></script>
-    <!-- <script>
-        window.csrfToken = "{{ csrf_token() }}";
-        window.baseUrlJabatan = "{{ url('jabatan-anggota') }}";
-    </script>
-    <script src="{{ asset('storage/assets/js/app-custom.js') }}"></script> -->
+   
     <script>
 
-    const csrf = '{{ csrf_token() }}';
-    const baseUrl = "{{ url('jabatan-anggota') }}";
+        const csrf = '{{ csrf_token() }}';
+        const baseUrl = "{{ url('jabatan-anggota') }}";
 
-    const form = document.getElementById('formTambahJabatan');
-    const btnSubmit = document.getElementById('btnSubmit');
-    const jabatanId = document.getElementById('jabatan_id');
-
-
-    // ================= SUBMIT (STORE + UPDATE) =================
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        let id = jabatanId.value;
-        let formData = new FormData(form);
-
-        let url = id ? `${baseUrl}/${id}` : baseUrl;
-        let method = id ? 'PUT' : 'POST';
-        
-        
-        fetch(url, {
-            method: 'POST', // tetap POST (Laravel spoof method)
-            headers: {
-                'X-CSRF-TOKEN': csrf,
-                'Accept': 'application/json'
-            },
-            body: (() => {
-                if(id) formData.append('_method', 'PUT');
-                return formData;
-            })()
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success){
-
-                if(id){
-                    let row = document.getElementById(`row-${id}`);
-
-                    row.children[1].innerText = data.data.nama_jabatan;
-                    row.children[2].innerText = data.data.urutan ?? '';
-                    row.children[3].innerText = data.data.is_active ? 'Aktif' : 'Tidak Aktif';
-                } else {
-
-                    let row = `
-                    <tr id="row-${data.data.id}">
-                        <td></td>
-                        <td>${data.data.nama_jabatan}</td>
-                        <td>${data.data.urutan ?? ''}</td>
-                        <td>${data.data.is_active ? 'Aktif' : 'Tidak Aktif'}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm editBtn" data-id="${data.data.id}">Edit</button>
-                            <button class="btn btn-danger btn-sm deleteBtn" data-id="${data.data.id}">Delete</button>
-                        </td>
-                    </tr>
-                    `;
-
-                    document.querySelector('#tabelJabatan tbody')
-                            .insertAdjacentHTML('beforeend', row);
-                }
-
-                updateRowNumbers(); 
-                showAlert('success', 'Jabatan berhasil ditambah');
-                resetForm();
-          }
+        const form = document.getElementById('formTambahJabatan');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const jabatanId = document.getElementById('jabatan_id');
 
 
-        })
-        .catch(async error => {
+        // ================= SUBMIT (STORE + UPDATE) =================
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-            let response = await error.response?.json?.();
+            let id = jabatanId.value;
+            let formData = new FormData(form);
 
-            if(response && response.errors){
-
-                let pesan = '';
-                    Object.values(response.errors).forEach(err => {
-                    pesan += err[0] + '<br>';
-                    });
-
-                showAlert('danger', pesan);
-
-            } else {
-                showAlert('danger', 'Terjadi kesalahan server!');
-            }
-
-      });
-
-    });
-
-  function updateRowNumbers() {
-      const rows = document.querySelectorAll('#tabelJabatan tbody tr');
-      rows.forEach((row, index) => {
-          row.children[0].innerText = index + 1;
-      });
-  }
-
-
-    // ================= EDIT =================
-    document.addEventListener('click', function(e){
-
-        if(e.target.classList.contains('editBtn')){
-
-            let id = e.target.dataset.id;
-
-            fetch(`${baseUrl}/${id}/edit`, {
-                headers: { 'Accept': 'application/json' }
-            })
-            .then(res => res.json())
-            .then(data => {
-
-                jabatanId.value = data.id;
-                document.getElementById('namaJabatan').value = data.nama_jabatan;
-                document.getElementById('deskripsi').value = data.deskripsi ?? '';
-                document.getElementById('urutan').value = data.urutan ?? '';
-                document.getElementById('is_active').value = data.is_active ? 'true' : 'false';
-
-                btnSubmit.innerText = "Update Jabatan";
-                btnSubmit.classList.remove('btn-primary');
-                btnSubmit.classList.add('btn-success');
-                    updateRowNumbers();
-
-            });
-
-        }
-
-    });
-
-
-    // ================= DELETE =================
-    document.addEventListener('click', function(e){
-
-        if(e.target.classList.contains('deleteBtn')){
-
-            if(!confirm('Yakin hapus?')) return;
-
-            let id = e.target.dataset.id;
-
-            fetch(`${baseUrl}/${id}`, {
-                method: 'POST',
+            let url = id ? `${baseUrl}/${id}` : baseUrl;
+            let method = id ? 'PUT' : 'POST';
+            
+            
+            fetch(url, {
+                method: 'POST', // tetap POST (Laravel spoof method)
                 headers: {
                     'X-CSRF-TOKEN': csrf,
                     'Accept': 'application/json'
                 },
-                body: new URLSearchParams({
-                    _method: 'DELETE'
-                })
+                body: (() => {
+                    if(id) formData.append('_method', 'PUT');
+                    return formData;
+                })()
             })
             .then(res => res.json())
             .then(data => {
-
                 if(data.success){
-                  document.getElementById(`row-${id}`).remove();
-                  updateRowNumbers();
-                  showAlert('success', 'Jabatan berhasil dihapus!');
-              }
 
+                    if(id){
+                        let row = document.getElementById(`row-${id}`);
 
-            });
+                        row.children[1].innerText = data.data.nama_jabatan;
+                        row.children[2].innerText = data.data.urutan ?? '';
+                        row.children[3].innerText = data.data.is_active ? 'Aktif' : 'Tidak Aktif';
+                    } else {
 
-        }
+                        let row = `
+                        <tr id="row-${data.data.id}">
+                            <td></td>
+                            <td>${data.data.nama_jabatan}</td>
+                            <td>${data.data.urutan ?? ''}</td>
+                            <td>${data.data.is_active ? 'Aktif' : 'Tidak Aktif'}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm editBtn" data-id="${data.data.id}">Edit</button>
+                                <button class="btn btn-danger btn-sm deleteBtn" data-id="${data.data.id}">Delete</button>
+                            </td>
+                        </tr>
+                        `;
 
-    });
-
-
-    // ================= RESET FORM =================
-    function resetForm(){
-        form.reset();
-        jabatanId.value = '';
-        btnSubmit.innerText = "Tambah Jabatan";
-        btnSubmit.classList.remove('btn-success');
-        btnSubmit.classList.add('btn-primary');
-    }
-
-  function showAlert(type, message) {
-
-    const modalEl = document.getElementById('globalAlertModal');
-    const modal = new bootstrap.Modal(modalEl);
-
-    const header = document.getElementById('modalHeader');
-    const title = document.getElementById('modalTitle');
-    const body = document.getElementById('modalMessage');
-
-    // Reset class warna
-    header.className = 'modal-header';
-
-    // let soundId = '';
-
-    switch(type) {
-        case 'success':
-            header.classList.add('.bg-light', 'text-white');
-            title.innerText = 'Berhasil';
-            // soundId = 'sound-success';
-            break;
-
-        case 'error':
-        case 'danger':
-            header.classList.add('bg-danger', 'text-white');
-            title.innerText = 'Gagal';
-            // soundId = 'sound-error';
-            break;
-
-        case 'warning':
-            header.classList.add('bg-warning');
-            title.innerText = 'Peringatan';
-            // soundId = 'sound-warning';
-            break;
-
-        default:
-            title.innerText = 'Informasi';
-    }
-
-    body.innerHTML = message;
-
-    modal.show();
-}
-
-
-  </script>
-<script>
-
-
-    $('#formTambahAnggota').on('submit', function(e){
-    e.preventDefault();
-
-    let id = $('#anggota_id').val();
-    let formData = new FormData(this);
-    let url = id ? "/anggota/" + id : "{{ route('anggota.store') }}";
-
-    if(id){
-        formData.append('_method', 'PUT');
-    }
-
-    // 🔵 TAMPILKAN LOADING LAYAR
-    $('#loadingOverlay').removeClass('d-none');
-
-    $.ajax({
-        url: url,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-
-        success: function(response){
-            if(response.success){
-                showAlert('success', id 
-                    ? 'Anggota berhasil diupdate'
-                    : 'Anggota berhasil ditambahkan'
-                );
-            }
-            if(!id){
-                        $('#formTambahAnggota')[0].reset();
-                        $('#imagePreview').attr('src', '').addClass('d-none');
+                        document.querySelector('#tabelJabatan tbody')
+                                .insertAdjacentHTML('beforeend', row);
                     }
-        },
 
-        error: function(xhr){
-            let errors = xhr.responseJSON.errors;
-            let html = '<div class="alert alert-danger"><ul>';
+                    updateRowNumbers(); 
+                    showAlert('success', 'Jabatan berhasil ditambah');
+                    resetForm();
+            }
 
-            $.each(errors, function(key, value){
-                html += '<li>' + value[0] + '</li>';
-            });
 
-            html += '</ul></div>';
-            $('#alert-container').html(html);
-        },
+            })
+            .catch(async error => {
 
-        complete: function(){
-            // 🟢 HILANGKAN LOADING
-            $('#loadingOverlay').addClass('d-none');
+                let response = await error.response?.json?.();
+
+                if(response && response.errors){
+
+                    let pesan = '';
+                        Object.values(response.errors).forEach(err => {
+                        pesan += err[0] + '<br>';
+                        });
+
+                    showAlert('danger', pesan);
+
+                } else {
+                    showAlert('danger', 'Terjadi kesalahan server!');
+                }
+
+        });
+
+        });
+
+    function updateRowNumbers() {
+        const rows = document.querySelectorAll('#tabelJabatan tbody tr');
+        rows.forEach((row, index) => {
+            row.children[0].innerText = index + 1;
+        });
+    }
+
+
+        // ================= EDIT =================
+        document.addEventListener('click', function(e){
+
+            if(e.target.classList.contains('editBtn')){
+
+                let id = e.target.dataset.id;
+
+                fetch(`${baseUrl}/${id}/edit`, {
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(res => res.json())
+                .then(data => {
+
+                    jabatanId.value = data.id;
+                    document.getElementById('namaJabatan').value = data.nama_jabatan;
+                    document.getElementById('deskripsi').value = data.deskripsi ?? '';
+                    document.getElementById('urutan').value = data.urutan ?? '';
+                    document.getElementById('is_active').value = data.is_active ? 'true' : 'false';
+
+                    btnSubmit.innerText = "Update Jabatan";
+                    btnSubmit.classList.remove('btn-primary');
+                    btnSubmit.classList.add('btn-success');
+                        updateRowNumbers();
+
+                });
+
+            }
+
+        });
+
+
+        // ================= DELETE =================
+        document.addEventListener('click', function(e){
+
+            if(e.target.classList.contains('deleteBtn')){
+
+                if(!confirm('Yakin hapus?')) return;
+
+                let id = e.target.dataset.id;
+
+                fetch(`${baseUrl}/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrf,
+                        'Accept': 'application/json'
+                    },
+                    body: new URLSearchParams({
+                        _method: 'DELETE'
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+
+                    if(data.success){
+                    document.getElementById(`row-${id}`).remove();
+                    updateRowNumbers();
+                    showAlert('success', 'Jabatan berhasil dihapus!');
+                }
+
+
+                });
+
+            }
+
+        });
+
+
+        // ================= RESET FORM =================
+        function resetForm(){
+            form.reset();
+            jabatanId.value = '';
+            btnSubmit.innerText = "Tambah Jabatan";
+            btnSubmit.classList.remove('btn-success');
+            btnSubmit.classList.add('btn-primary');
         }
-    });
 
-});
-</script>
+    function showAlert(type, message) {
 
-<script>
-$(document).ready(function(){
+        const modalEl = document.getElementById('globalAlertModal');
+        const modal = new bootstrap.Modal(modalEl);
 
-    $('#formTambahInventaris').on('submit', function(e){
+        const header = document.getElementById('modalHeader');
+        const title = document.getElementById('modalTitle');
+        const body = document.getElementById('modalMessage');
+
+        // Reset class warna
+        header.className = 'modal-header';
+
+        // let soundId = '';
+
+        switch(type) {
+            case 'success':
+                header.classList.add('.bg-light', 'text-white');
+                title.innerText = 'Berhasil';
+                // soundId = 'sound-success';
+                break;
+
+            case 'error':
+            case 'danger':
+                header.classList.add('bg-danger', 'text-white');
+                title.innerText = 'Gagal';
+                // soundId = 'sound-error';
+                break;
+
+            case 'warning':
+                header.classList.add('bg-warning');
+                title.innerText = 'Peringatan';
+                // soundId = 'sound-warning';
+                break;
+
+            default:
+                title.innerText = 'Informasi';
+        }
+
+        body.innerHTML = message;
+
+        modal.show();
+    }
+
+
+    </script>
+    <script>
+
+
+        $('#formTambahAnggota').on('submit', function(e){
         e.preventDefault();
 
-        let id = $('#inventaris_id').val();
+        let id = $('#anggota_id').val();
         let formData = new FormData(this);
-
-        let url = id ? "/inventaris/" + id : "{{ route('inventaris.store') }}";
+        let url = id ? "/anggota/" + id : "{{ route('anggota.store') }}";
 
         if(id){
-            formData.append('_method', 'PUT'); // spoof method
+            formData.append('_method', 'PUT');
         }
+
+        // 🔵 TAMPILKAN LOADING LAYAR
+        $('#loadingOverlay').removeClass('d-none');
 
         $.ajax({
             url: url,
@@ -522,23 +462,21 @@ $(document).ready(function(){
             data: formData,
             processData: false,
             contentType: false,
+
             success: function(response){
-
                 if(response.success){
-
                     showAlert('success', id 
-                        ? 'Inventaris berhasil diupdate'
-                        : 'Inventaris berhasil ditambah'
+                        ? 'Anggota berhasil diupdate'
+                        : 'Anggota berhasil ditambahkan'
                     );
-
-                    if(!id){
-                        $('#formTambahInventaris')[0].reset();
-                        $('#imagePreview').attr('src', '').addClass('d-none');
-                    }
                 }
+                if(!id){
+                            $('#formTambahAnggota')[0].reset();
+                            $('#imagePreview').attr('src', '').addClass('d-none');
+                        }
             },
-            error: function(xhr){
 
+            error: function(xhr){
                 let errors = xhr.responseJSON.errors;
                 let html = '<div class="alert alert-danger"><ul>';
 
@@ -547,15 +485,73 @@ $(document).ready(function(){
                 });
 
                 html += '</ul></div>';
-
                 $('#alert-container').html(html);
+            },
+
+            complete: function(){
+                // 🟢 HILANGKAN LOADING
+                $('#loadingOverlay').addClass('d-none');
             }
         });
 
     });
+    </script>
 
-});
-</script>
+    <script>
+    $(document).ready(function(){
+
+        $('#formTambahInventaris').on('submit', function(e){
+            e.preventDefault();
+
+            let id = $('#inventaris_id').val();
+            let formData = new FormData(this);
+
+            let url = id ? "/inventaris/" + id : "{{ route('inventaris.store') }}";
+
+            if(id){
+                formData.append('_method', 'PUT'); // spoof method
+            }
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response){
+
+                    if(response.success){
+
+                        showAlert('success', id 
+                            ? 'Inventaris berhasil diupdate'
+                            : 'Inventaris berhasil ditambah'
+                        );
+
+                        if(!id){
+                            $('#formTambahInventaris')[0].reset();
+                            $('#imagePreview').attr('src', '').addClass('d-none');
+                        }
+                    }
+                },
+                error: function(xhr){
+
+                    let errors = xhr.responseJSON.errors;
+                    let html = '<div class="alert alert-danger"><ul>';
+
+                    $.each(errors, function(key, value){
+                        html += '<li>' + value[0] + '</li>';
+                    });
+
+                    html += '</ul></div>';
+
+                    $('#alert-container').html(html);
+                }
+            });
+
+        });
+
+    });
+    </script>
     <script>
       document.getElementById('imageInput').addEventListener('change', function(event) {
 
@@ -592,84 +588,84 @@ $(document).ready(function(){
       
       </script>
 
-  <script>
-      document.addEventListener('click', function(e){
+    <script>
+        document.addEventListener('click', function(e){
 
-      if(e.target.classList.contains('deleteAnggota')){
-          let id = e.target.dataset.id;
-          if(!confirm('Apakah anda yakin akan menonaktifkan anggota tersebut?')) return;
-          fetch(`/anggota/${id}`, {
-              method: 'DELETE',
-              headers: {
-                  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                  'Accept': 'application/json'
-              }
-          })
-          .then(response => {
-            console.log(response.status); // 🔥 lihat statusnya
+        if(e.target.classList.contains('deleteAnggota')){
+            let id = e.target.dataset.id;
+            if(!confirm('Apakah anda yakin akan menonaktifkan anggota tersebut?')) return;
+            fetch(`/anggota/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log(response.status); // 🔥 lihat statusnya
+                    return response.json();
+                if(!response.ok){
+                    throw new Error('Gagal menghapus data');
+                }
+
                 return response.json();
-              if(!response.ok){
-                  throw new Error('Gagal menghapus data');
-              }
+            })
+            .then(data => {
 
-              return response.json();
-          })
-          .then(data => {
+                if(data.success){
 
-              if(data.success){
+                    // Hapus baris tabel
+                    const row = document.getElementById(`row-${id}`);
+                    if(row){
+                        row.remove();
+                    }
 
-                  // Hapus baris tabel
-                  const row = document.getElementById(`row-${id}`);
-                  if(row){
-                      row.remove();
-                  }
+                    updateRowNumbers();
 
-                  updateRowNumbers();
+                    showAlert('success', 'Data anggota berhasil dihapus.');
 
-                  showAlert('success', 'Data anggota berhasil dihapus.');
+                } else {
+                    showAlert('error', 'Gagal menghapus data.');
+                }
 
-              } else {
-                  showAlert('error', 'Gagal menghapus data.');
-              }
+            })
+            .catch(error => {
+                console.error(error);
+                showAlert('error', 'Terjadi kesalahan saat menghapus.');
+            });
 
-          })
-          .catch(error => {
-              console.error(error);
-              showAlert('error', 'Terjadi kesalahan saat menghapus.');
-          });
-
-      }
-
-  });
-
-
-  // Update nomor urut setelah delete
-  function updateRowNumbers() {
-      const rows = document.querySelectorAll('#tabelJabatan tbody tr');
-      rows.forEach((row, index) => {
-          row.children[0].innerText = index + 1;
-      });
-  }
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        const selectJabatan = document.querySelector('select[name="jabatan_id"]');
-        const inputNamaJabatan = document.getElementById('nama_jabatan');
-        console.log("nama_jabatan");
-        function updateNamaJabatan() {
-            const selectedOption = selectJabatan.options[selectJabatan.selectedIndex];
-            const nama = selectedOption.getAttribute('data-nama') || '';
-            inputNamaJabatan.value = nama;
         }
 
-        // Saat user ganti pilihan
-        selectJabatan.addEventListener('change', updateNamaJabatan);
-
-        // Saat halaman edit pertama kali load
-        updateNamaJabatan();
     });
-  </script>
+
+
+    // Update nomor urut setelah delete
+    function updateRowNumbers() {
+        const rows = document.querySelectorAll('#tabelJabatan tbody tr');
+        rows.forEach((row, index) => {
+            row.children[0].innerText = index + 1;
+        });
+    }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const selectJabatan = document.querySelector('select[name="jabatan_id"]');
+            const inputNamaJabatan = document.getElementById('nama_jabatan');
+            console.log("nama_jabatan");
+            function updateNamaJabatan() {
+                const selectedOption = selectJabatan.options[selectJabatan.selectedIndex];
+                const nama = selectedOption.getAttribute('data-nama') || '';
+                inputNamaJabatan.value = nama;
+            }
+
+            // Saat user ganti pilihan
+            selectJabatan.addEventListener('change', updateNamaJabatan);
+
+            // Saat halaman edit pertama kali load
+            updateNamaJabatan();
+        });
+    </script>
 
     <script>
         
@@ -736,156 +732,74 @@ $(document).ready(function(){
     </script>
 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const input = document.getElementById('imageInputMulti');
-    const previewContainer = document.getElementById('imagePreviewContainer');
-    const fileCountText = document.getElementById('fileCountText');
-
-    input.addEventListener('change', function () {
-
-        previewContainer.innerHTML = '';
-        fileCountText.textContent = '';
-
-        if (input.files.length > 0) {
-
-            fileCountText.textContent = input.files.length + ' file dipilih';
-
-            Array.from(input.files).forEach(file => {
-
-                if (!file.type.startsWith('image/')) {
-                    alert('File harus berupa gambar');
-                    input.value = '';
-                    previewContainer.innerHTML = '';
-                    fileCountText.textContent = '';
-                    return;
-                }
-
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-
-                    const col = document.createElement('div');
-                    col.classList.add('col-md-4', 'mb-3');
-
-                    col.innerHTML = `
-                        <div class="position-relative">
-                            <img src="${e.target.result}"
-                                class="img-thumbnail w-100"
-                                style="height:150px; object-fit:cover;">
-                        </div>
-                    `;
-
-                    previewContainer.appendChild(col);
-                };
-
-                reader.readAsDataURL(file);
-            });
-
-        } else {
-            fileCountText.textContent = 'Tidak ada file dipilih';
-        }
-    });
-
-});
-
-document.addEventListener('click', function(e){
-
-    if(e.target.classList.contains('remove-old')){
-
-        if(confirm('Hapus foto ini?')){
-
-            const previewItem = e.target.closest('.preview-item');
-
-            // Hapus seluruh preview
-            previewItem.remove();
-        }
-    }
-
-});
-</script>
-    <!-- <script>
         document.addEventListener('DOMContentLoaded', function () {
 
             const input = document.getElementById('imageInputMulti');
             const previewContainer = document.getElementById('imagePreviewContainer');
+            const fileCountText = document.getElementById('fileCountText');
 
-            let dt = new DataTransfer(); // penampung file dinamis
+            input.addEventListener('change', function () {
 
-            // Saat pilih file
-            input.addEventListener('change', function (e) {
+                previewContainer.innerHTML = '';
+                fileCountText.textContent = '';
 
-                Array.from(e.target.files).forEach(file => {
+                if (input.files.length > 0) {
 
-                    if (!file.type.startsWith('image/')) {
-                        alert('File harus berupa gambar');
-                        return;
-                    }
+                    fileCountText.textContent = input.files.length + ' file dipilih';
 
-                    dt.items.add(file);
-                    renderPreview(file);
-                });
+                    Array.from(input.files).forEach(file => {
 
-                input.files = dt.files; // update file input
-                input.value = ''; // reset supaya bisa pilih file sama lagi
-            });
+                        if (!file.type.startsWith('image/')) {
+                            alert('File harus berupa gambar');
+                            input.value = '';
+                            previewContainer.innerHTML = '';
+                            fileCountText.textContent = '';
+                            return;
+                        }
 
-            // Render preview
-            function renderPreview(file) {
+                        const reader = new FileReader();
 
-                const reader = new FileReader();
+                        reader.onload = function (e) {
 
-                reader.onload = function (e) {
+                            const col = document.createElement('div');
+                            col.classList.add('col-md-4', 'mb-3');
 
-                    const col = document.createElement('div');
-                    col.classList.add('col-md-4', 'mb-3', 'preview-item');
+                            col.innerHTML = `
+                                <div class="position-relative">
+                                    <img src="${e.target.result}"
+                                        class="img-thumbnail w-100"
+                                        style="height:150px; object-fit:cover;">
+                                </div>
+                            `;
 
-                    col.innerHTML = `
-                        <div class="position-relative">
-                            <img src="${e.target.result}"
-                                class="img-thumbnail w-100"
-                                style="height:150px; object-fit:cover;">
+                            previewContainer.appendChild(col);
+                        };
 
-                            <button type="button"
-                                class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 remove-new">
-                                ×
-                            </button>
-                        </div>
-                    `;
-
-                    previewContainer.appendChild(col);
-
-                    // tombol hapus file baru
-                    col.querySelector('.remove-new').addEventListener('click', function () {
-
-                        const index = Array.from(previewContainer.children).indexOf(col);
-
-                        dt.items.remove(index - countOldPhotos());
-                        input.files = dt.files;
-
-                        col.remove();
+                        reader.readAsDataURL(file);
                     });
-                };
 
-                reader.readAsDataURL(file);
-            }
-
-            // Hapus foto lama (edit mode)
-            previewContainer.addEventListener('click', function (e) {
-
-                if (e.target.classList.contains('remove-old')) {
-
-                    e.target.closest('.preview-item').remove();
+                } else {
+                    fileCountText.textContent = 'Tidak ada file dipilih';
                 }
             });
 
-            // Hitung jumlah foto lama
-            function countOldPhotos() {
-                return document.querySelectorAll('.old-photo').length;
+        });
+
+        document.addEventListener('click', function(e){
+
+            if(e.target.classList.contains('remove-old')){
+
+                if(confirm('Hapus foto ini?')){
+
+                    const previewItem = e.target.closest('.preview-item');
+
+                    // Hapus seluruh preview
+                    previewItem.remove();
+                }
             }
 
         });
-        </script> -->
+        </script>
 
         <script>
             function tambahBaris(){
@@ -896,6 +810,12 @@ document.addEventListener('click', function(e){
                             <option value="pemasukan">Pemasukan</option>
                             <option value="pengeluaran">Pengeluaran</option>
                         </select>
+                    </td>
+                    <td>
+                        <input type="date" class="form-control rounded-pill" name="tanggal[]" >
+                    </td> 
+                    <td>
+                        <input type="text" class="form-control rounded-pill" name="invoice[]">
                     </td>
                     <td>
                         <input type="text" name="uraian[]" class="form-control rounded-pill">
@@ -916,7 +836,65 @@ document.addEventListener('click', function(e){
             function hapusBaris(btn){
                 btn.closest('tr').remove();
             }
-            </script>
+        </script>
+    
+    <script>
+        $(document).on('click', '.btnEdit', function(){
+
+            $('#edit_id').val($(this).data('id'));
+            $('#edit_jenis').val($(this).data('jenis'));
+            $('#edit_tanggal').val($(this).data('tanggal'));
+            $('#edit_invoice').val($(this).data('invoice'));
+            $('#edit_jumlah').val($(this).data('jumlah'));
+
+            $('#modalEdit').modal('show');
+        });
+
+
+        $('#formEdit').submit(function(e){
+            e.preventDefault();
+
+            let id = $('#edit_id').val();
+
+            $.ajax({
+                url: '/keuangan/' + id,
+                type: 'PUT',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    jenis: $('#edit_jenis').val(),
+                    tanggal: $('#edit_tanggal').val(),
+                    invoice: $('#edit_invoice').val(),
+                    jumlah: $('#edit_jumlah').val()
+                },
+                success: function(response){
+                    if(response.success){
+
+                        let row = $('#row-' + response.data.id);
+
+                        // Update isi kolom
+                        row.find('td:eq(1)').text(response.data.jenis);
+                        row.find('td:eq(2)').text(response.data.tanggal);
+                        row.find('td:eq(3)').text(response.data.invoice);
+                        row.find('td:eq(4)').text(response.data.jumlah);
+
+                        // Update juga data-* di tombol edit
+                        let btn = row.find('.btnEdit');
+                        btn.data('jenis', response.data.jenis);
+                        btn.data('tanggal', $('#edit_tanggal').val());
+                        btn.data('invoice', response.data.invoice);
+                        btn.data('jumlah', $('#edit_jumlah').val());
+
+                        $('#modalEdit').modal('hide');
+
+                        showAlert('success', 'Transaksi berhasil diperbaharui');
+                    }
+                },
+                error: function(){
+                    alert('Gagal update data');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

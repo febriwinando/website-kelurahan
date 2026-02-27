@@ -22,8 +22,11 @@ Route::get('/daftar-anggota', [AnggotaController::class, 'list'])->name('list');
 
 Route::resource('/inventaris', InventarisController::class);
 Route::resource('/notulen', NotulenController::class);
-// Route::resource('/keuangan', KeuanganController::class);
-Route::get('/keuangan', [KeuanganController::class, 'index'])->name('keuangan.storeMultiple');
+
+Route::post('/keuangan/store-multiple', [KeuanganController::class, 'storeMultiple'])->name('keuangan.storeMultiple');
+Route::put('/keuangan/{keuangan}', [KeuanganController::class, 'update']);
+// Route::put('/keuangan/update-multiple', [KeuanganController::class, 'updateMultiple'])->name('keuangan.updateMultiple');
+Route::resource('/keuangan', KeuanganController::class);
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
