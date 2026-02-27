@@ -15,10 +15,9 @@ class Keuangan extends Model
         'kegiatan_id',
         'tanggal',
         'jenis', // pemasukan / pengeluaran
-        'nomor_bukti',
+        'invoice',
         'uraian',
         'jumlah',
-        'saldo',
         'dibuat_oleh',
         'diubah_oleh'
     ];

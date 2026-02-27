@@ -21,10 +21,9 @@ return new class extends Migration
 
             $table->date('tanggal');
             $table->enum('jenis', ['pemasukan', 'pengeluaran']);
-            $table->string('nomor_bukti')->nullable();
+            $table->string('invoice')->nullable();
             $table->text('uraian');
             $table->decimal('jumlah', 15, 2);
-            $table->decimal('saldo', 15, 2)->default(0);
 
             $table->foreignId('dibuat_oleh')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('diubah_oleh')->nullable()->constrained('users')->nullOnDelete();

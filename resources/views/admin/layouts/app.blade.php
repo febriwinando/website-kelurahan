@@ -118,7 +118,7 @@
             </li>
             {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/inventaris/create" aria-expanded="false">
+              <a class="sidebar-link" href="/keuangan" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/addfinancial.svg') }}">
                 </span>
@@ -886,6 +886,37 @@ document.addEventListener('click', function(e){
 
         });
         </script> -->
+
+        <script>
+            function tambahBaris(){
+                let row = `
+                <tr>
+                    <td>
+                        <select name="jenis[]" class="form-control rounded-pill">
+                            <option value="pemasukan">Pemasukan</option>
+                            <option value="pengeluaran">Pengeluaran</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" name="uraian[]" class="form-control rounded-pill">
+                    </td>
+                    <td>
+                        <input type="number" name="jumlah[]" class="form-control rounded-pill">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="hapusBaris(this)"><img src="{{ asset('storage/assets/svg/close20.svg') }}"> </button>
+                    </td>
+                </tr>
+                `;
+
+                document.querySelector('#transaksiTable tbody')
+                    .insertAdjacentHTML('beforeend', row);
+            }
+
+            function hapusBaris(btn){
+                btn.closest('tr').remove();
+            }
+            </script>
 </body>
 
 </html>
