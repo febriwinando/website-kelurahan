@@ -25,7 +25,6 @@ class Keuangan extends Model
     protected $casts = [
         'tanggal' => 'date',
         'jumlah' => 'decimal:2',
-        'saldo' => 'decimal:2',
     ];
 
     /*
