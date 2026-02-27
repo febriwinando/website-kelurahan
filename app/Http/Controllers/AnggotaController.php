@@ -16,10 +16,14 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        $anggotas = Anggota::with('jabatan')->latest()->get();
-        // $kecamatans = Kecamatan::with('kabupaten.provinsi')->get();
+        // $anggotas = Anggota::with('jabatan')->latest()->get();
         $kecamatans = Kabupaten::with('provinsi')->get();
-        $jabatans = Jabatan::get();
+        // $jabatans = Jabatan::get();
+        $jabatans = Jabatan::orderBy('urutan')->get();
+        $anggotas = Anggota::with('jabatan')
+                ->where('status', 'Aktif') // sesuaikan dengan field kamu
+                ->latest()
+                ->paginate(10);
         return view('admin.tambahanggota', compact('anggotas', 'kecamatans', 'jabatans'));
     }
 
@@ -47,7 +51,12 @@ class AnggotaController extends Controller
 
     public function list(){
         // $anggotas = Anggota::with('jabatan')->latest()->get();
-        $anggotas = Anggota::with('jabatan')->where('status', 'Aktif')->latest()->get();
+        // $anggotas = Anggota::with('jabatan')->where('status', 'Aktif')->latest()->get();
+
+        $anggotas = Anggota::with('jabatan')
+                ->where('status', 'Aktif') // sesuaikan dengan field kamu
+                ->latest()
+                ->paginate(10);
         return view('admin.daftaranggota', compact('anggotas'));
     
     }

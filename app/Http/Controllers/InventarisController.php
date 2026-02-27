@@ -10,7 +10,8 @@ class InventarisController extends Controller
 {
     public function index()
     {
-        $inventariss = Inventaris::latest()->get();
+        $inventariss = Inventaris::latest()
+                ->paginate(10);
 
         return view('admin.daftarinventaris', compact('inventariss'));
     }
@@ -18,7 +19,6 @@ class InventarisController extends Controller
     public function create()
     {
             $inventariss = Inventaris::latest()->get();
-
             return view('admin.tambahinventaris', compact('inventariss'));
     }
 

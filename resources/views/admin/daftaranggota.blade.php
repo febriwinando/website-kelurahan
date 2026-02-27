@@ -118,6 +118,7 @@
                                             </tbody>
 
                                         </table>
+                                        {{ $anggotas->links() }}
                                     </div>
                                 @endif
                             </div>

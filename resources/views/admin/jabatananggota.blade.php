@@ -127,7 +127,7 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nama</th>
-                                                    <th>Urutan</th>
+                                                    <th>Hierarki</th>
                                                     <th>Status</th>
                                                     <th>Aksi</th>
                                                 </tr>

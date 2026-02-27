@@ -16,6 +16,7 @@ class JabatanAnggotaTimPenggerakPKKController extends Controller
     public function index()
     {
         $jabatans = Jabatan::orderBy('urutan')->get();
+        
         return view('admin.jabatananggota', compact('jabatans'));
     }
 
