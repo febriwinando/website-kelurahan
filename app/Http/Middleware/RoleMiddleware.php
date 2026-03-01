@@ -14,22 +14,48 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-   public function handle(Request $request, Closure $next, ...$roles): Response
-    {
-        // pastikan sudah login
-        if (! auth()->check()) {
-            return redirect()->route('login');
-        }
+//    public function handle(Request $request, Closure $next, ...$roles): Response
+//     {
+//         // pastikan sudah login
+//         if (! auth()->check()) {
+//             return redirect()->route('login');
+//         }
 
-        // cek role user
-        $user = auth()->user();
+//         // cek role user
+//         $user = auth()->user();
 
-        // misal kolom di tabel users adalah level atau role
-        // contohnya: $user->level
-        if (! in_array($user->level, $roles)) {
-            abort(403, 'Unauthorized.');
-        }
+//         // misal kolom di tabel users adalah level atau role
+//         // contohnya: $user->level
+//         if (! in_array($user->level, $roles)) {
+//             abort(403, 'Unauthorized.');
+//         }
 
-        return $next($request);
+//         return $next($request);
+//     }
+
+    // public function handle(Request $request, Closure $next, $role): Response
+    // {
+    //     if (!auth()->check()) {
+    //         return redirect('/login');
+    //     }
+
+    //     if (auth()->user()->level !== $role) {
+    //         abort(403, 'Akses ditolak');
+    //     }
+
+    //     return $next($request);
+    // }
+
+    public function handle(Request $request, Closure $next, ...$roles)
+{
+    if (!auth()->check()) {
+        return redirect('/login');
     }
+
+    if (!in_array(auth()->user()->level, $roles)) {
+        abort(403, 'Akses ditolak');
+    }
+
+    return $next($request);
+}
 }

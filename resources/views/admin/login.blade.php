@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Halaman Login Whatsapp Aduan</title>
-  <link rel="shortcut icon" type="image/png" href="{{ asset('/assets/images/logos/logo.png') }}" />
+  <title>SIAP Bandarsono</title>
+  <link rel="shortcut icon" type="image/png" href="{{ asset('storage/assets/images/logos/siap.png') }}" />
   <link rel="stylesheet" href="{{ asset('storage/assets/css/styles.min.css') }}" />
 </head>
 
@@ -23,7 +23,7 @@
                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="{{ asset('storage/assets/images/logos/siap.png') }}" alt="" style="width:150px;">
                 </a>
-                {{-- <p class="text-center">Layanan Aduan Whatsapp Idaman</p> --}}
+                
                 <form method="POST" action="{{ route('login.post') }}">
                   @csrf
                   <div class="mb-3">

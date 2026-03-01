@@ -722,12 +722,11 @@
     </script>
 
     <script>
-        document.getElementById('pimpinanRapat').addEventListener('change', function() {
+        document.getElementById('anggota_id').addEventListener('change', function() {
 
             let selectedOption = this.options[this.selectedIndex];
             let nama = selectedOption.getAttribute('data-name');
-
-            document.getElementById('pimpinan_rapat_nama').value = nama;
+            document.getElementById('nama_anggota').value = nama;
         });
     </script>
 
@@ -894,6 +893,59 @@
                 }
             });
         });
+    </script>
+
+    <script>
+        document.addEventListener('click', function(e){
+
+            if(e.target.classList.contains('btnEdit')){
+
+                const btn = e.target;
+
+                const macam   = btn.dataset.macam;
+                const tanggal = btn.dataset.tanggal;
+                const nama    = btn.dataset.nama;
+                const hadir   = btn.dataset.hadir;
+
+                document.getElementById('detailMacam').innerText = macam;
+                document.getElementById('detailTanggal').innerText = tanggal;
+                document.getElementById('detailNama').innerText = nama;
+                document.getElementById('detailHadir').innerText = hadir;
+                $('#modalEdit').modal('show');
+            }
+
+            $('#formEditNotulen').submit(function(e){
+                e.preventDefault();
+
+                let id = $('#edit_id').val();
+
+                $.ajax({
+                    url: '/verifikasi/notulen/' + id,
+                    type: 'PUT',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response){
+
+                        $('#modalEdit').modal('hide');
+
+                        showAlert('success', response.message);
+
+                        // Optional: ubah tampilan tombol jadi "Terverifikasi"
+                        let row = $('#row-' + id);
+                        row.find('.status-col').html('<span class="badge bg-success">Terverifikasi</span>');
+                        row.find('.btnEdit').remove(); // hilangkan tombol verifikasi
+                    },
+                    error: function(){
+                        showAlert('danger', 'Gagal memverifikasi notulen');
+                    }
+                });
+            });
+            
+
+        });
+
+        
     </script>
 </body>
 

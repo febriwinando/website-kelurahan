@@ -23,12 +23,16 @@ class Notulen extends Model
         'tempat_disahkan',
         'foto_dokumentasi',
         'dibuat_oleh',
-        'diubah_oleh'
+        'diubah_oleh',
+        'status',
+        'diverifikasi_oleh',
+        'tanggal_verifikasi',
     ];
 
     protected $casts = [
         'tanggal' => 'date',
         'tanggal_disahkan' => 'date',
+        'tanggal_verifikasi' => 'date',
         'waktu' => 'datetime:H:i',
         'foto_dokumentasi' => 'array', 
     ];

@@ -111,8 +111,8 @@
                                             <h6>Uraian Jalannya Rapat</h6>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="pimpinanRapat" class="form-label">Pemimpin Rapat:</label>
-                                                    <select id="pimpinanRapat" name="pimpinan_rapat" class="selectpicker form-control" data-live-search="true" title="pilih pemimpin rapat">
+                                                    <label for="anggota_id" class="form-label">Pemimpin Rapat:</label>
+                                                    <select id="anggota_id" name="anggota_id" class="selectpicker form-control" data-live-search="true" title="pilih pemimpin rapat">
                                                         @foreach($anggotas as $anggota)
                                                             <option value="{{ $anggota->id }}" data-name="{{ $anggota->nama }}">
                                                                 {{ $anggota->nama }}
@@ -121,7 +121,7 @@
                                                     </select>
                                                 </div>
 
-                                                <input type="hidden" name="pimpinan_rapat_nama" id="pimpinan_rapat_nama"
+                                                <input type="text" name="nama_anggota" id="nama_anggota"
                                                     value="{{ $anggota->pimpinan_rapat ?? '' }}">
                                             </div>
                                             <div class="col-sm-6">

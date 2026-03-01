@@ -17,12 +17,11 @@ return new class extends Migration
             $table->date('tanggal');
             $table->time('waktu');
             $table->string('tempat');
-            $table->string('anggota_id')->nullable();
-            $table->foreignId('nama_anggota');
-            $table->string('pimpinan_rapat')->nullable();
+            $table->foreignId('anggota_id')->nullable();
+            $table->string('nama_anggota')->nullable();
+            $table->string('macam')->nullable();
             $table->integer('jumlah_diundang')->nullable();
             $table->integer('jumlah_hadir')->nullable();
-            $table->integer('jumlah_tidak_hadir')->nullable();
             $table->text('susunan_acara')->nullable();
             $table->text('keputusan')->nullable();
             $table->text('lain_lain')->nullable();
@@ -32,8 +31,11 @@ return new class extends Migration
             $table->string('tempat_disahkan')->nullable();
             $table->json('foto_dokumentasi')->nullable();
             // user tracking
+            $table->enum('status', ['terverifikasi', 'belum diverifikasi', 'verifikasi ditolak'])->default('belum diverifikasi');
             $table->unsignedBigInteger('dibuat_oleh')->nullable();
             $table->unsignedBigInteger('diubah_oleh')->nullable();
+            $table->foreignId('diverifikasi_oleh')->nullable();
+            $table->date('tanggal_verifikasi')->nullable();;
 
             $table->timestamps();
 

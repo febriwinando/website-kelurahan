@@ -94,6 +94,7 @@
                                                 <th>Tanggal/Waktu</th>
                                                 <th>Jumlah Undangan</th>
                                                 <th>Jumlah Hadir</th>
+                                                <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -102,19 +103,34 @@
                                         <tr id="row-{{ $notulen->id }}">
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $notulen->macam }}</td>
-                                            <td>{{ $notulen->pimpinan_rapat }}</td>
+                                            <td>{{ $notulen->nama_anggota }}</td>
                                             <td>{{ \Carbon\Carbon::parse($notulen->tanggal)->format('d-m-Y') }} - 
                                                 {{ \Carbon\Carbon::parse($notulen->waktu)->format('H:i') }}</td>
                                             <td>{{ $notulen->jumlah_diundang }}</td>
                                             <td>{{ $notulen->jumlah_hadir }}</td>
+                                            <td class="status-col">
+                                                {{ $notulen->status }}
+                                            </td>
                                             <td>
-                                                <a href="{{ route('notulen.edit', $notulen->id) }}" 
-                                                    class="btn btn-warning btn-sm">
-                                                    Edit
-                                                    </a>
+                                                    @role('administrator', 'user')
+                                                        <a href="{{ route('notulen.edit', $notulen->id) }}" 
+                                                        class="btn btn-warning btn-sm">
+                                                        Edit
+                                                        </a>
+                                                    @endrole
+                                                    @role('verifikator')
+                                                        <button 
+                                                            class="btn btn-warning btn-sm btnEdit"
+                                                            data-id="{{ $notulen->id }}"
+                                                            data-macam="{{ $notulen->macam }}"
+                                                            data-tanggal="{{ \Carbon\Carbon::parse($notulen->tanggal)->format('d-m-Y')}}"
+                                                            data-nama="{{ $notulen->nama_anggota }}"
+                                                            data-hadir="{{ $notulen->jumlah_hadir }}"
+                                                        >
+                                                            Verifikasi
+                                                        </button>
+                                                    @endrole
 
-                                                {{-- <button class="btn btn-warning btn-sm editinventaris" data-id="{{ $notulen->id }}">Edit</button> --}}
-                                                {{-- <button class="btn btn-danger btn-sm deleteInventaris" data-id="{{ $notulen->id }}">Nonaktifkan</button> --}}
                                             </td>
                                         </tr>
                                         @endforeach
@@ -127,6 +143,35 @@
 
                 </div>
                 
+            </div>
+            <div class="modal fade" id="modalEdit" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formEditNotulen">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="edit_id" name="id">
+                            <div class="modal-header">
+                                <h5>Verifikasi Notulen</h5>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="mb-2">
+                                    <h6 class="fw-light">Apakah anda yakin akan memverifikasi <span id="detailMacam"></span>? yang dilaksanakan pada <span id="detailTanggal"></span>, dipimpin oleh <span id="detailNama"></span> dengan jumlah peserta yang hadir sebanyak <span id="detailHadir"></span> orang</h6>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    Ya
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
             </div>
             {{-- @endif --}}
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>

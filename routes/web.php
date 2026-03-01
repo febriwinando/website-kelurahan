@@ -13,7 +13,6 @@ use App\Http\Controllers\KeuanganController;
 
 // Route::get('/', [BerandaController::class, 'index']);
 Route::get('/masuk', [AnggotaTimPenggerakPKKController::class, 'index']);
-
 Route::resource('/form-anggota', AnggotaTimPenggerakPKKController::class);
 Route::resource('/jabatan-anggota', JabatanAnggotaTimPenggerakPKKController::class);
 Route::resource('anggota', AnggotaController::class);
@@ -21,6 +20,9 @@ Route::resource('anggota', AnggotaController::class);
 Route::get('/daftar-anggota', [AnggotaController::class, 'list'])->name('list');
 
 Route::resource('/inventaris', InventarisController::class);
+
+Route::put('/verifikasi/notulen/{id}', [NotulenController::class, 'verifikasi'])->name('notulen.verifikasi');
+
 Route::resource('/notulen', NotulenController::class);
 
 Route::post('/keuangan/store-multiple', [KeuanganController::class, 'storeMultiple'])->name('keuangan.storeMultiple');
@@ -28,6 +30,10 @@ Route::put('/keuangan/{keuangan}', [KeuanganController::class, 'update']);
 // Route::put('/keuangan/update-multiple', [KeuanganController::class, 'updateMultiple'])->name('keuangan.updateMultiple');
 Route::resource('/keuangan', KeuanganController::class);
 
+Route::middleware(['auth', 'role:administrator,user'])->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');    
+});
+
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+

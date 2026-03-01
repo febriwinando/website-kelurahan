@@ -45,10 +45,10 @@ class NotulenController extends Controller
                 'waktu' => 'required',
                 'tempat' => 'required|string|max:255',
                 'macam' => 'nullable|string|max:255',
-                'pimpinan_rapat' => 'required|exists:anggotas,id',
+                'anggota_id' => 'required|exists:anggotas,id',
+                'nama_anggota' => 'nullable|string',
                 'jumlah_diundang' => 'nullable|integer|min:0',
                 'jumlah_hadir' => 'nullable|integer|min:0',
-                'jumlah_tidak_hadir' => 'nullable|integer|min:0',
                 'susunan_acara' => 'nullable|string',
                 'keputusan' => 'nullable|string',
                 'lain_lain' => 'nullable|string',
@@ -61,10 +61,10 @@ class NotulenController extends Controller
                 'waktu',
                 'tempat',
                 'macam',
-                'pimpinan_rapat',
+                'anggota_id',
+                'nama_anggota',
                 'jumlah_diundang',
                 'jumlah_hadir',
-                'jumlah_tidak_hadir',
                 'susunan_acara',
                 'keputusan',
                 'lain_lain',
@@ -204,7 +204,6 @@ class NotulenController extends Controller
                 'pimpinan_rapat_nama' => $request->pimpinan_rapat_nama,
                 'jumlah_diundang' => $request->jumlah_diundang,
                 'jumlah_hadir' => $request->jumlah_hadir,
-                'jumlah_tidak_hadir' => $request->jumlah_tidak_hadir,
                 'susunan_acara' => $request->susunan_acara,
                 'keputusan' => $request->keputusan,
                 'lain_lain' => $request->lain_lain,
@@ -222,6 +221,22 @@ class NotulenController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function verifikasi($id)
+    {
+        $notulen = Notulen::findOrFail($id);
+
+        $notulen->update([
+            'status' => 'terverifikasi',
+            'diverifikasi_oleh' => auth()->id(),
+            'tanggal_verifikasi' => now()
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Notulen berhasil diverifikasi'
+        ]);
     }
 
     /**
