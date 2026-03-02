@@ -18,7 +18,7 @@ class NotulenController extends Controller
     {
 
         // $notulens = Notulen::latest()->get();
-        $notulens = Notulen::with('anggota')->get();
+        $notulens = Notulen::with('anggota')->latest()->get();
         return view('admin.daftarnotulen', compact('notulens'));
     }
 

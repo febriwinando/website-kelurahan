@@ -911,54 +911,109 @@
     </script>
 
     <script>
-        document.addEventListener('click', function(e){
+        // Event buka modal
+document.addEventListener('click', function(e){
 
-            if(e.target.classList.contains('btnEdit')){
+    if(e.target.classList.contains('btnEdit')){
 
-                const btn = e.target;
+        const btn = e.target;
 
-                const macam   = btn.dataset.macam;
-                const tanggal = btn.dataset.tanggal;
-                const nama    = btn.dataset.nama;
-                const hadir   = btn.dataset.hadir;
+        const id      = btn.dataset.id;
+        const macam   = btn.dataset.macam;
+        const tanggal = btn.dataset.tanggal;
+        const nama    = btn.dataset.nama;
+        const hadir   = btn.dataset.hadir;
 
-                document.getElementById('detailMacam').innerText = macam;
-                document.getElementById('detailTanggal').innerText = tanggal;
-                document.getElementById('detailNama').innerText = nama;
-                document.getElementById('detailHadir').innerText = hadir;
-                $('#modalEdit').modal('show');
-            }
+        document.getElementById('edit_id').value = id;
+        document.getElementById('detailMacam').innerText = macam;
+        document.getElementById('detailTanggal').innerText = tanggal;
+        document.getElementById('detailNama').innerText = nama;
+        document.getElementById('detailHadir').innerText = hadir;
 
-            $('#formEditNotulen').submit(function(e){
-                e.preventDefault();
+        $('#modalEdit').modal('show');
+    }
 
-                let id = $('#edit_id').val();
+});
 
-                $.ajax({
-                    url: '/verifikasi/notulen/' + id,
-                    type: 'PUT',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response){
 
-                        $('#modalEdit').modal('hide');
+// Event submit AJAX (DI LUAR click listener)
+$('#formEditNotulen').submit(function(e){
+    e.preventDefault();
 
-                        showAlert('success', response.message);
+    let id = $('#edit_id').val();
 
-                        // Optional: ubah tampilan tombol jadi "Terverifikasi"
-                        let row = $('#row-' + id);
-                        row.find('.status-col').html('<span class="badge bg-success">Terverifikasi</span>');
-                        row.find('.btnEdit').remove(); // hilangkan tombol verifikasi
-                    },
-                    error: function(){
-                        showAlert('danger', 'Gagal memverifikasi notulen');
-                    }
-                });
-            });
+    $.ajax({
+        url: '/verifikasi/notulen/' + id,
+        type: 'PUT',
+        data: {
+            _token: '{{ csrf_token() }}'
+        },
+        success: function(response){
+
+            $('#modalEdit').modal('hide');
+
+            let row = $('#row-' + id);
+            row.find('.status-col')
+               .html('<span class="badge bg-success">Terverifikasi</span>');
+            row.find('.btnEdit').remove();
+
+            showAlert('success', 'Notulen telah diverifikasi');
+        },
+        error: function(){
+            showAlert('danger', 'Gagal memverifikasi notulen');
+        }
+    });
+});
+        // document.addEventListener('click', function(e){
+
+        //     if(e.target.classList.contains('btnEdit')){
+
+        //         const btn = e.target;
+
+        //         const macam   = btn.dataset.macam;
+        //         const tanggal = btn.dataset.tanggal;
+        //         const nama    = btn.dataset.nama;
+        //         const hadir   = btn.dataset.hadir;
+
+        //         document.getElementById('detailMacam').innerText = macam;
+        //         document.getElementById('detailTanggal').innerText = tanggal;
+        //         document.getElementById('detailNama').innerText = nama;
+        //         document.getElementById('detailHadir').innerText = hadir;
+        //         $('#modalEdit').modal('show');
+        //     }
+
+        //     $('#formEditNotulen').submit(function(e){
+        //         e.preventDefault();
+
+        //         let id = $('#edit_id').val();
+
+        //         $.ajax({
+        //             url: '/verifikasi/notulen/' + id,
+        //             type: 'PUT',
+        //             data: {
+        //                 _token: '{{ csrf_token() }}'
+        //             },
+        //             success: function(response){
+
+        //                 $('#modalEdit').modal('hide');
+
+        //                 // Optional: ubah tampilan tombol jadi "Terverifikasi"
+        //                 let row = $('#row-' + id);
+        //                 row.find('.status-col').html('<span class="badge bg-success">Terverifikasi</span>');
+        //                 row.find('.btnEdit').remove();
+
+        //                 showAlert('success', 'Notulen telah diverifikasi');
+
+
+        //             },
+        //             error: function(){
+        //                 showAlert('danger', 'Gagal memverifikasi notulen');
+        //             }
+        //         });
+        //     });
             
 
-        });
+        // });
 
         
     </script>

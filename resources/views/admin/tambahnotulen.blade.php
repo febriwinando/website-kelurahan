@@ -121,7 +121,7 @@
                                                     </select>
                                                 </div>
 
-                                                <input type="text" name="nama_anggota" id="nama_anggota"
+                                                <input type="hidden" name="nama_anggota" id="nama_anggota"
                                                     value="{{ $anggota->pimpinan_rapat ?? '' }}">
                                             </div>
                                             <div class="col-sm-6">
@@ -136,12 +136,7 @@
                                                     <input type="number" class="form-control rounded-pill" name="jumlah_hadir" value="{{ $notulen->jumlah_hadir ?? '' }}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Jumlah Tidak Hadir</label>
-                                                    <input type="number" class="form-control rounded-pill" name="jumlah_tidak_hadir" value="{{ $notulen->jumlah_tidak_hadir ?? '' }}">
-                                                </div>
-                                            </div>
+                                            
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Susunan Acara</label>

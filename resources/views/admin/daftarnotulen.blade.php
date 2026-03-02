@@ -109,7 +109,19 @@
                                             <td>{{ $notulen->jumlah_diundang }}</td>
                                             <td>{{ $notulen->jumlah_hadir }}</td>
                                             <td class="status-col">
-                                                {{ $notulen->status }}
+                                                 @if($notulen->status == 'belum diverifikasi')
+                                                    <span class="badge bg-warning p-2 rounded">
+                                                        {{ $notulen->status }}
+                                                    </span>
+                                                @elseif($notulen->status == 'verifikasi ditolak')
+                                                    <span class="badge bg-danger p-2 rounded">
+                                                        {{ $notulen->status }}
+                                                    </span>
+                                                @else
+                                                    <span class="badge bg-success p-2 rounded">
+                                                        {{ $notulen->status }}
+                                                    </span>
+                                                @endif
                                             </td>
                                             <td>
                                                     @role('administrator', 'user')
@@ -119,6 +131,7 @@
                                                         </a>
                                                     @endrole
                                                     @role('verifikator')
+                                                        @if(!in_array($notulen->status, ['terverifikasi', 'verifikasi ditolak']))
                                                         <button 
                                                             class="btn btn-warning btn-sm btnEdit"
                                                             data-id="{{ $notulen->id }}"
@@ -129,6 +142,7 @@
                                                         >
                                                             Verifikasi
                                                         </button>
+                                                        @endif
                                                     @endrole
 
                                             </td>
