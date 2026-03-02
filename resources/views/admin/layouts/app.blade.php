@@ -42,6 +42,7 @@
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">TIM PKK</span>
             </li>
+            @role('administrator', 'user')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/anggota" aria-expanded="false">
                 <span>
@@ -51,6 +52,8 @@
                 <span class="hide-menu">Tambah Anggota Baru</span>
               </a>
             </li>
+            @endrole
+            @role('administrator', 'user', 'verifikator')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/daftar-anggota" aria-expanded="false">
                 <span>
@@ -60,6 +63,8 @@
                 <span class="hide-menu">Data Anggota</span>
               </a>
             </li>
+            @endrole
+            @role('administrator', 'user')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/jabatan-anggota" aria-expanded="false">
                 <span>
@@ -70,11 +75,13 @@
                 <span class="hide-menu">Struktur Jabatan</span>
               </a>
             </li>
+            @endrole
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Inventaris</span>
             </li>
-            {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
+
+            @role('administrator', 'user')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/inventaris/create" aria-expanded="false">
                 <span>
@@ -83,6 +90,8 @@
                 <span class="hide-menu">Tambah Barang</span>
               </a>
             </li>
+            @endrole
+            @role('administrator', 'user', 'verifikator')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/inventaris" aria-expanded="false">
                 <span>
@@ -91,11 +100,12 @@
                 <span class="hide-menu">Data Barang</span>
               </a>
             </li>
+            @endrole
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Notulen</span>
             </li>
-            {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
+            @role('administrator', 'user')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/notulen/create" aria-expanded="false">
                 <span>
@@ -104,6 +114,8 @@
                 <span class="hide-menu">Buat Catatan Rapat</span>
               </a>
             </li>
+            @endrole
+            @role('administrator', 'user', 'verifikator')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/notulen" aria-expanded="false">
                 <span>
@@ -112,11 +124,12 @@
                 <span class="hide-menu">Arsip Notulen</span>
               </a>
             </li>
+            @endrole
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Keuangan</span>
             </li>
-            {{-- @if(in_array(Auth::user()->level, ['administrator', 'admin_kota'])) --}}
+            @role('administrator', 'user')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/keuangan/create" aria-expanded="false">
                 <span>
@@ -125,6 +138,8 @@
                 <span class="hide-menu">Tambah Transaksi</span>
               </a>
             </li>
+            @endrole
+            @role('administrator', 'user', 'verifikator')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/keuangan" aria-expanded="false">
                 <span>
@@ -133,7 +148,7 @@
                 <span class="hide-menu">Laporan Keuangan</span>
               </a>
             </li>
-            
+            @endrole
           </ul>
 
         </nav>
