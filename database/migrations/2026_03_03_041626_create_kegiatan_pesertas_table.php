@@ -9,21 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   public function up(): void
+    public function up()
     {
-        Schema::create('provinsis', function (Blueprint $table) {
-            $table->string('id', 2)->primary();
-            $table->string('nama', 255);
+        Schema::create('kegiatans', function (Blueprint $table) {
+            $table->id();
+            $table->date('tanggal');
+            $table->string('uraian_kegiatan');
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('provinsis');
+        Schema::dropIfExists('kegiatan_pesertas');
     }
 };

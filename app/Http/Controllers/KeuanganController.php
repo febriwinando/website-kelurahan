@@ -127,7 +127,7 @@ class KeuanganController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Notulen berhasil diverifikasi'
+            'message' => 'Transaksi berhasil diverifikasi'
         ]);
     }
     /**

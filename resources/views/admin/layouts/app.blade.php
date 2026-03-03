@@ -992,7 +992,7 @@
         $('#formVerifikasi').submit(function(e){
             e.preventDefault();
 
-            let id = $('#edit_id').val();
+            let id = $('#verifikasi_id').val();
 
             $.ajax({
                 url: '/verifikasi/keuangan/' + id,
@@ -1002,7 +1002,7 @@
                 },
                 success: function(response){
 
-                    $('#modalEdit').modal('hide');
+                    $('#modalVerifikasi').modal('hide');
 
                     let row = $('#row-' + id);
                     row.find('.status-col')

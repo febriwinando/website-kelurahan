@@ -60,7 +60,7 @@
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-semibold mb-0">Anggota PKK</h5>
+                                        <h5 class="card-title fw-semibold mb-0">Data Barang</h5>
                                         <div>
                                             <a href="/inventaris/create" class="btn btn-info">Tambah Barang</a>
                                         </div>
@@ -72,14 +72,14 @@
                                 <span id="pelapor"></span>
                             </div>
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Daftar Anggota</h5>
+                                <h5 class="card-title fw-semibold card-header">Daftar Barang</h5>
                                 @if($inventariss->isEmpty())
                                     <h4 class="text-center mt-5 mb-5">
                                         Belum ada data inventaris ...
                                     </h4>
                                 @else
                                 <div class="card-body">
-                                    <table class="table mt-4 table-striped-columns" id="tabelJabatan">
+                                    <table class="table mt-4 table-responsive table-hover" id="tabelJabatan">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>No</th>

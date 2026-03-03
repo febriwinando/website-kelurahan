@@ -122,7 +122,7 @@
                                 <h5 class="card-title fw-semibold card-header">Daftar Jabatan</h5>
 
                                     <div class="card-body">
-                                        <table class="table mt-4 table-striped-columns" id="tabelJabatan">
+                                        <table class="table mt-4 table-hover" id="tabelJabatan">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>No</th>

@@ -19,7 +19,11 @@ class Keuangan extends Model
         'uraian',
         'jumlah',
         'dibuat_oleh',
-        'diubah_oleh'
+        'diubah_oleh',
+        'status',
+        'diverifikasi_oleh',
+        'tanggal_verifikasi',
+        'kode_verifikasi',
     ];
 
     protected $casts = [

@@ -85,7 +85,7 @@
                                     </h4>
                                 @else
                                 <div class="card-body">
-                                    <table class="table mt-4 table-striped-columns" id="tabelTransaksi">
+                                    <table class="table mt-4 table-responsive table-hover" id="tabelTransaksi">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>No</th>
@@ -93,9 +93,9 @@
                                                 <th>Tanggal</th>
                                                 <th>Invoice</th>
                                                 <th>Nilai (Rp)</th>
-                                                @role('administrator', 'user')
+                                                <th>Status</th>
                                                 <th>Aksi</th>
-                                                @endrole
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -106,6 +106,21 @@
                                             <td>{{ $keuangan->tanggal->isoFormat('dddd, D MMMM Y') }}</td>
                                             <td>{{ $keuangan->invoice }}</td>
                                             <td>Rp {{ number_format($keuangan->jumlah, 0, ',', '.') }}</td>
+                                            <td class="status-col">
+                                                 @if($keuangan->status == 'belum diverifikasi')
+                                                    <span class="badge bg-warning p-2 rounded">
+                                                        {{ $keuangan->status }}
+                                                    </span>
+                                                @elseif($keuangan->status == 'verifikasi ditolak')
+                                                    <span class="badge bg-danger p-2 rounded">
+                                                        {{ $keuangan->status }}
+                                                    </span>
+                                                @else
+                                                    <span class="badge bg-success p-2 rounded">
+                                                        {{ $keuangan->status }}
+                                                    </span>
+                                                @endif
+                                            </td>
                                             @role('administrator', 'user')
                                             <td>
                                                 <button 
