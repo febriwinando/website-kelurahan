@@ -153,10 +153,10 @@
             <div class="modal fade" id="modalVerifikasi" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="formEditNotulen">
+                        <form id="formVerifikasi">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" id="edit_id" name="id">
+                            <input type="hidden" id="verifikasi_id" name="id">
                             <div class="modal-header">
                                 <h5>Verifikasi Notulen</h5>
                             </div>

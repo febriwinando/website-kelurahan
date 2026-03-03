@@ -106,6 +106,30 @@ class KeuanganController extends Controller
             ]
         ]);
     }
+
+
+    public function verifikasi($id)
+    {
+        $notulen = Keuangan::findOrFail($id);
+        
+        $kode = hash_hmac(
+            'sha256',
+            $notulen->id . now(),
+            config('app.key')
+        );
+
+        $notulen->update([
+            'status' => 'terverifikasi',
+            'diverifikasi_oleh' => auth()->id(),
+            'tanggal_verifikasi' => now(),
+            'kode_verifikasi' => $kode
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Notulen berhasil diverifikasi'
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      */

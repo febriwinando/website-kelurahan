@@ -26,6 +26,8 @@ Route::put('/verifikasi/notulen/{id}', [NotulenController::class, 'verifikasi'])
 Route::resource('/notulen', NotulenController::class);
 
 Route::post('/keuangan/store-multiple', [KeuanganController::class, 'storeMultiple'])->name('keuangan.storeMultiple');
+
+Route::put('/verifikasi/keuangan/{id}', [KeuanganController::class, 'verifikasi'])->name('keuangan.verifikasi');
 Route::put('/keuangan/{keuangan}', [KeuanganController::class, 'update']);
 // Route::put('/keuangan/update-multiple', [KeuanganController::class, 'updateMultiple'])->name('keuangan.updateMultiple');
 Route::resource('/keuangan', KeuanganController::class);

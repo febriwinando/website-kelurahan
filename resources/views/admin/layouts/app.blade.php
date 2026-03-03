@@ -978,7 +978,7 @@
                 const invoice    = btn.dataset.invoice;
                 const jumlah   = btn.dataset.jumlah;
 
-                document.getElementById('edit_id').value = id;
+                document.getElementById('verifikasi_id').value = id;
                 document.getElementById('detaiJenis').innerText = jenis;
                 document.getElementById('detailTanggal').innerText = tanggal;
                 document.getElementById('detailInvoice').innerText = invoice;
@@ -989,6 +989,34 @@
 
         });
         
+        $('#formVerifikasi').submit(function(e){
+            e.preventDefault();
+
+            let id = $('#edit_id').val();
+
+            $.ajax({
+                url: '/verifikasi/keuangan/' + id,
+                type: 'PUT',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response){
+
+                    $('#modalEdit').modal('hide');
+
+                    let row = $('#row-' + id);
+                    row.find('.status-col')
+                    .html('<span class="badge bg-success">Terverifikasi</span>');
+                    row.find('.btnVerifikasi').remove();
+
+                    showAlert('success', 'Transaksi telah diverifikasi');
+                },
+                error: function(){
+                    showAlert('danger', 'Gagal memverifikasi transaksi');
+                }
+            });
+        });
+
     </script>
 </body>
 
