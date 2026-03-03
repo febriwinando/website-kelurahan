@@ -14,7 +14,7 @@ class KegiatanController extends Controller
     public function index()
     {
         $kegiatans = Kegiatan::with('pesertas')->latest()->paginate(10);
-        return view('kegiatan.index', compact('kegiatans'));
+        return view('admin.tambahkegiatan', compact('kegiatans'));
     }
 
     public function store(Request $request)
@@ -39,7 +39,8 @@ class KegiatanController extends Controller
      */
     public function create()
     {
-        //
+        $kegiatans = Kegiatan::with('pesertas')->latest()->paginate(10);
+        return view('admin.tambahkegiatan', compact('kegiatans'));
     }
 
 

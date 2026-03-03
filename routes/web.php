@@ -10,6 +10,7 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\NotulenController;
 use App\Http\Controllers\KeuanganController;
+use App\Http\Controllers\KegiatanController;
 
 // Route::get('/', [BerandaController::class, 'index']);
 Route::get('/masuk', [AnggotaTimPenggerakPKKController::class, 'index']);
@@ -32,9 +33,13 @@ Route::put('/keuangan/{keuangan}', [KeuanganController::class, 'update']);
 // Route::put('/keuangan/update-multiple', [KeuanganController::class, 'updateMultiple'])->name('keuangan.updateMultiple');
 Route::resource('/keuangan', KeuanganController::class);
 
+
+Route::resource('kegiatan', KegiatanController::class);
+
 Route::middleware(['auth', 'role:administrator,user'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');    
 });
+
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');

@@ -149,6 +149,31 @@
               </a>
             </li>
             @endrole
+            
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+              <span class="hide-menu">Kegiatan</span>
+            </li>
+            @role('administrator', 'user')
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/kegiatan/create" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/addkegiatan.svg') }}">
+                </span>
+                <span class="hide-menu">Tambah Kegiatan</span>
+              </a>
+            </li>
+            @endrole
+            @role('administrator', 'user', 'verifikator')
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/kegiatan" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/kegiatan.svg') }}">
+                </span>
+                <span class="hide-menu">Daftar Kegiatan</span>
+              </a>
+            </li>
+            @endrole
           </ul>
 
         </nav>
@@ -1017,6 +1042,33 @@
             });
         });
 
+    </script>
+
+    <script>
+        document.getElementById('addRow').addEventListener('click', function () {
+            let table = document.getElementById('pesertaTable').getElementsByTagName('tbody')[0];
+            let rowCount = table.rows.length + 1;
+
+            let row = table.insertRow();
+            row.innerHTML = `
+                <td class="nomor">${rowCount}</td>
+                <td><input type="text" name="nama[]" class="form-control" required></td>
+                <td><input type="text" name="jabatan[]" class="form-control"></td>
+                <td><button type="button" class="btn btn-danger btn-sm removeRow">X</button></td>
+            `;
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('removeRow')) {
+                e.target.closest('tr').remove();
+
+                // reset nomor
+                let rows = document.querySelectorAll('#pesertaTable tbody tr');
+                rows.forEach((row, index) => {
+                    row.querySelector('.nomor').innerText = index + 1;
+                });
+            }
+        });
     </script>
 </body>
 
