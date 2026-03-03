@@ -14,11 +14,6 @@ return new class extends Migration
         Schema::create('keuangans', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('kegiatan_id')
-                ->nullable()
-                ->constrained('kegiatans')
-                ->nullOnDelete();
-
             $table->date('tanggal');
             $table->enum('jenis', ['pemasukan', 'pengeluaran']);
             $table->string('invoice')->nullable();

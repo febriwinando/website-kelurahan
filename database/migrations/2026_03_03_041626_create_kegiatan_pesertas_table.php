@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->date('tanggal');
             $table->string('uraian_kegiatan');
+            $table->enum('status', ['terverifikasi', 'belum diverifikasi', 'verifikasi ditolak'])->default('belum diverifikasi');
+            $table->foreignId('diverifikasi_oleh')->nullable();
+            $table->date('tanggal_verifikasi')->nullable();;
+            $table->string('kode_verifikasi')->nullable()->unique();
             $table->timestamps();
         });
     }
