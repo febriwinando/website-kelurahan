@@ -85,8 +85,8 @@
                                     </h4>
                                 @else
                                 <div class="card-body">
-                                    <table class="table mt-4" id="tabelJabatan">
-                                        <thead>
+                                    <table class="table mt-4 table-striped-columns" id="tabelJabatan">
+                                        <thead class="table-light">
                                             <tr>
                                                 <th>No</th>
                                                 <th>Macam</th>
@@ -104,7 +104,7 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $notulen->macam }}</td>
                                             <td>{{ $notulen->nama_anggota }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($notulen->tanggal)->format('d-m-Y') }} - 
+                                            <td>{{ $keuangan->tanggal->isoFormat('dddd, D MMMM Y') }} - 
                                                 {{ \Carbon\Carbon::parse($notulen->waktu)->format('H:i') }}</td>
                                             <td>{{ $notulen->jumlah_diundang }}</td>
                                             <td>{{ $notulen->jumlah_hadir }}</td>

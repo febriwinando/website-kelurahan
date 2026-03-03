@@ -87,8 +87,8 @@
                                     </h4>
                                 @else
                                     <div class="card-body">
-                                        <table class="table mt-4" id="tabelJabatan">
-                                            <thead>
+                                        <table class="table mt-4 table-striped-columns" id="tabelJabatan">
+                                            <thead class="table-light">
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nama</th>

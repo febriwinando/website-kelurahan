@@ -36,7 +36,7 @@ return new class extends Migration
             $table->unsignedBigInteger('diubah_oleh')->nullable();
             $table->foreignId('diverifikasi_oleh')->nullable();
             $table->date('tanggal_verifikasi')->nullable();;
-
+            $table->string('kode_verifikasi')->nullable()->unique();
             $table->timestamps();
 
             // relasi ke users

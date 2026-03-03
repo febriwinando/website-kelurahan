@@ -8,6 +8,7 @@ use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class NotulenController extends Controller
 {
@@ -226,11 +227,23 @@ class NotulenController extends Controller
     public function verifikasi($id)
     {
         $notulen = Notulen::findOrFail($id);
+        
+        // $kode = hash('sha256',
+        //     $notulen->id .
+        //     now()->timestamp .
+        //     Str::random(10)
+        // );
+        $kode = hash_hmac(
+            'sha256',
+            $notulen->id . now(),
+            config('app.key')
+        );
 
         $notulen->update([
             'status' => 'terverifikasi',
             'diverifikasi_oleh' => auth()->id(),
-            'tanggal_verifikasi' => now()
+            'tanggal_verifikasi' => now(),
+            'kode_verifikasi' => $kode
         ]);
 
         return response()->json([

@@ -55,12 +55,6 @@
                     </ul>
                 @endif
             </div>
-
-            {{-- @if($messages->isEmpty())
-                <div class="alert alert-primary" role="alert">
-                    Tidak aduan yang diterima.
-                </div>
-            @else --}}
             <div class="row">
                 <div class="col-lg-12" id="informasi-container">
                             <div class="row" >
@@ -85,8 +79,8 @@
                                     </h4>
                                 @else
                                 <div class="card-body">
-                                    <table class="table mt-4" id="tabelJabatan">
-                                        <thead>
+                                    <table class="table mt-4 table-striped-columns" id="tabelJabatan">
+                                        <thead class="table-light">
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama</th>
@@ -97,7 +91,9 @@
                                                 <th>Kondisi</th>
                                                 <th>Status</th>
                                                 <th>Keterangan</th>
+                                                @role('administrator', 'user')
                                                 <th>Aksi</th>
+                                                @endrole
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -106,21 +102,22 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $inventaris->nama_barang }}</td>
                                             <td>{{ $inventaris->diterima_dari }}</td>
-                                            <td>{{ $inventaris->tanggal_penerimaan }}</td>
+                                            <td>{{ $inventaris->tanggal_penerimaan->isoFormat('dddd, D MMMM Y') }}</td>
                                             <td>{{ $inventaris->jumlah }}</td>
                                             <td>{{ $inventaris->tempat_penyimpanan }}</td>
                                             <td>{{ $inventaris->kondisi }}</td>
                                             <td>{{ $inventaris->status }}</td>
                                             <td>{{ $inventaris->keterangan }}</td>
-                                            <td>
-                                                <a href="{{ route('inventaris.edit', $inventaris->id) }}" 
-                                                    class="btn btn-warning btn-sm">
-                                                    Edit
-                                                    </a>
-
-                                                {{-- <button class="btn btn-warning btn-sm editinventaris" data-id="{{ $inventaris->id }}">Edit</button> --}}
-                                                {{-- <button class="btn btn-danger btn-sm deleteInventaris" data-id="{{ $inventaris->id }}">Nonaktifkan</button> --}}
-                                            </td>
+                                            
+                                            @role('administrator', 'user')
+                                                <td>
+                                                    <a href="{{ route('inventaris.edit', $inventaris->id) }}" 
+                                                        class="btn btn-warning btn-sm">
+                                                        Edit
+                                                        </a>
+                                                </td>
+                                            @endrole
+                                            
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -133,7 +130,7 @@
                 </div>
 
             </div>
-            {{-- @endif --}}
+            
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>
 
         @endsection

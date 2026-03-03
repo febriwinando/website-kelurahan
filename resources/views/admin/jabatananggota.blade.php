@@ -122,8 +122,8 @@
                                 <h5 class="card-title fw-semibold card-header">Daftar Jabatan</h5>
 
                                     <div class="card-body">
-                                        <table class="table mt-4" id="tabelJabatan">
-                                            <thead>
+                                        <table class="table mt-4 table-striped-columns" id="tabelJabatan">
+                                            <thead class="table-light">
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nama</th>

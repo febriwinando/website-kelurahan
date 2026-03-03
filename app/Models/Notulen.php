@@ -27,6 +27,7 @@ class Notulen extends Model
         'status',
         'diverifikasi_oleh',
         'tanggal_verifikasi',
+        'kode_verifikasi',
     ];
 
     protected $casts = [

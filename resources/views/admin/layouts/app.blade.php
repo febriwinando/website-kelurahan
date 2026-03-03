@@ -912,109 +912,82 @@
 
     <script>
         // Event buka modal
-document.addEventListener('click', function(e){
+        document.addEventListener('click', function(e){
 
-    if(e.target.classList.contains('btnEdit')){
+            if(e.target.classList.contains('btnEdit')){
 
-        const btn = e.target;
+                const btn = e.target;
 
-        const id      = btn.dataset.id;
-        const macam   = btn.dataset.macam;
-        const tanggal = btn.dataset.tanggal;
-        const nama    = btn.dataset.nama;
-        const hadir   = btn.dataset.hadir;
+                const id      = btn.dataset.id;
+                const macam   = btn.dataset.macam;
+                const tanggal = btn.dataset.tanggal;
+                const nama    = btn.dataset.nama;
+                const hadir   = btn.dataset.hadir;
 
-        document.getElementById('edit_id').value = id;
-        document.getElementById('detailMacam').innerText = macam;
-        document.getElementById('detailTanggal').innerText = tanggal;
-        document.getElementById('detailNama').innerText = nama;
-        document.getElementById('detailHadir').innerText = hadir;
+                document.getElementById('edit_id').value = id;
+                document.getElementById('detailMacam').innerText = macam;
+                document.getElementById('detailTanggal').innerText = tanggal;
+                document.getElementById('detailNama').innerText = nama;
+                document.getElementById('detailHadir').innerText = hadir;
 
-        $('#modalEdit').modal('show');
-    }
+                $('#modalEdit').modal('show');
+            }
 
-});
-
-
-// Event submit AJAX (DI LUAR click listener)
-$('#formEditNotulen').submit(function(e){
-    e.preventDefault();
-
-    let id = $('#edit_id').val();
-
-    $.ajax({
-        url: '/verifikasi/notulen/' + id,
-        type: 'PUT',
-        data: {
-            _token: '{{ csrf_token() }}'
-        },
-        success: function(response){
-
-            $('#modalEdit').modal('hide');
-
-            let row = $('#row-' + id);
-            row.find('.status-col')
-               .html('<span class="badge bg-success">Terverifikasi</span>');
-            row.find('.btnEdit').remove();
-
-            showAlert('success', 'Notulen telah diverifikasi');
-        },
-        error: function(){
-            showAlert('danger', 'Gagal memverifikasi notulen');
-        }
-    });
-});
-        // document.addEventListener('click', function(e){
-
-        //     if(e.target.classList.contains('btnEdit')){
-
-        //         const btn = e.target;
-
-        //         const macam   = btn.dataset.macam;
-        //         const tanggal = btn.dataset.tanggal;
-        //         const nama    = btn.dataset.nama;
-        //         const hadir   = btn.dataset.hadir;
-
-        //         document.getElementById('detailMacam').innerText = macam;
-        //         document.getElementById('detailTanggal').innerText = tanggal;
-        //         document.getElementById('detailNama').innerText = nama;
-        //         document.getElementById('detailHadir').innerText = hadir;
-        //         $('#modalEdit').modal('show');
-        //     }
-
-        //     $('#formEditNotulen').submit(function(e){
-        //         e.preventDefault();
-
-        //         let id = $('#edit_id').val();
-
-        //         $.ajax({
-        //             url: '/verifikasi/notulen/' + id,
-        //             type: 'PUT',
-        //             data: {
-        //                 _token: '{{ csrf_token() }}'
-        //             },
-        //             success: function(response){
-
-        //                 $('#modalEdit').modal('hide');
-
-        //                 // Optional: ubah tampilan tombol jadi "Terverifikasi"
-        //                 let row = $('#row-' + id);
-        //                 row.find('.status-col').html('<span class="badge bg-success">Terverifikasi</span>');
-        //                 row.find('.btnEdit').remove();
-
-        //                 showAlert('success', 'Notulen telah diverifikasi');
+        });
 
 
-        //             },
-        //             error: function(){
-        //                 showAlert('danger', 'Gagal memverifikasi notulen');
-        //             }
-        //         });
-        //     });
-            
+        // Event submit AJAX (DI LUAR click listener)
+        $('#formEditNotulen').submit(function(e){
+            e.preventDefault();
 
-        // });
+            let id = $('#edit_id').val();
 
+            $.ajax({
+                url: '/verifikasi/notulen/' + id,
+                type: 'PUT',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response){
+
+                    $('#modalEdit').modal('hide');
+
+                    let row = $('#row-' + id);
+                    row.find('.status-col')
+                    .html('<span class="badge bg-success">Terverifikasi</span>');
+                    row.find('.btnEdit').remove();
+
+                    showAlert('success', 'Notulen telah diverifikasi');
+                },
+                error: function(){
+                    showAlert('danger', 'Gagal memverifikasi notulen');
+                }
+            });
+        });
+
+
+        document.addEventListener('click', function(e){
+
+            if(e.target.classList.contains('btnVerifikasi')){
+
+                const btn = e.target;
+
+                const id      = btn.dataset.id;
+                const jenis   = btn.dataset.jenis;
+                const tanggal = btn.dataset.tanggal;
+                const invoice    = btn.dataset.invoice;
+                const jumlah   = btn.dataset.jumlah;
+
+                document.getElementById('edit_id').value = id;
+                document.getElementById('detaiJenis').innerText = jenis;
+                document.getElementById('detailTanggal').innerText = tanggal;
+                document.getElementById('detailInvoice').innerText = invoice;
+                document.getElementById('detailJumlah').innerText = jumlah;
+
+                $('#modalVerifikasi').modal('show');
+            }
+
+        });
         
     </script>
 </body>

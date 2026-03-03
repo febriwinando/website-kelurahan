@@ -24,10 +24,11 @@ return new class extends Migration
             $table->string('invoice')->nullable();
             $table->text('uraian');
             $table->decimal('jumlah', 15, 2);
-
             $table->foreignId('dibuat_oleh')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('diubah_oleh')->nullable()->constrained('users')->nullOnDelete();
-
+            $table->foreignId('diverifikasi_oleh')->nullable();
+            $table->date('tanggal_verifikasi')->nullable();;
+            $table->string('kode_verifikasi')->nullable()->unique();
             $table->timestamps();
         });
     }

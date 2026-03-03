@@ -85,15 +85,17 @@
                                     </h4>
                                 @else
                                 <div class="card-body">
-                                    <table class="table mt-4" id="tabelTransaksi">
-                                        <thead>
+                                    <table class="table mt-4 table-striped-columns" id="tabelTransaksi">
+                                        <thead class="table-light">
                                             <tr>
                                                 <th>No</th>
                                                 <th>Transaksi</th>
                                                 <th>Tanggal</th>
                                                 <th>Invoice</th>
                                                 <th>Nilai (Rp)</th>
+                                                @role('administrator', 'user')
                                                 <th>Aksi</th>
+                                                @endrole
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -101,9 +103,10 @@
                                         <tr id="row-{{ $keuangan->id }}">
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $keuangan->jenis }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($keuangan->tanggal)->format('d-m-Y') }}</td>
+                                            <td>{{ $keuangan->tanggal->isoFormat('dddd, D MMMM Y') }}</td>
                                             <td>{{ $keuangan->invoice }}</td>
                                             <td>Rp {{ number_format($keuangan->jumlah, 0, ',', '.') }}</td>
+                                            @role('administrator', 'user')
                                             <td>
                                                 <button 
                                                         class="btn btn-warning btn-sm btnEdit"
@@ -115,8 +118,25 @@
                                                     >
                                                         Edit
                                                     </button>
-                                                {{-- <button class="btn btn-danger btn-sm deleteInventaris" data-id="{{ $keuangan->id }}">Nonaktifkan</button> --}}
                                             </td>
+                                            @endrole
+                                            
+                                            @role('verifikator')
+                                            <td>
+                                                @if(!in_array($keuangan->status, ['terverifikasi', 'verifikasi ditolak']))
+                                                    <button 
+                                                        class="btn btn-warning btn-sm btnVerifikasi"
+                                                        data-id="{{ $keuangan->id }}"
+                                                        data-jenis="{{ $keuangan->jenis }}"
+                                                        data-tanggal="{{ $keuangan->tanggal->isoFormat('dddd, D MMMM Y') }}"
+                                                        data-invoice="{{ $keuangan->invoice }}"
+                                                        data-jumlah="Rp {{ number_format($keuangan->jumlah, 0, ',', '.') }}"
+                                                    >
+                                                        Verifikasi
+                                                    </button>
+                                                @endif
+                                            </td>
+                                            @endrole
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -129,6 +149,37 @@
                 </div>
                 
             </div>
+
+            <div class="modal fade" id="modalVerifikasi" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formEditNotulen">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="edit_id" name="id">
+                            <div class="modal-header">
+                                <h5>Verifikasi Notulen</h5>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="mb-2">
+                                    <h6 class="fw-light">Apakah anda yakin akan memverifikasi <span class="fw-semibold" id="detaiJenis"></span> tersebut? yang dilaksanakan pada <span class="fw-semibold" id="detailTanggal"></span>, Nomor Invoice: <span class="fw-semibold" id="detailInvoice"></span> sebesar: <span class="fw-semibold" id="detailJumlah"></span></h6>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    Ya
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal fade" id="modalEdit" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -166,9 +217,7 @@
                                     <label>Jumlah</label>
                                     <input type="number" id="edit_jumlah" class="form-control">
                                 </div>
-
                             </div>
-
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">
                                     Simpan
