@@ -161,4 +161,25 @@ class KegiatanController extends Controller
             'message' => 'Peserta berhasil dihapus'
         ]);
     }
+
+    public function storeTambah(Request $request)
+    {
+        $request->validate([
+            'kegiatan_id' => 'required|exists:kegiatans,id',
+            'nama' => 'required|string',
+            'jabatan' => 'nullable|string'
+        ]);
+
+        $peserta = KegiatanPeserta::create([
+            'kegiatan_id' => $request->kegiatan_id,
+            'nama' => $request->nama,
+            'jabatan' => $request->jabatan
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Peserta berhasil ditambahkan',
+            'data' => $peserta
+        ]);
+    }
 }

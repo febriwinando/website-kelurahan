@@ -40,7 +40,7 @@ class KeuanganController extends Controller
             $tanggal = $request->tanggal[$i];
 
             Keuangan::create([
-                'kegiatan_id' => $request->kegiatan_id,
+                
                 'tanggal' => $tanggal,
                 'jenis' => $jenis,
                 'invoice' => $invoice,

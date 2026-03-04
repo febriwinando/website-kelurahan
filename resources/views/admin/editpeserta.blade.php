@@ -64,19 +64,23 @@
                                         <div>
                                             <a href="/kegiatan/create" class="btn btn-info">Tambah Kegiatan</a>
                                             <a href="/kegiatan" class="btn btn-info">Daftar Kegiatan</a>
-
+                                            <button class="btn btn-success" id="btnTambahPeserta">
+                                                + Tambah Peserta
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="card-text mb-3 fs-5 mt-2">
+                            <!-- <div class="card-text mb-3 fs-5 mt-2">
                                 <span id="pelapor"></span>
-                            </div>
+                            </div> -->
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Daftar Peserta</h5>
+                                <h5 class="card-title fw-semibold card-header">Daftar Peserta 
+                                    
+                                </h5>
                                 <div class="card-body">
-                                    <table class="table mb-0 table-responsive table-hover">
+                                    <table class="table table-responsive table-hover">
                                         <thead class="table-light">
                                             <tr>
                                                 <th width="5%">No</th>
@@ -155,6 +159,120 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="modalTambahPeserta">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formTambahPeserta">
+                            @csrf
+                            <input type="hidden" id="kegiatan_id" value="{{ $kegiatan->id }}">
+
+                            <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title">Tambah Peserta</h5>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label>Nama</label>
+                                    <input type="text" id="tambah_nama" class="form-control" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Jabatan</label>
+                                    <input type="text" id="tambah_jabatan" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-success" type="submit">
+                                    Simpan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+            document.getElementById('btnTambahPeserta')
+            .addEventListener('click', function(){
+                new bootstrap.Modal(
+                    document.getElementById('modalTambahPeserta')
+                ).show();
+            });
+            </script>
+
+            <script>
+                document.getElementById('formTambahPeserta')
+                .addEventListener('submit', function(e){
+
+                    e.preventDefault();
+
+                    fetch(`/peserta`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            kegiatan_id: document.getElementById('kegiatan_id').value,
+                            nama: document.getElementById('tambah_nama').value,
+                            jabatan: document.getElementById('tambah_jabatan').value
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+
+                        if(data.status === 'success'){
+
+                            let peserta = data.data;
+                            let tbody = document.querySelector('table tbody');
+
+                            let nomor = tbody.children.length + 1;
+
+                            let newRow = `
+                                <tr id="row-${peserta.id}">
+                                    <td>${nomor}</td>
+                                    <td class="nama">${peserta.nama}</td>
+                                    <td class="jabatan">${peserta.jabatan ?? ''}</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm btnEditPeserta"
+                                            data-id="${peserta.id}"
+                                            data-nama="${peserta.nama}"
+                                            data-jabatan="${peserta.jabatan ?? ''}">
+                                            Edit
+                                        </button>
+
+                                        <button class="btn btn-danger btn-sm btnHapusPeserta"
+                                            data-id="${peserta.id}">
+                                            Hapus
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
+
+                            tbody.insertAdjacentHTML('beforeend', newRow);
+
+                            showAlert('success', data.message);
+
+                            // Reset form
+                            document.getElementById('formTambahPeserta').reset();
+
+                            bootstrap.Modal.getInstance(
+                                document.getElementById('modalTambahPeserta')
+                            ).hide();
+
+                        } else {
+                            showAlert('error', data.message);
+                        }
+
+                    })
+                    .catch(() => {
+                        showAlert('error', 'Terjadi kesalahan server');
+                    });
+
+                });
+            </script>
 
             <script>
             document.addEventListener('click', function(e){
