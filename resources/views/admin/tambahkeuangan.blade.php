@@ -99,7 +99,7 @@
                                                         <input type="number" name="jumlah[]" class="form-control rounded-pill"> 
                                                     </td> 
                                                     <td> 
-                                                            <button type="button" class="btn btn-danger" onclick="hapusBaris(this)">
+                                                            <button type="button" class="btn btn-danger btn-sm" onclick="hapusBaris(this)">
                                                                 <img src="{{ asset('storage/assets/svg/close20.svg') }}">     
                                                             </button> 
                                                     </td> 

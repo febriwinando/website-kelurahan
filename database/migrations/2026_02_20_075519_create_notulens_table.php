@@ -31,9 +31,9 @@ return new class extends Migration
             $table->string('tempat_disahkan')->nullable();
             $table->json('foto_dokumentasi')->nullable();
             // user tracking
-            $table->enum('status', ['terverifikasi', 'belum diverifikasi', 'verifikasi ditolak'])->default('belum diverifikasi');
             $table->unsignedBigInteger('dibuat_oleh')->nullable();
             $table->unsignedBigInteger('diubah_oleh')->nullable();
+            $table->enum('status', ['terverifikasi', 'belum diverifikasi', 'verifikasi ditolak'])->default('belum diverifikasi');
             $table->foreignId('diverifikasi_oleh')->nullable();
             $table->date('tanggal_verifikasi')->nullable();;
             $table->string('kode_verifikasi')->nullable()->unique();

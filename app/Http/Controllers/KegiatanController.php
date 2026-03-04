@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KegiatanController extends Controller
 {
@@ -19,20 +20,62 @@ class KegiatanController extends Controller
 
     public function store(Request $request)
     {
-        $kegiatan = Kegiatan::create([
-            'tanggal' => $request->tanggal,
-            'uraian_kegiatan' => $request->uraian_kegiatan
+        $request->validate([
+            'tanggal' => 'required|date',
+            'uraian_kegiatan' => 'required',
+            'nama' => 'required|array|min:1',
+            'nama.*' => 'required|string'
         ]);
 
-        foreach ($request->nama as $key => $nama) {
-            $kegiatan->pesertas()->create([
-                'nama' => $nama,
-                'jabatan' => $request->jabatan[$key] ?? null
-            ]);
-        }
+        DB::beginTransaction();
 
-        return redirect()->back()->with('success', 'Kegiatan berhasil disimpan');
+        try {
+
+            $kegiatan = Kegiatan::create([
+                'tanggal' => $request->tanggal,
+                'uraian_kegiatan' => $request->uraian_kegiatan
+            ]);
+
+            foreach ($request->nama as $key => $nama) {
+                $kegiatan->pesertas()->create([
+                    'nama' => $nama,
+                    'jabatan' => $request->jabatan[$key] ?? null
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Kegiatan berhasil disimpan'
+            ]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan: '.$e->getMessage()
+            ], 500);
+        }
     }
+    // public function store(Request $request)
+    // {
+    //     $kegiatan = Kegiatan::create([
+    //         'tanggal' => $request->tanggal,
+    //         'uraian_kegiatan' => $request->uraian_kegiatan
+    //     ]);
+
+    //     foreach ($request->nama as $key => $nama) {
+    //         $kegiatan->pesertas()->create([
+    //             'nama' => $nama,
+    //             'jabatan' => $request->jabatan[$key] ?? null
+    //         ]);
+    //     }
+
+    //     return redirect()->back()->with('success', 'Kegiatan berhasil disimpan');
+    // }
 
     /**
      * Show the form for creating a new resource.

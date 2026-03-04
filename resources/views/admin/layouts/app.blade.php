@@ -450,22 +450,19 @@
 
         switch(type) {
             case 'success':
-                header.classList.add('.bg-light', 'text-white');
+                header.classList.add('bg-success', 'text-white');
                 title.innerText = 'Berhasil';
-                // soundId = 'sound-success';
                 break;
 
             case 'error':
             case 'danger':
                 header.classList.add('bg-danger', 'text-white');
                 title.innerText = 'Gagal';
-                // soundId = 'sound-error';
                 break;
 
             case 'warning':
                 header.classList.add('bg-warning');
                 title.innerText = 'Peringatan';
-                // soundId = 'sound-warning';
                 break;
 
             default:
@@ -1054,7 +1051,10 @@
                 <td class="nomor">${rowCount}</td>
                 <td><input type="text" name="nama[]" class="form-control" required></td>
                 <td><input type="text" name="jabatan[]" class="form-control"></td>
-                <td><button type="button" class="btn btn-danger btn-sm removeRow">X</button></td>
+                <td><button type="button" class="btn btn-danger btn-sm removeRow">
+                    <img src="{{ asset('storage/assets/svg/close20.svg') }}">     
+                    </button> 
+                </td>
             `;
         });
 
@@ -1068,6 +1068,54 @@
                     row.querySelector('.nomor').innerText = index + 1;
                 });
             }
+        });
+    </script>
+    <script>
+        document.getElementById('formKegiatan').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let form = this;
+            let formData = new FormData(form);
+
+            fetch("{{ route('kegiatan.store') }}", {
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.status === 'success') {
+
+                    showAlert('success', data.message);
+
+                    form.reset();
+
+                    // Reset peserta table ke 1 baris
+                    let tbody = document.querySelector('#pesertaTable tbody');
+                    tbody.innerHTML = `
+                        <tr>
+                            <td class="nomor">1</td>
+                            <td><input type="text" name="nama[]" class="form-control" required></td>
+                            <td><input type="text" name="jabatan[]" class="form-control"></td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm removeRow">
+                                    <img src="{{ asset('storage/assets/svg/close20.svg') }}">
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+
+                } else {
+                    showAlert('error', data.message);
+                }
+
+            })
+            .catch(error => {
+                showAlert('error', 'Terjadi kesalahan server');
+            });
         });
     </script>
 </body>

@@ -47,32 +47,29 @@
             </div>
             <div class="row">
                 <div class="col-lg-12" id="informasi-container">
-                {{-- <div id="alert-container"></div> --}}
-
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h5 class="card-title fw-semibold mb-0">Tambah Inventaris</h5>
+                                        <h5 class="card-title fw-semibold mb-0">Tambah Kegiatan</h5>
                                         <div>
-                                            <a href="/keuangan" class="btn btn-info">Laporan Keuangan</a>
+                                            <a href="/keuangan" class="btn btn-info">Daftar Kegiatan</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Form Inventaris</h5>
+                                <h5 class="card-title fw-semibold card-header">Form Kehadiran</h5>
                                 <div class="card-body">
-                                    <form action="{{ route('kegiatan.store') }}" method="POST">
+                                    <form action="{{ route('kegiatan.store') }}" method="POST" id="formKegiatan">
                                             @csrf
-
                                             <div class="mb-3">
-                                                <label>Tanggal</label>
+                                                <label class="form-label">Tanggal</label>
                                                 <input type="date" name="tanggal" class="form-control" required>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label>Uraian Kegiatan</label>
+                                                <label class="form-label">Uraian Kegiatan</label>
                                                 <textarea name="uraian_kegiatan" class="form-control" required></textarea>
                                             </div>
 
@@ -80,7 +77,7 @@
 
                                             <h5>Daftar Peserta</h5>
 
-                                            <table class="table table-bordered" id="pesertaTable">
+                                            <table class="table" id="pesertaTable">
                                                 <thead>
                                                     <tr>
                                                         <th width="5%">No</th>
@@ -99,17 +96,19 @@
                                                             <input type="text" name="jabatan[]" class="form-control">
                                                         </td>
                                                         <td>
-                                                            <button type="button" class="btn btn-danger btn-sm removeRow">X</button>
+                                                             <button type="button" class="btn btn-danger btn-sm removeRow">
+                                                                <img src="{{ asset('storage/assets/svg/close20.svg') }}">     
+                                                            </button> 
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
 
-                                            <button type="button" class="btn btn-success btn-sm" id="addRow">
+                                            <button type="button" class="btn btn-info" id="addRow">
                                                 + Tambah Peserta
                                             </button>
 
-                                            <br><br>
+                                            
 
                                             <button type="submit" class="btn btn-primary">
                                                 Simpan
