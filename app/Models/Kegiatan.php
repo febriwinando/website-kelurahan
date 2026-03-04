@@ -7,7 +7,11 @@ class Kegiatan extends Model
 {
     protected $fillable = [
         'tanggal',
-        'uraian_kegiatan'
+        'uraian_kegiatan',
+        'status',
+        'diverifikasi_oleh',
+        'tanggal_verifikasi',
+        'kode_verifikasi',
     ];
 
     protected $casts = [

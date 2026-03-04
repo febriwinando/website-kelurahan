@@ -60,9 +60,9 @@
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-semibold mb-0">Data Barang</h5>
+                                        <h5 class="card-title fw-semibold mb-0">Kegiatan</h5>
                                         <div>
-                                            <a href="/inventaris/create" class="btn btn-info">Tambah Barang</a>
+                                            <a href="/kegiatan/create" class="btn btn-info">Tambah Kegiatan</a>
                                         </div>
                                     </div>
                                 </div>
@@ -72,44 +72,84 @@
                                 <span id="pelapor"></span>
                             </div>
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Daftar Barang</h5>
-                                <!-- @if($kegiatans->isEmpty())
-                                    <h4 class="text-center mt-5 mb-5">
-                                        Belum ada data inventaris ...
-                                    </h4>
-                                @else -->
+                                <h5 class="card-title fw-semibold card-header">Daftar Kegiatan</h5>
                                 <div class="card-body">
-                                    <p>
-                                        <b>Tanggal:</b> 
-                                        {{ \Carbon\Carbon::parse($kegiatan->tanggal)->locale('id')->isoFormat('dddd, D MMMM Y') }}
-                                    </p>
+                                    @if($kegiatans->isEmpty())
+                                    <h4 class="text-center mt-5 mb-5">
+                                        Belum ada arsip notulen ...
+                                    </h4>
+                                    @else
+                                    <div class="card-body">
+                                        <table class="table mt-4 table-responsive table-hover" id="tabelJabatan">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Uraian</th>
+                                                    <th>Tanggal</th>
+                                                    <th>Status</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($kegiatans as $key => $kegiatan)
+                                            <tr id="row-{{ $kegiatan->id }}">
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $kegiatan->uraian_kegiatan }}</td>
+                                                <td>{{ $kegiatan->tanggal->isoFormat('dddd, D MMMM Y')  }}</td>
+                                                <td class="status-col">
+                                                    @if($kegiatan->status == 'belum diverifikasi')
+                                                        <span class="badge bg-warning p-2 rounded">
+                                                            {{ $kegiatan->status }}
+                                                        </span>
+                                                    @elseif($kegiatan->status == 'verifikasi ditolak')
+                                                        <span class="badge bg-danger p-2 rounded">
+                                                            {{ $kegiatan->status }}
+                                                        </span>
+                                                    @else
+                                                        <span class="badge bg-success p-2 rounded">
+                                                            {{ $kegiatan->status }}
+                                                        </span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                        @if($kegiatan->status == 'belum diverifikasi')
+                                                            @role('administrator', 'user')
+                                                                <a href="{{ route('kegiatan.edit', $kegiatan->id) }}" 
+                                                                class="btn btn-warning btn-sm">
+                                                                Edit
+                                                                </a>
+                                                            @endrole
+                                                        @endif
+                                                        @role('verifikator')
+                                                            <a href="{{ route('kegiatan.edit', $kegiatan->id) }}" 
+                                                                class="btn btn-warning btn-sm">
+                                                                Buka
+                                                                </a>
+                                                        @endrole
+                                                        @role('verifikator')
+                                                            @if(!in_array($kegiatan->status, ['terverifikasi', 'verifikasi ditolak']))
+                                                            <button 
+                                                                class="btn btn-warning btn-sm btnVerifikasiKegiatan"
+                                                                data-id="{{ $kegiatan->id }}"
+                                                                data-tanggal="{{ \Carbon\Carbon::parse($kegiatan->tanggal)->format('d-m-Y')}}"
+                                                                data-uraian="{{ $kegiatan->uraian_kegiatan }}"
+                                                            >
+                                                                Verifikasi
+                                                            </button>
+                                                            @endif
+                                                        @endrole
 
-                                    <p>
-                                        <b>Uraian Kegiatan:</b> {{ $kegiatan->uraian_kegiatan }}
-                                    </p>
-
-                                    <table width="100%" border="1" cellpadding="8" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th width="5%">No</th>
-                                                <th>Nama</th>
-                                                <th>Jabatan</th>
-                                                <th width="20%">Tanda Tangan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($kegiatan->pesertas as $index => $peserta)
-                                            <tr>
-                                                <td align="center">{{ $index + 1 }}</td>
-                                                <td>{{ $peserta->nama }}</td>
-                                                <td>{{ $peserta->jabatan }}</td>
-                                                <td height="60px"></td>
+                                                </td>
                                             </tr>
                                             @endforeach
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    @endif
+                                    
                                 </div>
-                                <!-- @endif -->
+                                
                             </div>
 
                 </div>
@@ -118,4 +158,33 @@
             
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>
 
+            <div class="modal fade" id="modalVerifikasiKegiatan" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formUpdateKegiatan">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="kegiatanId" name="id">
+                            <div class="modal-header">
+                                <h5>Verifikasi Notulen</h5>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="mb-2">
+                                    <h6 class="fw-light">Apakah anda yakin akan memverifikasi <span id="detailUraian"></span>? yang dilaksanakan pada <span id="detailTanggal"></span></h6>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    Ya
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
         @endsection

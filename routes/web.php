@@ -33,7 +33,9 @@ Route::put('/keuangan/{keuangan}', [KeuanganController::class, 'update']);
 // Route::put('/keuangan/update-multiple', [KeuanganController::class, 'updateMultiple'])->name('keuangan.updateMultiple');
 Route::resource('/keuangan', KeuanganController::class);
 
-
+Route::put('/peserta/{id}', [KegiatanController::class, 'updatePeserta'])->name('peserta.update');
+Route::delete('/peserta/{id}', [KegiatanController::class, 'destroyPeserta'])->name('peserta.destroy');
+Route::put('/verifikasi/kegiatan/{id}', [KegiatanController::class, 'verifikasi'])->name('kegiatan.verifikasi');
 Route::resource('kegiatan', KegiatanController::class);
 
 Route::middleware(['auth', 'role:administrator,user'])->group(function () {

@@ -1039,6 +1039,56 @@
             });
         });
 
+
+        document.addEventListener('click', function(e){
+
+            if(e.target.classList.contains('btnVerifikasiKegiatan')){
+
+                const btn = e.target;
+
+                const id      = btn.dataset.id;
+                const uraian   = btn.dataset.uraian;
+                const tanggal = btn.dataset.tanggal;
+                console.log(id);
+                document.getElementById('kegiatanId').value = id;
+                document.getElementById('detailUraian').innerText = uraian;
+                document.getElementById('detailTanggal').innerText = tanggal;
+
+                $('#modalVerifikasiKegiatan').modal('show');
+            }
+
+        });
+
+
+        $('#formUpdateKegiatan').submit(function(e){
+            e.preventDefault();
+
+            let id = $('#kegiatanId').val();
+
+            $.ajax({
+                url: '/verifikasi/kegiatan/' + id,
+                type: 'PUT',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response){
+
+                    $('#modalVerifikasiKegiatan').modal('hide');
+
+                    let row = $('#row-' + id);
+                    row.find('.status-col')
+                    .html('<span class="badge bg-success">Terverifikasi</span>');
+                    row.find('.btnVerifikasiKegiatan').remove();
+
+                    showAlert('success', 'Kegiatan telah diverifikasi');
+                },
+                error: function(){
+                    showAlert('danger', 'Gagal memverifikasi kegiatan');
+                }
+            });
+        });
+
+
     </script>
 
     <script>

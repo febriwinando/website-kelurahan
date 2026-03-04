@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
+use App\Models\KegiatanPeserta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -60,23 +61,29 @@ class KegiatanController extends Controller
             ], 500);
         }
     }
-    // public function store(Request $request)
-    // {
-    //     $kegiatan = Kegiatan::create([
-    //         'tanggal' => $request->tanggal,
-    //         'uraian_kegiatan' => $request->uraian_kegiatan
-    //     ]);
 
-    //     foreach ($request->nama as $key => $nama) {
-    //         $kegiatan->pesertas()->create([
-    //             'nama' => $nama,
-    //             'jabatan' => $request->jabatan[$key] ?? null
-    //         ]);
-    //     }
+    public function verifikasi($id)
+    {
+        $notulen = Kegiatan::findOrFail($id);
+        
+        $kode = hash_hmac(
+            'sha256',
+            $notulen->id . now(),
+            config('app.key')
+        );
 
-    //     return redirect()->back()->with('success', 'Kegiatan berhasil disimpan');
-    // }
+        $notulen->update([
+            'status' => 'terverifikasi',
+            'diverifikasi_oleh' => auth()->id(),
+            'tanggal_verifikasi' => now(),
+            'kode_verifikasi' => $kode
+        ]);
 
+        return response()->json([
+            'success' => true,
+            'message' => 'Transaksi berhasil diverifikasi'
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -98,9 +105,13 @@ class KegiatanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kegiatan $kegiatan)
+    public function edit($id)
     {
-        //
+        $kegiatan = Kegiatan::findOrFail($id);
+
+        return view('admin.editpeserta', compact(
+                'kegiatan',
+        ));
     }
 
     /**
@@ -117,5 +128,37 @@ class KegiatanController extends Controller
     public function destroy(Kegiatan $kegiatan)
     {
         //
+    }
+
+
+    public function updatePeserta(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string',
+            'jabatan' => 'nullable|string'
+        ]);
+
+        $peserta = KegiatanPeserta::findOrFail($id);
+
+        $peserta->update([
+            'nama' => $request->nama,
+            'jabatan' => $request->jabatan
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Peserta berhasil diperbarui'
+        ]);
+    }
+
+    public function destroyPeserta($id)
+    {
+        $peserta = KegiatanPeserta::findOrFail($id);
+        $peserta->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Peserta berhasil dihapus'
+        ]);
     }
 }

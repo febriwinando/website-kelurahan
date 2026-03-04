@@ -52,7 +52,7 @@
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h5 class="card-title fw-semibold mb-0">Tambah Kegiatan</h5>
                                         <div>
-                                            <a href="/keuangan" class="btn btn-info">Daftar Kegiatan</a>
+                                            <a href="/kegiatan" class="btn btn-info">Daftar Kegiatan</a>
                                         </div>
                                     </div>
                                 </div>
