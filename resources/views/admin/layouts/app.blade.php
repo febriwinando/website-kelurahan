@@ -40,6 +40,32 @@
           <ul id="sidebarnav">
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+              <span class="hide-menu">Dasawisma</span>
+            </li>
+            @role('administrator', 'user')
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/warga" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/addpeople.svg') }}">
+                  {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
+                </span>
+                <span class="hide-menu">Tambah Warga TP-PKK</span>
+              </a>
+            </li>
+            @endrole
+            @role('administrator', 'user', 'verifikator')
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/daftar-anggota" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/daftaranggota.svg') }}">
+                  {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
+                </span>
+                <span class="hide-menu">Data Warga TP-PKK</span>
+              </a>
+            </li>
+            @endrole
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">TIM PKK</span>
             </li>
             @role('administrator', 'user')
