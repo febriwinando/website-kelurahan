@@ -64,27 +64,28 @@
                                 <h5 class="card-title fw-semibold card-header">Form TP-PKK </h5>
 
                                 <div class="card-body">
-                                   <form id="formWarga">
+                                   <form id="formWarga" method="POST" action="{{ isset($warga) ? route('warga.update',$warga->id) : route('warga.store')}}">
                                         @csrf
+                                        <input type="hidden" name="id" id="warga_id">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Dasa Wisma</label>
-                                                    <input type="text" name="dasa_wisma" class="form-control rounded-pill">
+                                                    <input type="text" name="dasa_wisma" value="{{ $warga->dasa_wisma ?? '' }}" class="form-control rounded-pill">
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Nama Kepala Keluarga</label>
-                                                    <input type="text" name="nama_kepala_keluarga" class="form-control rounded-pill">
+                                                    <input type="text" name="nama_kepala_keluarga" value="{{ $warga->nama_kepala_keluarga ?? '' }}" class="form-control rounded-pill">
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">No. Kartu Keluara</label>
-                                                    <input type="text" name="no_kk" class="form-control rounded-pill">
+                                                    <input type="text" name="no_kk" value="{{ $warga->no_kk ?? '' }}" class="form-control rounded-pill">
                                                 </div>
                                             </div>
                                         </div>
@@ -94,23 +95,23 @@
                                             <div class="col-md-6">
                                                     <div class="mb-3">
                                                     <label class="form-label">No Registrasi</label>
-                                                    <input type="text" name="no_registrasi" class="form-control rounded-pill">
+                                                    <input type="text" name="no_registrasi" value="{{ $warga->no_registrasi ?? '' }}" class="form-control rounded-pill">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">No KTP/NIK</label>
-                                                <input type="text" name="nik" class="form-control rounded-pill">
+                                                <input type="text" name="nik" value="{{ $warga->nik ?? '' }}" class="form-control rounded-pill">
                                             </div>
 
                                             <div class="col-md-6">
                                                 <label class="form-label">Nama</label>
-                                                <input type="text" name="nama" class="form-control rounded-pill">
+                                                <input type="text" name="nama" value="{{ $warga->nama ?? '' }}" class="form-control rounded-pill">
                                             </div>
                                         
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jabatan</label>
-                                                    <input type="text" name="jabatan" class="form-control rounded-pill">
+                                                    <input type="text" name="jabatan" value="{{ $warga->jabatan ?? '' }}" class="form-control rounded-pill">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -119,10 +120,10 @@
                                                     <label class="form-label">Jenis Kelamin</label><br>
                                                     <div class="d-flex gap-3 mt-2">
                                                         <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="jenis_kelamin" value="Laki-Laki"><label class="form-check-label">Laki-Laki</label>
+                                                        <input class="form-check-input" type="radio" name="jenis_kelamin" value="Laki-Laki" {{ isset($warga) && $warga->jenis_kelamin == 'Laki-Laki' ? 'checked' : '' }}><label class="form-check-label">Laki-Laki</label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="jenis_kelamin" value="Perempuan"><label class="form-check-label">Perempuan</label>
+                                                            <input class="form-check-input" type="radio" name="jenis_kelamin" value="Perempuan" {{ isset($warga) && $warga->jenis_kelamin == 'Perempuan' ? 'checked' : '' }}><label class="form-check-label">Perempuan</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -143,7 +144,7 @@
                                              <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal Lahir</label>
-                                                    <input type="date" name="tanggal_lahir" class="form-control">
+                                                    <input type="date" name="tanggal_lahir" value="{{ $warga->tanggal_lahir ?? '' }}" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -154,19 +155,23 @@
                                                     <labe class="form-label">Status Perkawinan</label><br>
                                                     <div class="d-flex gap-3 mt-2">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="status_perkawinan" value="Menikah">
+                                                            <input class="form-check-input" type="radio" name="status_perkawinan" value="Menikah"
+                                                            {{ isset($warga) && $warga->status_perkawinan == 'Menikah' ? 'checked' : '' }}>
                                                             <label class="form-check-label">Menikah</label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="status_perkawinan" value="Lajang">
+                                                            <input class="form-check-input" type="radio" name="status_perkawinan" value="Lajang"
+                                                            {{ isset($warga) && $warga->status_perkawinan == 'Lajang' ? 'checked' : '' }}>
                                                             <label class="form-check-label">Lajang</label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="status_perkawinan" value="Janda">
+                                                            <input class="form-check-input" type="radio" name="status_perkawinan" value="Janda"
+                                                            {{ isset($warga) && $warga->status_perkawinan == 'Janda' ? 'checked' : '' }}>
                                                             <label class="form-check-label">Janda</label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="status_perkawinan" value="Duda">
+                                                            <input class="form-check-input" type="radio" name="status_perkawinan" value="Duda"
+                                                            {{ isset($warga) && $warga->status_perkawinan == 'Duda' ? 'checked' : '' }}>
                                                             <label class="form-check-label">Duda</label>
                                                         </div>
                                                     </div>
@@ -178,11 +183,13 @@
                                                     <label class="form-label">Status Dalam Keluarga</label><br>
                                                     <div class="d-flex gap-3 mt-2">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="status_dalam_keluarga" value="Kepala Rumah Tangga">
+                                                            <input class="form-check-input" type="radio" name="status_dalam_keluarga" value="Kepala Rumah Tangga"
+                                                            {{ isset($warga) && $warga->status_dalam_keluarga == 'Kepala Rumah Tangga' ? 'checked' : '' }}>
                                                             <label class="form-check-label">Kepala Rumah Tangga </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="status_dalam_keluarga" value="Anggota Keluarga">
+                                                            <input class="form-check-input" type="radio" name="status_dalam_keluarga" value="Anggota Keluarga"
+                                                            {{ isset($warga) && $warga->status_dalam_keluarga == 'Anggota Keluarga' ? 'checked' : '' }}>
                                                             <label class="form-check-label">Anggota Keluarga </label>
                                                         </div>
                                                     </div>
@@ -204,7 +211,7 @@
                                             <div class="col-md-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Alamat</label>
-                                                    <textarea name="alamat" class="form-control"></textarea>
+                                                    <textarea name="alamat" class="form-control">value="{{ $warga->alamat ?? '' }}" </textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -241,24 +248,6 @@
                                                         <!-- <option value="">Pilih Kelurahan</option> -->
                                                     </select>
                                                     </div>
-
-                                                    <!-- </div> -->
-                                                    <!-- <div class="col-md-3">
-                                                        <label class="form-label">Desa</label>
-                                                        <input type="text" name="desa" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label">Kecamatan</label>
-                                                        <input type="text" name="kecamatan" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label">Kabupaten</label>
-                                                        <input type="text" name="kabupaten" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label">Provinsi</label>
-                                                        <input type="text" name="provinsi" class="form-control">
-                                                    </div> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -277,9 +266,6 @@
                                                 {{-- Pekerjaan --}}
                                                 <div class="mb-3">
                                                     <label class="form-label">Pekerjaan</label><br>
-                                                    <!-- @foreach(['Petani','Pedagang','Swasta','Wirausaha','PNS','TNI/Polri','Lainnya'] as $pekerjaan)
-                                                        <input type="radio" name="pekerjaan" value="{{ $pekerjaan }}"> {{ $pekerjaan }}
-                                                    @endforeach -->
                                                     <select name="pekerjaan" id="pekerjaan" class="form-select rounded-pill">
                                                                 <option value="">-- Pilih Pekerjaan --</option>
                                                                 <option value="ASN/PNS" {{ isset($anggota) && $anggota->pekerjaan == 'ASN/PNS' ? 'selected' : '' }}>ASN/PNS</option>
@@ -318,10 +304,10 @@
                                                     <label class="form-label">{{ $label }}</label><br>
                                                     <div class="d-flex gap-3 mt-2">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="{{ $field }}" value="Ya"><label class="form-check-label">Ya</label>
+                                                            <input class="form-check-input" type="radio" name="{{ $field }}" value="Ya" {{ isset($warga) && $warga->$field == 'Ya' ? 'checked' : '' }} ><label class="form-check-label">Ya</label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="{{ $field }}" value="Tidak"><label class="form-check-label">Tidak</label>
+                                                            <input class="form-check-input" type="radio" name="{{ $field }}" value="Tidak" {{ isset($warga) && $warga->$field == 'Tidak' ? 'checked' : '' }} ><label class="form-check-label">Tidak</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -340,8 +326,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <button type="submit" class="btn btn-primary w-100">
+                                                <!-- <button type="submit" class="btn btn-primary w-100">
                                                     Simpan Data
+                                                </button> -->
+                                                <button type="submit" class="btn btn-primary w-100">
+                                                    {{ isset($warga) ? 'Update Data' : 'Simpan Data' }}
                                                 </button>
                                             </div>
                                         </div>                                        

@@ -10,6 +10,7 @@ class Warga extends Model
         'dasa_wisma',
         'nama_kepala_keluarga',
         'no_registrasi',
+        'no_kk',
         'nik',
         'nama',
         'jabatan',

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Warga;
 use App\Models\Kabupaten;
+use App\Models\Kecamatan;
 use App\Models\Provinsi;
 
 
@@ -16,7 +17,7 @@ class WargaController extends Controller
         $provinsis = Provinsi::orderBy('nama')->get();
         $kecamatans = Kabupaten::with('provinsi')->get();
         $wargas = Warga::latest()->paginate(10);
-        return view('admin.tambahwarga', compact('wargas', 'kecamatans','provinsis'));
+        return view('admin.daftarwarga', compact('wargas', 'kecamatans','provinsis'));
     }
 
     public function create()
@@ -52,5 +53,19 @@ class WargaController extends Controller
             'success' => true,
             'message' => 'Data berhasil disimpan'
         ]);
+    }
+
+    public function edit($id)
+    {
+        $warga = Warga::findOrFail($id);
+
+        $provinsis = Provinsi::all();
+        $kecamatans = Kabupaten::with('provinsi')->get();
+
+        return view('admin.tambahwarga', compact(
+            'warga',
+            'provinsis',
+            'kecamatans'
+        ));
     }
 }

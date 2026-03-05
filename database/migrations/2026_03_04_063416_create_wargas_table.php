@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('dasa_wisma')->nullable();
             $table->string('nama_kepala_keluarga')->nullable();
             $table->string('no_registrasi')->nullable();
+            $table->string('no_kk')->nullable();
             $table->string('nik')->nullable();
             $table->string('nama');
             $table->string('jabatan')->nullable();
