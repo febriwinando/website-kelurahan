@@ -1238,7 +1238,221 @@
         });
     </script>
 
-            <script>
+<script>
+
+function resetSelect(target, placeholder){
+
+    $(target).selectpicker('destroy');
+
+    $(target).html('<option value="">'+placeholder+'</option>');
+
+    $(target).prop('disabled', true);
+
+    $(target).selectpicker({
+        liveSearch: true
+    });
+
+}
+
+
+function loadKabupaten(provinsi_id, selected=null){
+
+    resetSelect('#kabupaten','Pilih Kabupaten');
+    resetSelect('#kecamatan','Pilih Kecamatan');
+    resetSelect('#kelurahan','Pilih Kelurahan');
+
+    if(!provinsi_id) return;
+
+    $.get('/kabupaten/' + provinsi_id, function(data){
+
+        let html = '<option value="">Pilih Kabupaten</option>';
+
+        data.forEach(function(item){
+            html += `<option value="${item.id}">${item.nama}</option>`;
+        });
+
+        $('#kabupaten').selectpicker('destroy');
+
+        $('#kabupaten').html(html);
+
+        $('#kabupaten').prop('disabled', false);
+
+        $('#kabupaten').selectpicker({
+            liveSearch:true
+        });
+
+        if(selected){
+            $('#kabupaten').selectpicker('val', selected);
+        }
+
+    });
+
+}
+
+
+function loadKecamatan(kabupaten_id, selected=null){
+
+    resetSelect('#kecamatan','Pilih Kecamatan');
+    resetSelect('#kelurahan','Pilih Kelurahan');
+
+    if(!kabupaten_id) return;
+
+    $.get('/kecamatan/' + kabupaten_id, function(data){
+
+        let html = '<option value="">Pilih Kecamatan</option>';
+
+        data.forEach(function(item){
+            html += `<option value="${item.id}">${item.nama}</option>`;
+        });
+
+        $('#kecamatan').selectpicker('destroy');
+
+        $('#kecamatan').html(html);
+
+        $('#kecamatan').prop('disabled', false);
+
+        $('#kecamatan').selectpicker({
+            liveSearch:true
+        });
+
+        if(selected){
+            $('#kecamatan').selectpicker('val', selected);
+        }
+
+    });
+
+}
+
+
+function loadKelurahan(kecamatan_id, selected=null){
+
+    resetSelect('#kelurahan','Pilih Kelurahan');
+
+    if(!kecamatan_id) return;
+
+    $.get('/kelurahan/' + kecamatan_id, function(data){
+
+        let html = '<option value="">Pilih Kelurahan</option>';
+
+        data.forEach(function(item){
+            html += `<option value="${item.id}">${item.nama}</option>`;
+        });
+
+        $('#kelurahan').selectpicker('destroy');
+
+        $('#kelurahan').html(html);
+
+        $('#kelurahan').prop('disabled', false);
+
+        $('#kelurahan').selectpicker({
+            liveSearch:true
+        });
+
+        if(selected){
+            $('#kelurahan').selectpicker('val', selected);
+        }
+
+    });
+
+}
+
+
+$(document).ready(function(){
+
+/* =====================
+EVENT CHANGE
+===================== */
+
+$('#provinsi').on('change', function(){
+
+    let id = $(this).val();
+
+    loadKabupaten(id);
+
+});
+
+
+$('#kabupaten').on('change', function(){
+
+    let id = $(this).val();
+
+    loadKecamatan(id);
+
+});
+
+
+$('#kecamatan').on('change', function(){
+
+    let id = $(this).val();
+
+    loadKelurahan(id);
+
+});
+// $('#provinsi').on('changed.bs.select', function(){
+
+//     let id = $(this).val();
+
+//     loadKabupaten(id);
+
+// });
+
+
+// $('#kabupaten').on('changed.bs.select', function(){
+
+//     let id = $(this).val();
+
+//     loadKecamatan(id);
+
+// });
+
+
+// $('#kecamatan').on('changed.bs.select', function(){
+
+//     let id = $(this).val();
+
+//     loadKelurahan(id);
+
+// });
+
+
+/* =====================
+EDIT MODE
+===================== */
+
+let provinsi  = $('#edit_provinsi').val();
+let kabupaten = $('#edit_kabupaten').val();
+let kecamatan = $('#edit_kecamatan').val();
+let kelurahan = $('#edit_kelurahan').val();
+
+if(provinsi){
+
+    $('#provinsi').selectpicker('val', provinsi);
+
+    loadKabupaten(provinsi, kabupaten);
+
+    setTimeout(function(){
+
+        if(kabupaten){
+            loadKecamatan(kabupaten, kecamatan);
+        }
+
+    },300);
+
+
+    setTimeout(function(){
+
+        if(kecamatan){
+            loadKelurahan(kecamatan, kelurahan);
+        }
+
+    },600);
+
+}
+
+});
+
+</script>
+            <!-- <script>
                 $(document).ready(function(){
 
                 // ================= PROVINSI -> KABUPATEN =================
@@ -1334,69 +1548,9 @@
                     });
 
                 });
-            </script>
-
-            
-            <!-- <script>
-                $('#formWarga').submit(function(e){
-                    e.preventDefault();
-
-                    $.ajax({
-                        url: "{{ route('warga.store') }}",
-                        type: "POST",
-                        data: $(this).serialize(),
-                        success: function(response){
-                            alert('Data berhasil disimpan');
-                            $('#formWarga')[0].reset();
-                        },
-                        error: function(xhr){
-                            alert('Terjadi kesalahan');
-                        }
-                    });
-                });
             </script> -->
 
-            <!-- <script>
-                $('#formWarga').submit(function(e){
-                    e.preventDefault();
-
-                    $.ajax({
-                        url: "{{ route('warga.store') }}",
-                        type: "POST",
-                        data: $(this).serialize(),
-                        success: function(response){
-
-                            showAlert('success', 'Data warga berhasil disimpan');
-
-                            $('#formWarga')[0].reset();
-
-                            // refresh selectpicker jika ada
-                            $('.selectpicker').selectpicker('refresh');
-                        },
-                        error: function(xhr){
-
-                            let message = 'Terjadi kesalahan pada sistem';
-
-                            // jika error validasi Laravel
-                            if(xhr.status === 422){
-
-                                let errors = xhr.responseJSON.errors;
-                                message = '<ul>';
-
-                                $.each(errors, function(key, value){
-                                    message += '<li>' + value[0] + '</li>';
-                                });
-
-                                message += '</ul>';
-                            }
-
-                            showAlert('danger', message);
-
-                        }
-                    });
-
-                });
-                </script> -->
+            
                 <script>
                     $('#formWarga').submit(function(e){
 

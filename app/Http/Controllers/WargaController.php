@@ -66,18 +66,18 @@ class WargaController extends Controller
 
         $provinsis = Provinsi::orderBy('nama')->get();
 
-        $kabupatens = Kabupaten::where('provinsi_id', $warga->provinsi_id)->get();
+        $kabupatens = Kabupaten::get();
 
-        $kecamatans = Kecamatan::where('kabupaten_id', $warga->kabupaten_id)->get();
+        // $kecamatans = Kecamatan::where('kabupaten_id', $warga->kabupaten_id)->get();
 
-        $kelurahans = Kelurahan::where('kecamatan_id', $warga->kecamatan_id)->get();
+        // $kelurahans = Kelurahan::where('kecamatan_id', $warga->kecamatan_id)->get();
 
         return view('admin.tambahwarga', compact(
             'warga',
             'provinsis',
             'kabupatens',
-            'kecamatans',
-            'kelurahans'
+            // 'kecamatans',
+            // 'kelurahans'
         ));
     }
     // public function edit($id)

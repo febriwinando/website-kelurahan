@@ -60,9 +60,9 @@
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-semibold mb-0">Kegiatan</h5>
+                                        <h5 class="card-title fw-semibold mb-0">TP-PKK</h5>
                                         <div>
-                                            <a href="/kegiatan/create" class="btn btn-info">Tambah Kegiatan</a>
+                                            <a href="/warga/create" class="btn btn-info">Tambah TP-PKK</a>
                                         </div>
                                     </div>
                                 </div>
@@ -72,11 +72,11 @@
                                 <span id="pelapor"></span>
                             </div>
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Daftar Kegiatan</h5>
+                                <h5 class="card-title fw-semibold card-header">Daftar TP-PKK</h5>
                                 <div class="card-body">
                                     @if($wargas->isEmpty())
                                     <h4 class="text-center mt-5 mb-5">
-                                        Belum ada arsip notulen ...
+                                        Data TP-PKK belum tersedia ...
                                     </h4>
                                     @else
                                     <div class="card-body">

@@ -114,7 +114,7 @@
                                                     <label for="anggota_id" class="form-label">Pemimpin Rapat:</label>
                                                     <select id="anggota_id" name="anggota_id" class="selectpicker form-control" data-live-search="true" title="pilih pemimpin rapat">
                                                         @foreach($anggotas as $anggota)
-                                                            <option value="{{ $anggota->id }}" data-name="{{ $anggota->nama }}">
+                                                            <option value="{{ $anggota->id }}" data-name="{{ $anggota->nama }}" {{ isset($notulen) && $notulen->anggota_id == $anggota->id ? 'selected' : '' }}>
                                                                 {{ $anggota->nama }}
                                                             </option>
                                                         @endforeach   

@@ -104,7 +104,7 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $notulen->macam }}</td>
                                             <td>{{ $notulen->nama_anggota }}</td>
-                                            <td>{{ $keuangan->tanggal->isoFormat('dddd, D MMMM Y') }} - 
+                                            <td>{{ $notulen->tanggal->isoFormat('dddd, D MMMM Y') }} - 
                                                 {{ \Carbon\Carbon::parse($notulen->waktu)->format('H:i') }}</td>
                                             <td>{{ $notulen->jumlah_diundang }}</td>
                                             <td>{{ $notulen->jumlah_hadir }}</td>

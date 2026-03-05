@@ -85,7 +85,7 @@
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal Penerimaan/Pembelian</label>
-                                                    <input type="date" class="form-control rounded-pill" name="tanggal_penerimaan" value="{{ $inventaris->tanggal_penerimaan ?? '' }}" >
+                                                    <input type="date" class="form-control rounded-pill" name="tanggal_penerimaan"  value="{{ old('tanggal_penerimaan', isset($inventaris) ? $inventaris->tanggal_penerimaan?->format('Y-m-d') : '') }}" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">

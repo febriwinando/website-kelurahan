@@ -77,3 +77,20 @@ Route::get('/get-kabupaten/{provinsi}', [WargaController::class, 'kabupaten']);
 Route::get('/get-kecamatan/{kabupaten}', [WargaController::class, 'kecamatan']);
 Route::get('/get-kelurahan/{kecamatan}', [WargaController::class, 'kelurahan']);
 
+
+// use App\Models\Kabupaten;
+// use App\Models\Kecamatan;
+// use App\Models\Kelurahan;
+
+Route::get('/kabupaten/{provinsi_id}', function ($provinsi_id) {
+    return Kabupaten::where('provinsi_id', $provinsi_id)->get();
+});
+
+Route::get('/kecamatan/{kabupaten_id}', function ($kabupaten_id) {
+    return Kecamatan::where('kabupaten_id', $kabupaten_id)->get();
+});
+
+Route::get('/kelurahan/{kecamatan_id}', function ($kecamatan_id) {
+    return Kelurahan::where('kecamatan_id', $kecamatan_id)->get();
+});
+

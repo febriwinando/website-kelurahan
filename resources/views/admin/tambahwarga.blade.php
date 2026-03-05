@@ -231,36 +231,55 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <div class="row mb-3">
+                                                <div class="row">
+
                                                     <div class="col-md-3">
                                                     <label>Provinsi</label>
-                                                        <select id="provinsi" name="provinsi" class="form-control selectpicker" data-live-search="true">
-                                                            @foreach($provinsis as $provinsi)
-                                                                <option value="{{ $provinsi->id }}" {{ isset($warga) && $warga->provinsi == $provinsi->id ? 'selected' : '' }}>{{ $provinsi->nama }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                    <select class="selectpicker form-control"
+                                                            id="provinsi"
+                                                            data-live-search="true"
+                                                            title="Pilih Provinsi" name="provinsi">
+
+                                                        @foreach($provinsis as $provinsi)
+                                                            <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
+                                                        @endforeach
+
+                                                    </select>
                                                     </div>
 
-                                                    <div class="col-md-3">
-                                                        <label>Kabupaten</label>
-                                                        <select id="kabupaten" name="kabupaten" class="form-control selectpicker" data-live-search="true" disabled>
-                                                            
-                                                        </select>
-                                                    </div>
 
                                                     <div class="col-md-3">
-                                                        <label>Kecamatan</label>
-                                                        <select id="kecamatan" name="kecamatan" class="form-control selectpicker" data-live-search="true" disabled>
-                                                            
-                                                        </select>
+                                                    <label>Kabupaten</label>
+                                                    <select class="selectpicker form-control"
+                                                            id="kabupaten"
+                                                            data-live-search="true"
+                                                            title="Pilih Kabupaten" name="kabupaten"
+                                                            disabled>
+                                                    </select>
                                                     </div>
 
+
                                                     <div class="col-md-3">
-                                                        <label>Kelurahan</label>
-                                                        <select id="kelurahan" name="kelurahan" class="form-control selectpicker" data-live-search="true" disabled>
-                                                            
-                                                        </select>
+                                                    <label>Kecamatan</label>
+                                                    <select class="selectpicker form-control"
+                                                            id="kecamatan"
+                                                            data-live-search="true"
+                                                            title="Pilih Kecamatan" name="kecamatan"
+                                                            disabled>
+                                                    </select>
                                                     </div>
+
+
+                                                    <div class="col-md-3">
+                                                    <label>Kelurahan</label>
+                                                    <select class="selectpicker form-control"
+                                                            id="kelurahan"
+                                                            data-live-search="true"
+                                                            title="Pilih Kelurahan" name="kelurahan"
+                                                            disabled>
+                                                    </select>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -268,7 +287,13 @@
                                                 <div class="mb-3">
                                                     <label for="pendidikan" class="form-label">Pendidikan</label>
                                                     <select name="pendidikan" id="pendidikan" class="form-select rounded-pill">
-                                                            
+                                                        <option value="">-- Pilih Pendidikan --</option>
+                                                        <option value="SD" {{ isset($warga) && $warga->pendidikan == 'SD' ? 'selected' : '' }}>SD</option>
+                                                        <option value="SMP" {{ isset($warga) && $warga->pendidikan == 'SMP' ? 'selected' : '' }}>SMP</option>
+                                                        <option value="SMA/SMK" {{ isset($warga) && $warga->pendidikan == 'SMA/SMK' ? 'selected' : '' }}>SMA/SMK</option>
+                                                        <option value="S1" {{ isset($warga) && $warga->pendidikan == 'S1' ? 'selected' : '' }}>S1</option>
+                                                        <option value="S2" {{ isset($warga) && $warga->pendidikan == 'S2' ? 'selected' : '' }}>S2</option>
+                                                        <option value="S3" {{ isset($warga) && $warga->pendidikan == 'S3' ? 'selected' : '' }}>S3</option>
                                                     </select>
                                                 </div>
                                             </div>
