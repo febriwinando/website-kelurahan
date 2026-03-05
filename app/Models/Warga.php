@@ -20,7 +20,7 @@ class Warga extends Model
         'status_dalam_keluarga',
         'agama',
         'alamat',
-        'desa',
+        'kelurahan',
         'kecamatan',
         'kabupaten',
         'provinsi',

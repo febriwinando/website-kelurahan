@@ -6,21 +6,25 @@ use Illuminate\Http\Request;
 
 use App\Models\Warga;
 use App\Models\Kabupaten;
+use App\Models\Provinsi;
+
 
 class WargaController extends Controller
 {
     public function index()
     {
+        $provinsis = Provinsi::orderBy('nama')->get();
         $kecamatans = Kabupaten::with('provinsi')->get();
         $wargas = Warga::latest()->paginate(10);
-        return view('admin.tambahwarga', compact('wargas', 'kecamatans'));
+        return view('admin.tambahwarga', compact('wargas', 'kecamatans','provinsis'));
     }
 
     public function create()
     {
+        $provinsis = Provinsi::orderBy('nama')->get();
         $kecamatans = Kabupaten::with('provinsi')->get();
         $wargas = Warga::latest()->paginate(10);
-        return view('admin.tambahwarga', compact('wargas', 'kecamatans'));
+        return view('admin.tambahwarga', compact('wargas', 'kecamatans','provinsis'));
     }
 
     public function store(Request $request)

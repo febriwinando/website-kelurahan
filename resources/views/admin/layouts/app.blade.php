@@ -44,7 +44,7 @@
             </li>
             @role('administrator', 'user')
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/warga" aria-expanded="false">
+              <a class="sidebar-link" href="/warga/create" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/addpeople.svg') }}">
                   {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
@@ -55,7 +55,7 @@
             @endrole
             @role('administrator', 'user', 'verifikator')
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/daftar-anggota" aria-expanded="false">
+              <a class="sidebar-link" href="/warga" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/daftaranggota.svg') }}">
                   {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
@@ -1194,6 +1194,164 @@
             });
         });
     </script>
+
+            <script>
+                $(document).ready(function(){
+
+                // ================= PROVINSI -> KABUPATEN =================
+                    $('#provinsi').change(function(){
+
+                        let provinsi_id = $(this).val();
+
+                        $('#kabupaten').prop('disabled', true);
+                        // $('#kabupaten').html('<option value="">Loading...</option>');
+                        $('#kabupaten').selectpicker('refresh');
+
+                        if(provinsi_id){
+
+                            $.get('/get-kabupaten/' + provinsi_id, function(data){
+
+                                let html = '<option value="">Pilih Kabupaten</option>';
+                                data.forEach(function(item){
+                                    let selected = item.nama === 'SUMATERA UTARA' ? 'selected' : '';
+                                    // html += `<option value="${item.id}" >${item.nama}</option>`;
+                                    html += `<option value="${item.id}" ${selected}>${item.nama}</option>`;
+                                });
+
+                                $('#kabupaten').html(html);
+                                $('#kabupaten').prop('disabled', false);
+
+                                // WAJIB untuk selectpicker
+                                $('#kabupaten').selectpicker('refresh');
+
+                            });
+
+                        }
+
+                    });
+
+
+                    // ================= KABUPATEN -> KECAMATAN =================
+                    $('#kabupaten').change(function(){
+
+                        let kabupaten_id = $(this).val();
+
+                        $('#kecamatan').prop('disabled', true);
+                        // $('#kecamatan').html('<option value="">Loading...</option>');
+                        $('#kecamatan').selectpicker('refresh');
+
+                        if(kabupaten_id){
+
+                            $.get('/get-kecamatan/' + kabupaten_id, function(data){
+
+                                let html = '<option value="">Pilih Kecamatan</option>';
+
+                                data.forEach(function(item){
+                                    html += `<option value="${item.id}">${item.nama}</option>`;
+                                });
+
+                                $('#kecamatan').html(html);
+                                $('#kecamatan').prop('disabled', false);
+                                $('#kecamatan').selectpicker('refresh');
+
+                            });
+
+                        }
+
+                    });
+
+
+                    // ================= KECAMATAN -> KELURAHAN =================
+                    $('#kecamatan').change(function(){
+
+                        let kecamatan_id = $(this).val();
+
+                        $('#kelurahan').prop('disabled', true);
+                        // $('#kelurahan').html('<option value="">Loading...</option>');
+                        $('#kelurahan').selectpicker('refresh');
+
+                        if(kecamatan_id){
+
+                            $.get('/get-kelurahan/' + kecamatan_id, function(data){
+
+                                let html = '<option value="">Pilih Kelurahan</option>';
+
+                                data.forEach(function(item){
+                                    html += `<option value="${item.id}">${item.nama}</option>`;
+                                });
+
+                                $('#kelurahan').html(html);
+                                $('#kelurahan').prop('disabled', false);
+                                $('#kelurahan').selectpicker('refresh');
+
+                            });
+
+                        }
+
+                    });
+
+                });
+            </script>
+            <!-- <script>
+                $('#formWarga').submit(function(e){
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: "{{ route('warga.store') }}",
+                        type: "POST",
+                        data: $(this).serialize(),
+                        success: function(response){
+                            alert('Data berhasil disimpan');
+                            $('#formWarga')[0].reset();
+                        },
+                        error: function(xhr){
+                            alert('Terjadi kesalahan');
+                        }
+                    });
+                });
+            </script> -->
+
+            <script>
+                $('#formWarga').submit(function(e){
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: "{{ route('warga.store') }}",
+                        type: "POST",
+                        data: $(this).serialize(),
+                        success: function(response){
+
+                            showAlert('success', 'Data warga berhasil disimpan');
+
+                            $('#formWarga')[0].reset();
+
+                            // refresh selectpicker jika ada
+                            $('.selectpicker').selectpicker('refresh');
+                        },
+                        error: function(xhr){
+
+                            let message = 'Terjadi kesalahan pada sistem';
+
+                            // jika error validasi Laravel
+                            if(xhr.status === 422){
+
+                                let errors = xhr.responseJSON.errors;
+                                message = '<ul>';
+
+                                $.each(errors, function(key, value){
+                                    message += '<li>' + value[0] + '</li>';
+                                });
+
+                                message += '</ul>';
+                            }
+
+                            showAlert('danger', message);
+
+                        }
+                    });
+
+                });
+                </script>
 </body>
 
 </html>
