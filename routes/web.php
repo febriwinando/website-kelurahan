@@ -72,3 +72,8 @@ Route::middleware(['auth', 'role:administrator,user'])->group(function () {
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
+
+Route::get('/get-kabupaten/{provinsi}', [WargaController::class, 'kabupaten']);
+Route::get('/get-kecamatan/{kabupaten}', [WargaController::class, 'kecamatan']);
+Route::get('/get-kelurahan/{kecamatan}', [WargaController::class, 'kelurahan']);
+

@@ -472,8 +472,6 @@
         // Reset class warna
         header.className = 'modal-header';
 
-        // let soundId = '';
-
         switch(type) {
             case 'success':
                 header.classList.add('bg-success', 'text-white');
@@ -498,7 +496,52 @@
         body.innerHTML = message;
 
         modal.show();
+
+        // reload halaman setelah modal ditutup
+        modalEl.addEventListener('hidden.bs.modal', function () {
+            location.reload();
+        }, { once: true });
+
     }
+    // function showAlert(type, message) {
+
+    //     const modalEl = document.getElementById('globalAlertModal');
+    //     const modal = new bootstrap.Modal(modalEl);
+
+    //     const header = document.getElementById('modalHeader');
+    //     const title = document.getElementById('modalTitle');
+    //     const body = document.getElementById('modalMessage');
+
+    //     // Reset class warna
+    //     header.className = 'modal-header';
+
+    //     // let soundId = '';
+
+    //     switch(type) {
+    //         case 'success':
+    //             header.classList.add('bg-success', 'text-white');
+    //             title.innerText = 'Berhasil';
+    //             break;
+
+    //         case 'error':
+    //         case 'danger':
+    //             header.classList.add('bg-danger', 'text-white');
+    //             title.innerText = 'Gagal';
+    //             break;
+
+    //         case 'warning':
+    //             header.classList.add('bg-warning');
+    //             title.innerText = 'Peringatan';
+    //             break;
+
+    //         default:
+    //             title.innerText = 'Informasi';
+    //     }
+
+    //     body.innerHTML = message;
+
+    //     modal.show();
+    // }
 
 
     </script>
@@ -1292,6 +1335,8 @@
 
                 });
             </script>
+
+            
             <!-- <script>
                 $('#formWarga').submit(function(e){
                     e.preventDefault();
@@ -1311,7 +1356,7 @@
                 });
             </script> -->
 
-            <script>
+            <!-- <script>
                 $('#formWarga').submit(function(e){
                     e.preventDefault();
 
@@ -1351,7 +1396,53 @@
                     });
 
                 });
-                </script>
+                </script> -->
+                <script>
+                    $('#formWarga').submit(function(e){
+
+                        e.preventDefault();
+
+                        let form = $(this);
+                        let url = form.attr('action');
+
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            data: form.serialize(),
+
+                            success: function(response){
+
+                                showAlert('success', response.message ?? 'Data warga berhasil disimpan');
+
+                                $('#formWarga')[0].reset();
+
+                                $('.selectpicker').selectpicker('refresh');
+
+                            },
+
+                            error: function(xhr){
+
+                                let message = 'Terjadi kesalahan pada sistem';
+
+                                if(xhr.status === 422){
+
+                                    let errors = xhr.responseJSON.errors;
+                                    message = '<ul>';
+
+                                    $.each(errors, function(key, value){
+                                        message += '<li>' + value[0] + '</li>';
+                                    });
+
+                                    message += '</ul>';
+                                }
+
+                                showAlert('danger', message);
+                            }
+
+                        });
+
+                    });
+                    </script>
 </body>
 
 </html>

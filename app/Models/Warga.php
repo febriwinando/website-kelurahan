@@ -48,4 +48,5 @@ class Warga extends Model
         'ikut_paud' => 'boolean',
         'ikut_koperasi' => 'boolean',
     ];
+
 }

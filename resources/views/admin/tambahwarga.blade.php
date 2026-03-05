@@ -66,7 +66,23 @@
                                 <div class="card-body">
                                    <form id="formWarga" method="POST" action="{{ isset($warga) ? route('warga.update',$warga->id) : route('warga.store')}}">
                                         @csrf
-                                        <input type="hidden" name="id" id="warga_id">
+                                        @if(isset($warga))
+                                            @method('PUT')
+                                            <input type="hidden" name="id" id="warga_id">
+                                            <!-- <input type="hidden" name="provinsi_id" id="provinsi_id" value="{{ $warga->provinsi ?? '' }}">
+                                            <input type="hidden" name="kabupaten_id" id="kabupaten_id" value="{{ $warga->kabupaten ?? '' }}">
+                                            <input type="hidden" name="kecamatan_id" id="kecamatan_id" value="{{ $warga->kecamatan ?? '' }}">
+                                            <input type="hidden" name="kelurahan_id" id="kelurahan_id" value="{{ $warga->kelurahan ?? '' }}"> -->
+
+                                            
+                                        @endif
+                                        
+                                        @if(isset($warga))
+                                        <input type="hidden" id="edit_provinsi" value="{{ $warga->provinsi }}">
+                                        <input type="hidden" id="edit_kabupaten" value="{{ $warga->kabupaten }}">
+                                        <input type="hidden" id="edit_kecamatan" value="{{ $warga->kecamatan }}">
+                                        <input type="hidden" id="edit_kelurahan" value="{{ $warga->kelurahan }}">
+                                        @endif
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
@@ -132,9 +148,9 @@
                                                 <div class="mb-3">
                                                     <label for="tempatLahir" class="form-label">Tempat Lahir</label>
                                                     <select id="tempatLahir" name="tempat_lahir" class="selectpicker form-control" data-live-search="true" title="pilih tempat kelahiran">
-                                                        @foreach($kecamatans as $kecamatan)
-                                                            <option value="{{ $kecamatan->id }}" data-name="{{ $kecamatan->nama }}" {{ isset($anggota) && $anggota->tempat_lahir == $kecamatan->id ? 'selected' : '' }}>
-                                                                {{ $kecamatan->nama }}- {{ $kecamatan->provinsi->nama }}   
+                                                        @foreach($kabupatens as $kabupaten)
+                                                            <option value="{{ $kabupaten->id }}" data-name="{{ $kabupaten->nama }}" {{ isset($warga) && $warga->tempat_lahir == $kabupaten->id ? 'selected' : '' }}>
+                                                                {{ $kabupaten->nama }}- {{ $kabupaten->provinsi->nama }}   
                                                             </option>
                                                         @endforeach   
                                                     </select>
@@ -144,7 +160,7 @@
                                              <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal Lahir</label>
-                                                    <input type="date" name="tanggal_lahir" value="{{ $warga->tanggal_lahir ?? '' }}" class="form-control">
+                                                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', isset($warga) ? $warga->tanggal_lahir?->format('Y-m-d') : '') }}" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -202,7 +218,7 @@
                                                     <div class="mb-3">
                                                             <select name="agama" id="agama" class="form-select rounded-pill">
                                                                 @foreach(['Islam','Kristen','Katholik','Hindu','Budha','Khonghucu','Kepercayaan Lain'] as $agama)
-                                                                    <option value="{{ $agama }}">{{ $agama }}</option>
+                                                                    <option value="{{ $agama }}" {{ isset($warga) && $warga->agama == $agama ? 'selected' : '' }}>{{ $agama }}</option>
                                                                 @endforeach
                                                             </select>
                                                     </div>
@@ -211,42 +227,39 @@
                                             <div class="col-md-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Alamat</label>
-                                                    <textarea name="alamat" class="form-control">value="{{ $warga->alamat ?? '' }}" </textarea>
+                                                    <textarea name="alamat" class="form-control"> {{ $warga->alamat ?? '' }} </textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="row mb-3">
-                                                    <!-- <div class="row"> -->
-
                                                     <div class="col-md-3">
                                                     <label>Provinsi</label>
-                                                    <select id="provinsi" class="form-control selectpicker" data-live-search="true">
-                                                        <!-- <option value="">Pilih Provinsi</option> -->
-                                                        @foreach($provinsis as $provinsi)
-                                                            <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                        <select id="provinsi" name="provinsi" class="form-control selectpicker" data-live-search="true">
+                                                            @foreach($provinsis as $provinsi)
+                                                                <option value="{{ $provinsi->id }}" {{ isset($warga) && $warga->provinsi == $provinsi->id ? 'selected' : '' }}>{{ $provinsi->nama }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
 
                                                     <div class="col-md-3">
-                                                    <label>Kabupaten</label>
-                                                    <select id="kabupaten" class="form-control selectpicker" data-live-search="true" disabled>
-                                                        <!-- <option value="">Pilih Kabupaten</option> -->
-                                                    </select>
+                                                        <label>Kabupaten</label>
+                                                        <select id="kabupaten" name="kabupaten" class="form-control selectpicker" data-live-search="true" disabled>
+                                                            
+                                                        </select>
                                                     </div>
 
                                                     <div class="col-md-3">
-                                                    <label>Kecamatan</label>
-                                                    <select id="kecamatan" class="form-control selectpicker" data-live-search="true" disabled>
-                                                        <!-- <option value="">Pilih Kecamatan</option> -->
-                                                    </select>
+                                                        <label>Kecamatan</label>
+                                                        <select id="kecamatan" name="kecamatan" class="form-control selectpicker" data-live-search="true" disabled>
+                                                            
+                                                        </select>
                                                     </div>
 
                                                     <div class="col-md-3">
-                                                    <label>Kelurahan</label>
-                                                    <select id="kelurahan" class="form-control selectpicker" data-live-search="true" disabled>
-                                                        <!-- <option value="">Pilih Kelurahan</option> -->
-                                                    </select>
+                                                        <label>Kelurahan</label>
+                                                        <select id="kelurahan" name="kelurahan" class="form-control selectpicker" data-live-search="true" disabled>
+                                                            
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -255,9 +268,7 @@
                                                 <div class="mb-3">
                                                     <label for="pendidikan" class="form-label">Pendidikan</label>
                                                     <select name="pendidikan" id="pendidikan" class="form-select rounded-pill">
-                                                            @foreach(['Tidak Tamat SD','SD/MI','SMP','SMU/SMK','Diploma','S1','S2','S3'] as $pendidikan)
-                                                                <option value="{{ $pendidikan }}" >{{ $pendidikan }}</option>
-                                                            @endforeach
+                                                            
                                                     </select>
                                                 </div>
                                             </div>
@@ -268,18 +279,18 @@
                                                     <label class="form-label">Pekerjaan</label><br>
                                                     <select name="pekerjaan" id="pekerjaan" class="form-select rounded-pill">
                                                                 <option value="">-- Pilih Pekerjaan --</option>
-                                                                <option value="ASN/PNS" {{ isset($anggota) && $anggota->pekerjaan == 'ASN/PNS' ? 'selected' : '' }}>ASN/PNS</option>
-                                                                <option value="TNI/Polri" {{ isset($anggota) && $anggota->pekerjaan == 'TNI/Polri' ? 'selected' : '' }}>TNI/Polri</option>
-                                                                <option value="Pegawai Swasta" {{ isset($anggota) && $anggota->pekerjaan == 'Pegawai Swasta' ? 'selected' : '' }}>Pegawai Swasta</option>
-                                                                <option value="Wiraswasta" {{ isset($anggota) && $anggota->pekerjaan == 'Wiraswasta' ? 'selected' : '' }}>Wiraswasta</option>
-                                                                <option value="Petani" {{ isset($anggota) && $anggota->pekerjaan == 'Petani' ? 'selected' : '' }}>Petani</option>
-                                                                <option value="Nelayan" {{ isset($anggota) && $anggota->pekerjaan == 'Nelayan' ? 'selected' : '' }}>Nelayan</option>
-                                                                <option value="Guru/Dosen" {{ isset($anggota) && $anggota->pekerjaan == 'Guru/Dosen' ? 'selected' : '' }}>Guru/Dosen</option>
-                                                                <option value="Tenaga Kesehatan" {{ isset($anggota) && $anggota->pekerjaan == 'Tenaga Kesehatan' ? 'selected' : '' }}>Tenaga Kesehatan</option>
-                                                                <option value="Pelajar/Mahasiswa" {{ isset($anggota) && $anggota->pekerjaan == 'Pelajar/Mahasiswa' ? 'selected' : '' }}>Pelajar/Mahasiswa</option>
-                                                                <option value="Ibu Rumah Tangga" {{ isset($anggota) && $anggota->pekerjaan == 'Ibu Rumah Tangga' ? 'selected' : '' }}>Ibu Rumah Tangga</option>
-                                                                <option value="Tidak Bekerja" {{ isset($anggota) && $anggota->pekerjaan == 'Tidak Bekerja' ? 'selected' : '' }}>Tidak Bekerja</option>
-                                                                <option value="Lainnya" {{ isset($anggota) && $anggota->pekerjaan == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                                                                <option value="ASN/PNS" {{ isset($warga) && $warga->pekerjaan == 'ASN/PNS' ? 'selected' : '' }}>ASN/PNS</option>
+                                                                <option value="TNI/Polri" {{ isset($warga) && $warga->pekerjaan == 'TNI/Polri' ? 'selected' : '' }}>TNI/Polri</option>
+                                                                <option value="Pegawai Swasta" {{ isset($warga) && $warga->pekerjaan == 'Pegawai Swasta' ? 'selected' : '' }}>Pegawai Swasta</option>
+                                                                <option value="Wiraswasta" {{ isset($warga) && $warga->pekerjaan == 'Wiraswasta' ? 'selected' : '' }}>Wiraswasta</option>
+                                                                <option value="Petani" {{ isset($warga) && $warga->pekerjaan == 'Petani' ? 'selected' : '' }}>Petani</option>
+                                                                <option value="Nelayan" {{ isset($warga) && $warga->pekerjaan == 'Nelayan' ? 'selected' : '' }}>Nelayan</option>
+                                                                <option value="Guru/Dosen" {{ isset($warga) && $warga->pekerjaan == 'Guru/Dosen' ? 'selected' : '' }}>Guru/Dosen</option>
+                                                                <option value="Tenaga Kesehatan" {{ isset($warga) && $warga->pekerjaan == 'Tenaga Kesehatan' ? 'selected' : '' }}>Tenaga Kesehatan</option>
+                                                                <option value="Pelajar/Mahasiswa" {{ isset($warga) && $warga->pekerjaan == 'Pelajar/Mahasiswa' ? 'selected' : '' }}>Pelajar/Mahasiswa</option>
+                                                                <option value="Ibu Rumah Tangga" {{ isset($warga) && $warga->pekerjaan == 'Ibu Rumah Tangga' ? 'selected' : '' }}>Ibu Rumah Tangga</option>
+                                                                <option value="Tidak Bekerja" {{ isset($warga) && $warga->pekerjaan == 'Tidak Bekerja' ? 'selected' : '' }}>Tidak Bekerja</option>
+                                                                <option value="Lainnya" {{ isset($warga) && $warga->pekerjaan == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                                                             </select>
                                                 </div>
 
@@ -287,31 +298,43 @@
                                             
                                                 {{-- Ya Tidak Section --}}
                                                 @php
-                                                $yesNoFields = [
-                                                    'akseptor_kb' => 'Akseptor KB',
-                                                    'aktif_posyandu' => 'Aktif Posyandu',
-                                                    'ikut_bkb' => 'Mengikuti BKB',
-                                                    'memiliki_tabungan' => 'Memiliki Tabungan',
-                                                    'ikut_kelompok_belajar' => 'Ikut Kelompok Belajar',
-                                                    'ikut_paud' => 'Ikut PAUD',
-                                                    'ikut_koperasi' => 'Ikut Koperasi'
-                                                ];
+                                                    $yesNoFields = [
+                                                        'akseptor_kb' => 'Akseptor KB',
+                                                        'aktif_posyandu' => 'Aktif Posyandu',
+                                                        'ikut_bkb' => 'Mengikuti BKB',
+                                                        'memiliki_tabungan' => 'Memiliki Tabungan',
+                                                        'ikut_kelompok_belajar' => 'Ikut Kelompok Belajar',
+                                                        'ikut_paud' => 'Ikut PAUD',
+                                                        'ikut_koperasi' => 'Ikut Koperasi'
+                                                    ];
                                                 @endphp
 
                                                 @foreach($yesNoFields as $field => $label)
-                                                <div class="col-md-3">
-                                                <div class="mb-3">
-                                                    <label class="form-label">{{ $label }}</label><br>
-                                                    <div class="d-flex gap-3 mt-2">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="{{ $field }}" value="Ya" {{ isset($warga) && $warga->$field == 'Ya' ? 'checked' : '' }} ><label class="form-check-label">Ya</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="{{ $field }}" value="Tidak" {{ isset($warga) && $warga->$field == 'Tidak' ? 'checked' : '' }} ><label class="form-check-label">Tidak</label>
+                                                    <div class="col-md-3">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">{{ $label }}</label><br>
+
+                                                        <div class="d-flex gap-3 mt-2">
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="{{ $field }}"
+                                                                    value="1"
+                                                                    {{ isset($warga) && $warga->$field == 1 ? 'checked' : '' }}>
+                                                                <label class="form-check-label">Ya</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="{{ $field }}"
+                                                                    value="0"
+                                                                    {{ isset($warga) && $warga->$field == 0 ? 'checked' : '' }}>
+                                                                <label class="form-check-label">Tidak</label>
+                                                            </div>
+
                                                         </div>
                                                     </div>
-                                                </div>
-                                                </div>
+                                                    </div>
                                                 @endforeach
                                             <div class="col-md-6">
                                                 <div class="mb-3">
