@@ -61,8 +61,8 @@
                     </div>
 
                     <h1 class="mb-4">
-                        Backup Today, <br>
-                        <span class="accent-text">Recover Tomorrow</span>
+                        PKK
+                        <span class="accent-text">Bandarsono</span>
                     </h1>
 
                     <p class="mb-4 mb-md-5">
@@ -143,24 +143,18 @@
 
           <div class="col-xl-12" data-aos="fade-up" data-aos-delay="200">
             <span class="about-meta">Tentang Kami</span>
-            <h2 class="about-title">TTIS Tebing Tinggi</h2>
-            <p class="about-description">Tim Tanggap Insiden Siber (TTIS) Pemko Tebing Tinggi adalah tim tanggap insiden keamanan siber yang dibentuk oleh Pemerintah Kota Tebing Tinggi untuk meningkatkan ketahanan digital dan mengamankan infrastruktur teknologi informasi. Kami berperan sebagai garda terdepan dalam mendeteksi, merespons, dan mengatasi insiden keamanan siber yang dapat mengancam sistem informasi di lingkungan pemerintahan dan masyarakat Kota Tebing Tinggi.</p>
-            <h4 class="about-title">Visi</h4>
-            <p class="about-description">Menjadi tim respons insiden keamanan siber yang andal dan proaktif dalam melindungi sistem informasi serta data digital di Kota Tebing Tinggi.</p>
-            <h4 class="about-title">Misi</h4>
-
+            <h2 class="about-title">Tujuan Utama</h2>
+            <p class="about-description">Bertujuan memberdayakan keluarga agar dapat hidup sejahtera, maju, dan mandiri, serta terwujudnya keluarga yang beriman bertaqwa, berakhlak mulia, sehat, serta memiliki kesetaraan gender dan kesadaran hukum serta lingkungan.</p>
+            <h4 class="about-title">Peran dan Fungsi</h4>
             <div class="row feature-list-wrapper">
               <div class="col-md-12">
                 <ul class="feature-list">
-                  <li><i class="bi bi-check-circle-fill"></i> Deteksi & Respons – Mengidentifikasi, menganalisis, dan menangani insiden keamanan siber dengan cepat dan tepat.</li>
-                  <li><i class="bi bi-check-circle-fill"></i> Edukasi & Kesadaran – Meningkatkan kesadaran keamanan siber melalui pelatihan, seminar, dan publikasi informasi.</li>
-                  <li><i class="bi bi-check-circle-fill"></i> Kolaborasi & Koordinasi – Bekerja sama dengan TTIS nasional, instansi pemerintah, serta sektor swasta dalam mitigasi ancaman siber.</li>
-                  <li><i class="bi bi-check-circle-fill"></i> Perlindungan Data & Infrastruktur – Memastikan keamanan data dan infrastruktur digital melalui kebijakan dan teknologi yang tepat.</li>
-
+                  <li><i class="bi bi-check-circle-fill"></i> ⁠Sebagai mitra kerja pemerintah kelurahan dan organisasi kemasyarakatan, membantu dalam meningkatkan kesejahteraan keluarga dan menumbuhkan potensi perempuan untuk meningkatkan pendapatan keluarga.</li>
+                  <li><i class="bi bi-check-circle-fill"></i> ⁠Berfungsi sebagai fasilitator, perencana, pelaksana, pengendali, pembina, penyuluh, dan motivator dalam menjalankan program PKK, serta menampung dan menyalurkan aspirasi masyarakat.</li>
                 </ul>
               </div>
-
             </div>
+            
 
           </div>
 
@@ -174,8 +168,8 @@
     <section id="features-cards" class="features-cards section">
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Implementasi TTIS Pemko Tebing Tinggi</h2>
-        <p>Untuk memastikan TTIS Pemko Tebing Tinggi berfungsi secara optimal, berikut adalah pelaksanaan yang akan diterapkan:</p>
+        <h2>Tugas Khusus</h2>
+        <p>Berikut merupakan empat tugas khusus yang menjadi bagian dari pelaksanaan kegiatan Tim Penggerak PKK Kelurahan Bandarsono dalam mendukung pemberdayaan dan kesejahteraan keluarga.</p>
       </div><!-- End Section Title -->
       <div class="container">
 
@@ -183,33 +177,40 @@
 
           <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
             <div class="feature-box orange">
-              <span class="material-symbols-outlined">assured_workload</span>
-              <h4>Ketahanan Siber Pemerintah dan Infrastruktur Publik</h4>
-              <p>TTIS bertanggung jawab dalam mendeteksi, merespons, dan memitigasi insiden keamanan siber yang mengancam sistem pemerintahan. Dengan penerapan standar keamanan dan pemantauan real-time, layanan digital seperti e-Government, Smart City, dan e-Health dapat beroperasi dengan aman dan terpercaya.</p>
+              <!-- <span class="material-symbols-outlined">assured_workload</span> -->
+              <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/planning.svg') }}" style="width:60px;height:60px;color:#edb86e;"></span>
+
+              <h4>Perencanaan Program Kerja</h4>
+              <p>Menyusun rencana kerja sesuai dengan kebijakan daerah dan melaksanakannya sesuai jadwal</p>
             </div>
           </div><!-- End Feature Borx-->
 
           <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
             <div class="feature-box blue">
-            <span class="material-symbols-outlined">monitoring</span>
-              <h4>Kepercayaan Publik & Ekonomi Digital yang Lebih Kuat</h4>
-              <p>Keamanan siber yang baik akan meningkatkan kepercayaan masyarakat dan dunia usaha terhadap layanan digital. Dengan edukasi publik, audit keamanan untuk UMKM, dan kerja sama dengan sektor swasta, TTTIS dapat menjadi pilar dalam mendorong pertumbuhan ekonomi digital yang lebih aman dan berkelanjutan.</p>
+            <!-- <span class="material-symbols-outlined">monitoring</span> -->
+              <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/teamwork.svg') }}" style="width:60px;height:60px;color:#edb86e;"></span>
+              <h4>Pemberdayaan dan Penggerakan Masyarakat</h4>
+              <p>Menyuluh dan menggerakkan masyarakat di tingkat RW, RT, dan dasa wisma, serta menggali dan mengembangkan potensi keluarga</p>
             </div>
           </div><!-- End Feature Borx-->
 
           <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
             <div class="feature-box green">
-            <span class="material-symbols-outlined">globe</span>
-              <h4>Pencegahan Ancaman Global & Kejahatan Siber Nasional</h4>
-              <p>Sebagai benteng pertahanan digital daerah, TTTIS akan membangun sistem deteksi dini terhadap ancaman siber, menyediakan layanan pengaduan insiden, serta berkoordinasi dengan TTIS nasional. Hal ini memastikan respons cepat terhadap serangan siber dan mendukung penegakan hukum di bidang kejahatan digital.</p>
+            <!-- <span class="material-symbols-outlined">globe</span> -->
+              <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/education.svg') }}" style="width:60px;height:60px;color:#edb86e;"></span>
+
+              <h4>Pembinaan dan Kolaborasi Program</h4>
+              <p>Melaksanakan penyuluhan, pembinaan, serta berpartisipasi dalam program instansi terkait kesejahteraan keluarga</p>
             </div>
           </div><!-- End Feature Borx-->
 
           <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
             <div class="feature-box red">
-            <span class="material-symbols-outlined">deployed_code_account</span>
-              <h4>Peningkatan SDM & Kesadaran Keamanan Siber</h4>
-              <p>TTTIS akan aktif dalam melatih dan mengembangkan talenta keamanan siber melalui pelatihan, sertifikasi, dan simulasi serangan. Dengan membangun ekosistem yang mendukung, TTTIS dapat menciptakan tenaga ahli keamanan siber lokal dan meningkatkan kesadaran masyarakat terhadap ancaman digital.</p>
+            <!-- <span class="material-symbols-outlined">deployed_code_account</span> -->
+              <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/document.svg') }}" style="width:60px;height:60px;color:#edb86e;"></span>
+
+              <h4>Administrasi dan Pelaporan Kegiatan</h4>
+              <p>Membuat laporan kegiatan dan menjalankan administrasi yang tertib</p>
             </div>
           </div><!-- End Feature Borx-->
 
@@ -231,12 +232,23 @@
             <div class="feature-item text-end mb-5" data-aos="fade-right" data-aos-delay="200">
               <div class="d-flex align-items-center justify-content-end gap-4">
                 <div class="feature-content">
-                  <h4>Gunakan Password yang Kuat dan Unik</h4>
-                  <p>Kombinasikan huruf besar, huruf kecil, angka, dan simbol.<br>
-                 Jangan gunakan kata sandi yang sama untuk banyak akun.</p>
+                  <h4>Penghayatan Pancasila</h4>
+                  <p>Kegiatan penyuluhan tentang nilai-nilai Pancasila, upacara peringatan hari besar nasional, serta kegiatan keagamaan bersama.</p>
                 </div>
                 <div class="feature-icon flex-shrink-0">
-                <span class="material-symbols-outlined">lock</span>
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg10/garuda.svg') }}" style="width:60px;height:60px;color:#edb86e;"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item text-end mb-5" data-aos="fade-right" data-aos-delay="300">
+              <div class="d-flex align-items-center justify-content-end gap-4">
+                <div class="feature-content">
+                  <h4>Pendidikan dan Keterampilan</h4>
+                  <p>Pelatihan keterampilan seperti menjahit, memasak, membuat kerajinan tangan, atau mengelola usaha kecil; juga penyuluhan tentang pentingnya pendidikan bagi anak-anak dan keluarga</p>
+                </div>
+                <div class="feature-icon flex-shrink-0">
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg10/learning.svg') }}" style="width:60px;height:60px;color:#034971;"></span>
                 </div>
               </div>
             </div><!-- End .feature-item -->
@@ -244,23 +256,35 @@
             <div class="feature-item text-end mb-5" data-aos="fade-right" data-aos-delay="300">
               <div class="d-flex align-items-center justify-content-end gap-4">
                 <div class="feature-content">
-                  <h4>Aktifkan Autentikasi Dua Faktor (2FA) </h4>
-                  <p>Tambahkan lapisan keamanan ekstra agar akun lebih sulit diretas.</p>
+                  <h4>Kesehatan</h4>
+                  <p>Posyandu untuk anak dan ibu hamil, penyuluhan tentang pola makan sehat, penanaman kesadaran akan kesehatan reproduksi, serta kegiatan pemeriksaan kesehatan massal</p>
                 </div>
                 <div class="feature-icon flex-shrink-0">
-                <span class="material-symbols-outlined">vpn_key</span>
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg10/health.svg') }}" style="width:60px;height:60px;color:#034971;"></span>
                 </div>
               </div>
             </div><!-- End .feature-item -->
 
-            <div class="feature-item text-end" data-aos="fade-right" data-aos-delay="400">
+            <div class="feature-item text-end mb-5" data-aos="fade-right" data-aos-delay="400">
               <div class="d-flex align-items-center justify-content-end gap-4">
                 <div class="feature-content">
-                  <h4>Waspada terhadap Phishing</h4>
-                  <p>Jangan asal klik tautan atau membuka lampiran dari email dan pesan mencurigakan.</p>
+                  <h4>Pangan</h4>
+                  <p>Pembuatan makanan olahan lokal, pelatihan budidaya tanaman sayuran atau hewan ternak skala kecil, serta penyuluhan tentang gizi seimbang</p>
                 </div>
                 <div class="feature-icon flex-shrink-0">
-                <span class="material-symbols-outlined">destruction</span>
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg10/agriculture.svg') }}" style="width:60px;height:60px;color:#034971;"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item text-end mb-5" data-aos="fade-right" data-aos-delay="400">
+              <div class="d-flex align-items-center justify-content-end gap-4">
+                <div class="feature-content">
+                  <h4>Sandang</h4>
+                  <p>Penyuluhan tentang perawatan pakaian, pembuatan pakaian atau aksesoris, serta kegiatan pengumpulan dan pembagian pakaian bekas yang masih layak pakai</p>
+                </div>
+                <div class="feature-icon flex-shrink-0">
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg10/clothes.svg') }}" style="width:60px;height:60px;color:#034971;"></span>
                 </div>
               </div>
             </div><!-- End .feature-item -->
@@ -269,7 +293,7 @@
 
           <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
             <div class="phone-mockup text-center">
-              <img src="{{ asset('storage/dashboards/img/baru/phonesec.png')}}" alt="Phone Mockup" class="img-fluid">
+              <img src="{{ asset('storage/assets/images/logos/logo_pkk.png')}}" alt="Phone Mockup" class="img-fluid">
             </div>
           </div><!-- End Phone Mockup -->
 
@@ -278,12 +302,12 @@
             <div class="feature-item mb-5" data-aos="fade-left" data-aos-delay="200">
               <div class="d-flex align-items-center gap-4">
                 <div class="feature-icon flex-shrink-0">
-                <span class="material-symbols-outlined">deployed_code_history</span>
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg10/house.svg') }}" style="width:60px;height:60px;color:#f6c103;"></span>
                   <!-- <i class="material-icons">history</i> -->
                 </div>
                 <div class="feature-content">
-                  <h4>Perbarui Perangkat dan Aplikasi Secara Berkala</h4>
-                  <p>Pastikan sistem operasi dan aplikasi selalu dalam versi terbaru untuk menutup celah keamanan.</p>
+                  <h4>Perumahan dan Tata Laksana Rumah Tangga</h4>
+                  <p>Penyuluhan tentang manajemen keuangan rumah tangga, penataan ruang hunian yang sehat, serta kegiatan gotong royong membersihkan lingkungan rumah atau wilayah RT/RW</p>
                 </div>
               </div>
             </div><!-- End .feature-item -->
@@ -291,23 +315,46 @@
             <div class="feature-item mb-5" data-aos="fade-left" data-aos-delay="300">
               <div class="d-flex align-items-center gap-4">
                 <div class="feature-icon flex-shrink-0">
-                <span class="material-symbols-outlined">person_alert</span>
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg10/environment.svg') }}" style="width:60px;height:60px;color:#f6c103;"></span>
                 </div>
                 <div class="feature-content">
-                  <h4>Batasi Informasi Pribadi di Media Sosial</h4>
-                  <p>Jangan sembarangan membagikan data sensitif seperti alamat, nomor telepon, atau identitas lainnya.</p>
+                  <h4>Kelestarian Lingkungan Hidup</h4>
+                  <p>Penanaman pohon, pembuatan taman keluarga, penyuluhan tentang pengelolaan sampah, serta kegiatan pembersihan sungai atau kawasan umum</p>
                 </div>
               </div>
             </div><!-- End .feature-item -->
 
-            <div class="feature-item" data-aos="fade-left" data-aos-delay="400">
+            <div class="feature-item mb-5" data-aos="fade-left" data-aos-delay="400">
               <div class="d-flex align-items-center gap-4">
                 <div class="feature-icon flex-shrink-0">
-                <span class="material-symbols-outlined">health_and_safety</span>
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg10/teamwork.svg') }}" style="width:60px;height:60px;color:#f6c103;"></span>
                 </div>
                 <div class="feature-content">
-                  <h4>Gunakan Jaringan Internet yang Aman</h4>
-                  <p>Hindari akses data sensitif melalui Wi-Fi publik tanpa VPN.</p>
+                  <h4>Gotong Royong</h4>
+                  <p>Kegiatan kerja bakti bersama masyarakat untuk memperbaiki fasilitas umum seperti jalan kecil, tempat ibadah, atau taman; juga acara silaturahmi antar keluarga</p>
+                </div>
+              </div>
+            </div>
+            <div class="feature-item mb-5" data-aos="fade-left" data-aos-delay="300">
+              <div class="d-flex align-items-center gap-4">
+                <div class="feature-icon flex-shrink-0">
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg10/finance.svg') }}" style="width:60px;height:60px;color:#f6c103;"></span>
+                </div>
+                <div class="feature-content">
+                  <h4>Pengembangan Koperasi</h4>
+                  <p>Pendirian atau pengembangan koperasi simpan pinjam atau koperasi produk lokal untuk meningkatkan ekonomi keluarga</p>
+                </div>
+              </div>
+            </div><!-- End .feature-item -->
+
+            <div class="feature-item mb-5" data-aos="fade-left" data-aos-delay="400">
+              <div class="d-flex align-items-center gap-4">
+                <div class="feature-icon flex-shrink-0">
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg10/famili.svg') }}" style="width:60px;height:60px;color:#f6c103;"></span>
+                </div>
+                <div class="feature-content">
+                  <h4>Perencanaan Sehat</h4>
+                  <p>Penyuluhan tentang keluarga berencana, hak dan kewajiban keluarga, serta kesetaraan gender dalam rumah tangga</p>
                 </div>
               </div>
             </div><!-- End .feature-item -->
@@ -480,9 +527,9 @@
                 <span class="material-symbols-outlined">location_on</span>
                 </div>
                 <div class="content">
-                  <h4>Alamat Kantor</h4>
-                  <p>Jl. Imam Bonjol No.1A, Satria, Kec. Padang Hilir,</p>  
-                  <p>Kota Tebing Tinggi, Sumatera Utara</p>
+                  <h4>Alamat Kantor Lurah Bandarsono</h4>
+                  <p>Jl. Damai No. 8, Bandar Sono, Kec. Padang Hulu</p>  
+                  <p>Kota Tebing Tinggi, Sumatera Utara - 20631</p>
                 </div>
               </div>
               <div class="info-item" data-aos="fade-up" data-aos-delay="500">
@@ -491,8 +538,8 @@
                 </div>
                 <div class="content">
                   <h4>Email</h4>
-                  <p>diskominfo@tebingtinggikota.go.id</p>
-                  <p>info@tebingtinggikota.go.id</p>
+                  <p>ppkbandarsono@gmail.com</p>
+                  <!-- <p>info@tebingtinggikota.go.id</p> -->
                 </div>
               </div>
             </div>

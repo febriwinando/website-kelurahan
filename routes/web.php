@@ -18,6 +18,9 @@ use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 
+// Beranda SI-AP
+Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+
 // Jabatan
 Route::resource('/jabatan-anggota', JabatanAnggotaTimPenggerakPKKController::class);
 
@@ -71,7 +74,7 @@ Route::middleware(['auth', 'role:administrator,user'])->group(function () {
 });
 
 
-Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/masuk', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
 
