@@ -52,6 +52,7 @@
                 <span class="hide-menu">Tambah Warga TP-PKK</span>
               </a>
             </li>
+            
             @endrole
             @role('administrator', 'user', 'verifikator')
             <li class="sidebar-item">
@@ -61,6 +62,24 @@
                   {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
                 </span>
                 <span class="hide-menu">Data Warga TP-PKK</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/dasawisma/create" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/pencatatan.svg') }}">
+                  {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
+                </span>
+                <span class="hide-menu">Pendataan Warga</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/dasawisma" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/datadasawisma.svg') }}">
+                  {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
+                </span>
+                <span class="hide-menu">Data Dasawisma</span>
               </a>
             </li>
             @endrole

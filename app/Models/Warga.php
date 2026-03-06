@@ -49,4 +49,10 @@ class Warga extends Model
         'ikut_koperasi' => 'boolean',
     ];
 
+
+    public function dasawisma()
+    {
+        return $this->hasMany(DasawismaWarga::class, 'no_kk', 'no_kk');
+    }
+
 }

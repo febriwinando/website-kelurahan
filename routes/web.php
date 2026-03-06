@@ -12,12 +12,11 @@ use App\Http\Controllers\NotulenController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\WargaController;
+use App\Http\Controllers\DasawismaWargaController;
+
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
-
-// Route::get('/', [BerandaController::class, 'index']);
-// Route::get('/masuk', [AnggotaTimPenggerakPKKController::class, 'index']);
 
 // Jabatan
 Route::resource('/jabatan-anggota', JabatanAnggotaTimPenggerakPKKController::class);
@@ -50,18 +49,21 @@ Route::resource('kegiatan', KegiatanController::class);
 Route::post('/warga/store', [WargaController::class, 'store'])->name('warga.store');
 Route::resource('warga', WargaController::class);
 
+// Dasawisma Warga
+Route::resource('dasawisma', DasawismaWargaController::class);
 
-Route::get('/get-kabupaten/{provinsi_id}', function ($provinsi_id) {
-    return Kabupaten::where('provinsi_id', $provinsi_id)->get();
-});
 
-Route::get('/get-kecamatan/{kabupaten_id}', function ($kabupaten_id) {
-    return Kecamatan::where('kabupaten_id', $kabupaten_id)->get();
-});
+// Route::get('/get-kabupaten/{provinsi_id}', function ($provinsi_id) {
+//     return Kabupaten::where('provinsi_id', $provinsi_id)->get();
+// });
 
-Route::get('/get-kelurahan/{kecamatan_id}', function ($kecamatan_id) {
-    return Kelurahan::where('kecamatan_id', $kecamatan_id)->get();
-});
+// Route::get('/get-kecamatan/{kabupaten_id}', function ($kabupaten_id) {
+//     return Kecamatan::where('kabupaten_id', $kabupaten_id)->get();
+// });
+
+// Route::get('/get-kelurahan/{kecamatan_id}', function ($kecamatan_id) {
+//     return Kelurahan::where('kecamatan_id', $kecamatan_id)->get();
+// });
 
 
 Route::middleware(['auth', 'role:administrator,user'])->group(function () {
@@ -77,10 +79,6 @@ Route::get('/get-kabupaten/{provinsi}', [WargaController::class, 'kabupaten']);
 Route::get('/get-kecamatan/{kabupaten}', [WargaController::class, 'kecamatan']);
 Route::get('/get-kelurahan/{kecamatan}', [WargaController::class, 'kelurahan']);
 
-
-// use App\Models\Kabupaten;
-// use App\Models\Kecamatan;
-// use App\Models\Kelurahan;
 
 Route::get('/kabupaten/{provinsi_id}', function ($provinsi_id) {
     return Kabupaten::where('provinsi_id', $provinsi_id)->get();
