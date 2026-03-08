@@ -70,22 +70,21 @@
 
                                         <div class="col-md-6 mb-3">
                                             <label>No KK</label>
-                                            <select name="no_kk" class="form-control" required>
+                                            <select name="no_kk" class="selectpicker form-control no_kk_insert" id="no_kk" data-live-search="true" required>
                                                 <option value="">Pilih No KK</option>
                                                 @foreach($wargas as $warga)
-                                                    <option value="{{ $warga->no_kk }}">
-                                                        {{ $warga->no_kk }} - {{ $warga->nama_kepala_keluarga }}
+                                                    <option value="{{ $warga->no_kk }}" data-nama="{{ $warga->nama_kepala_keluarga }}">
+                                                        {{ $warga->no_kk }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label>Nama Keluarga</label>
-                                            <input type="text" name="nama_keluarga" class="form-control">
+                                            <input type="text" name="nama_keluarga" id="nama_keluarga" class="form-control">
                                         </div>
 
                                         </div>
-
 
                                         <hr>
 
@@ -93,35 +92,35 @@
 
                                         <div class="row">
 
-                                        <div class="col-md-2 mb-3">
-                                        <label>Balita</label>
-                                        <input type="number" name="balita" class="form-control">
-                                        </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label>Balita</label>
+                                                <input type="number" name="balita" class="form-control">
+                                            </div>
 
-                                        <div class="col-md-2 mb-3">
-                                        <label>PUS</label>
-                                        <input type="number" name="pus" class="form-control">
-                                        </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label>PUS</label>
+                                                <input type="number" name="pus" class="form-control">
+                                            </div>
 
-                                        <div class="col-md-2 mb-3">
-                                        <label>WUS</label>
-                                        <input type="number" name="wus" class="form-control">
-                                        </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label>WUS</label>
+                                                <input type="number" name="wus" class="form-control">
+                                            </div>
 
-                                        <div class="col-md-2 mb-3">
-                                        <label>Ibu Hamil</label>
-                                        <input type="number" name="ibu_hamil" class="form-control">
-                                        </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label>Ibu Hamil</label>
+                                                <input type="number" name="ibu_hamil" class="form-control">
+                                            </div>
 
-                                        <div class="col-md-2 mb-3">
-                                        <label>Ibu Menyusui</label>
-                                        <input type="number" name="ibu_menyusui" class="form-control">
-                                        </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label>Ibu Menyusui</label>
+                                                <input type="number" name="ibu_menyusui" class="form-control">
+                                            </div>
 
-                                        <div class="col-md-2 mb-3">
-                                        <label>Lansia</label>
-                                        <input type="number" name="lansia" class="form-control">
-                                        </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label>Lansia</label>
+                                                <input type="number" name="lansia" class="form-control">
+                                            </div>
 
                                         </div>
 
@@ -132,25 +131,25 @@
 
                                         <div class="row">
 
-                                        <div class="col-md-3">
-                                        <label>Sehat</label>
-                                        <input type="number" name="rumah_sehat" class="form-control">
-                                        </div>
+                                            <div class="col-md-3">
+                                                <label>Sehat</label>
+                                                <input type="number" name="rumah_sehat" class="form-control">
+                                            </div>
 
-                                        <div class="col-md-3">
-                                        <label>Kurang Sehat</label>
-                                        <input type="number" name="rumah_kurang_sehat" class="form-control">
-                                        </div>
+                                            <div class="col-md-3">
+                                                <label>Kurang Sehat</label>
+                                                <input type="number" name="rumah_kurang_sehat" class="form-control">
+                                            </div>
 
-                                        <div class="col-md-3">
-                                        <label>Memiliki TPS</label>
-                                        <input type="number" name="memiliki_tps" class="form-control">
-                                        </div>
+                                            <div class="col-md-3">
+                                                <label>Memiliki TPS</label>
+                                                <input type="number" name="memiliki_tps" class="form-control">
+                                            </div>
 
-                                        <div class="col-md-3">
-                                        <label>Pembuangan Sampah</label>
-                                        <input type="number" name="pembuangan_sampah" class="form-control">
-                                        </div>
+                                            <div class="col-md-3">
+                                                <label>Pembuangan Sampah</label>
+                                                <input type="number" name="pembuangan_sampah" class="form-control">
+                                            </div>
 
                                         </div>
 
@@ -159,7 +158,7 @@
 
                                         <h5>Sumber Air</h5>
 
-                                        <div class="row">
+                                        <!-- <div class="row">
 
                                         <div class="col-md-3">
                                         <label>PDAM</label>
@@ -181,27 +180,71 @@
                                         <input type="number" name="lainnya_air" class="form-control">
                                         </div>
 
-                                        </div>
+                                        </div> -->
 
+                                        <div class="row">
+
+                                            <div class="col-md-3">
+                                                <label>
+                                                    <input type="checkbox" name="pdam" value="1"    >
+                                                    PDAM
+                                                </label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>
+                                                    <input type="checkbox" name="sumur" value="1">
+                                                    Sumur
+                                                </label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>
+                                                    <input type="checkbox" name="sungai" value="1">
+                                                    Sungai
+                                                </label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>
+                                                    <input type="checkbox" name="lainnya_air" value="1">
+                                                    Lainnya
+                                                </label>
+                                            </div>
+
+                                        </div>
 
                                         <hr>
 
                                         <h5>Makanan Pokok</h5>
 
                                         <div class="row">
+                                            <div class="col-md-3">
+                                                <label>Beras</label>
+                                                <input type="number" name="beras" class="form-control">
+                                            </div>
 
-                                        <div class="col-md-3">
-                                        <label>Beras</label>
-                                        <input type="number" name="beras" class="form-control">
+                                            <div class="col-md-3">
+                                                <label>Non Beras</label>
+                                                <input type="number" name="non_beras" class="form-control">
+                                            </div>
                                         </div>
 
-                                        <div class="col-md-3">
-                                        <label>Non Beras</label>
-                                        <input type="number" name="non_beras" class="form-control">
-                                        </div>
 
-                                        </div>
+                                        <hr>
+                                        <h5>Kegiatan Warga</h5>
 
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label>UP2K</label>
+                                                <input type="number" name="beras" class="form-control">
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>Industri Rumah Tangga</label>
+                                                <input type="number" name="non_beras" class="form-control">
+                                            </div>
+                                        </div>
 
                                         <hr>
 
@@ -219,4 +262,5 @@
             {{-- @endif --}}
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>
 
+            
         @endsection

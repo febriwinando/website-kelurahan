@@ -32,10 +32,10 @@
                     <ul>
                     <li><a href="#beranda" class="active">Beranda</a></li>
                     <li><a href="#profil">Profil</a></li>
-                    <li><a href="#artikel">Artikel</a></li>
-                    <li><a href="#peraturan">Peraturan</a></li>
+                    <li><a href="#tugas">Tugas</a></li>
+                    <li><a href="#program">Program</a></li>
                     
-                    <li><a href="#lapor">Kontak dan Lapor</a></li>
+                    <li><a href="#lapor">Kontak</a></li>
                     </ul>
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
                 </nav>
@@ -53,78 +53,95 @@
         <div class="container" data-aos="fade-up" data-aos-delay="150">
 
             <div class="row align-items-center">
+                          <div class="col-lg-6">
+                <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
+                    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="{{ asset('storage/assets/images/products/gb1.jpg') }}" class="d-block w-100" alt="pkk1">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{{ asset('storage/assets/images/products/bg2.jpg') }}" class="d-block w-100" alt="pkk2">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{{ asset('storage/assets/images/products/bg3.jpg') }}" class="d-block w-100" alt="pkk3">
+                        </div>
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                    <!-- <img src="{{ asset('storage/dashboards/img/baru/section1.png')}}" alt="Hero Image" class="img-fluid"> -->
+                </div>
+            </div>
                 <div class="col-lg-6">
                     <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
-                    <div class="company-badge mb-4">
-                    <span class="material-symbols-outlined">speaker_notes</span>
-                        Lapor Insiden Siber
-                    </div>
-
                     <h1 class="mb-4">
                         PKK
                         <span class="accent-text">Bandarsono</span>
                     </h1>
 
                     <p class="mb-4 mb-md-5">
-                    "Hadapi Ancaman, Jangan Diam! Jika terjadi insiden siber terhadap layanan Pemerintah Kota Tebing Tinggi, segera laporkan ke TTIS untuk tindakan cepat dan tepat. Keamanan digital adalah tanggung jawab bersama!"
+                    SI-AP Bandarsono (Sistem Informasi Administrasi dan Pelayanan PKK Bandarsono) adalah platform digital yang digunakan untuk memudahkan pengelolaan administrasi PKK, pendataan warga, serta pelaporan kegiatan secara lebih tertib, cepat, dan terintegrasi di Kelurahan Bandarsono.
                     </p>
 
                     <div class="hero-buttons">
-                        <a href="#lapor" class="btn btn-primary me-0 me-sm-2 mx-1">LAPORKAN</a>
+                        <a href="#lapor" class="btn btn-primary me-0 me-sm-2 mx-1">Hubungi</a>
 
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
-                    <img src="{{ asset('storage/dashboards/img/baru/section1.png')}}" alt="Hero Image" class="img-fluid">
-                </div>
-            </div>
+
         </div>
 
         <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
             <div class="col-lg-3 col-md-6">
                 <div class="stat-item">
                 <div class="stat-icon">
-                <span class="material-symbols-outlined">dns</span>
+                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/team.svg') }}" style="width:40px;height:40px;"></span>
                 </div>
                 <div class="stat-content">
-                    <h4>Domain</h4>
-                    <p class="mb-0">tebingtinggikota.go.id</p>
+                    <h4>Anggota PKK</h4>
+                    <p class="mb-0">38 anggota/pengurus</p>
                 </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                     <div class="stat-item">
                         <div class="stat-icon">
-                            <span class="material-symbols-outlined">host</span>
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/map.svg') }}" style="width:40px;height:40px;"></span>
                         </div>
                         <div class="stat-content">
-                            <h4>Server</h4>
-                            <p class="mb-0">Terdapat 50 Server</p>
+                            <h4>Luas Wilayah</h4>
+                            <p class="mb-0">1,3970 km<sup>2</sup></p>
                         </div>
                     </div>
             </div>
             <div class="col-lg-3 col-md-6">
                     <div class="stat-item">
                         <div class="stat-icon">
-                            <span class="material-symbols-outlined">vpn_lock</span>
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/district.svg') }}" style="width:40px;height:40px;"></span>
                         </div>
                         <div class="stat-content">
-                            <h4>VPN</h4>
-                            <p class="mb-0">Akses Aman dan Terenkripsi</p>
+                            <h4>Lingkungan</h4>
+                            <p class="mb-0">9 Lingkungan</p>
                         </div>
                     </div>
             </div>
             <div class="col-lg-3 col-md-6">
                     <div class="stat-item">
                         <div class="stat-icon">
-                            <span class="material-symbols-outlined">encrypted</span>
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/community.svg') }}" style="width:40px;height:40px;"></span>
                         </div>
                         <div class="stat-content">
-                            <h4>SSL</h4>
-                            <p class="mb-0">Komunikasi Terenkripsi</p>
+                            <h4>Dasawisma</h4>
+                            <p class="mb-0">Jumlah Dasawisma</p>
                         </div>
                     </div>
             </div>
@@ -143,6 +160,22 @@
 
           <div class="col-xl-12" data-aos="fade-up" data-aos-delay="200">
             <span class="about-meta">Tentang Kami</span>
+            <h2 class="about-title">Visi Umum PKK Kelurahan</h2>
+            <p class="about-description">Terwujudnya keluarga yang beriman dan bertaqwa kepada Tuhan Yang Maha Esa, berakhlak mulia, sehat, sejahtera, maju, dan mandiri, serta memiliki kesetaraan gender, kesadaran hukum, dan kepedulian terhadap lingkungan</p>
+            <h2 class="about-title">Misi Umum PKK Kelurahan</h2>
+            <div class="row feature-list-wrapper">
+              <div class="col-md-12">
+                <ul class="feature-list">
+                  <li><i class="bi bi-check-circle-fill"></i> Meningkatkan penghayatan nilai-nilai Pancasila, gotong royong, dan sikap saling menghargai dalam kehidupan keluarga dan masyarakat.</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Meningkatkan kualitas hidup keluarga di bidang pangan, sandang, perumahan, pendidikan, dan kesehatan.</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Mengembangkan potensi ekonomi keluarga melalui pelatihan keterampilan dan pengembangan koperasi atau usaha kecil.</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Menumbuhkan kesadaran akan pentingnya kelestarian lingkungan dan perencanaan keluarga sehat.</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Mengelola kegiatan PKK secara terstruktur dan sesuai dengan kebutuhan masyarakat lokal.</li>
+
+                </ul>
+              </div>
+            </div>
+            <p class="about-description">Bertujuan memberdayakan keluarga agar dapat hidup sejahtera, maju, dan mandiri, serta terwujudnya keluarga yang beriman bertaqwa, berakhlak mulia, sehat, serta memiliki kesetaraan gender dan kesadaran hukum serta lingkungan.</p>
             <h2 class="about-title">Tujuan Utama</h2>
             <p class="about-description">Bertujuan memberdayakan keluarga agar dapat hidup sejahtera, maju, dan mandiri, serta terwujudnya keluarga yang beriman bertaqwa, berakhlak mulia, sehat, serta memiliki kesetaraan gender dan kesadaran hukum serta lingkungan.</p>
             <h4 class="about-title">Peran dan Fungsi</h4>
@@ -165,7 +198,7 @@
     </section><!-- /About Section -->
 
     <!-- Features Cards Section -->
-    <section id="features-cards" class="features-cards section">
+    <section id="tugas" class="features-cards section">
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Tugas Khusus</h2>
@@ -221,10 +254,12 @@
     </section><!-- /Features Cards Section -->
 
     <!-- Features 2 Section -->
-    <section id="features-2" class="features-2 section">
+    <section id="program" class="features-2 section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
+        <div class="container section-title" data-aos="fade-up">
+          <h2>10 Program Pokok</h2>
+        </div>
         <div class="row align-items-center">
 
           <div class="col-lg-4">
@@ -368,145 +403,6 @@
     </section><!-- /Features 2 Section -->
 
 
-    <!-- Testimonials Section -->
-    <section id="artikel" class="testimonials section light-background">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Artikel</h2>
-        <p>Artikel seputar keamanan informasi dan siber.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row g-5">
-          {{-- @php $delay = 100; @endphp
-          @foreach ($artikels as $index => $artikel)
-            <div class="col-lg-3" data-aos="fade-up" data-aos-delay="{{ $delay }}">
-              <div class="testimonial-item">
-                <img src="{{ asset($artikel->gambar)}}" class="testimonial-img mb-3 wv-100" alt="">
-                <h3>{{ $artikel->judul}}</h3>
-                <div class="artikel-sumber text-body-tertiary mb-3" style="font-size:12px;">Sumber: {{ $artikel->sumber }}</div>
-
-                <p class="mb-2">
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>{!! \Illuminate\Support\Str::limit(strip_tags($artikel->konten), 50) !!}</span>
-                  <div class="d-none artikel-konten">{!! $artikel->konten !!}</div>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-                <a href="#{{$artikel->id}}" class="read-more d-inline-flex align-items-center gap-1 text-decoration-none mt-2">
-                  <span class="material-symbols-outlined">open_in_full</span>
-                  <span>Baca</span>
-                </a>
-              </div>
-            </div>
-            @php
-            $delay += 100;
-            if (($index + 1) % 4 === 0) {
-                $delay = 100;
-            }
-            @endphp
-          @endforeach --}}
-
-        </div>
-        <div class="mt-3">
-          {{-- {{ $artikels->links() }} --}}
-        </div>
-      </div>
-
-    </section>
-<!-- Modal Artikel -->
-    <div class="modal fade " id="artikelModal" tabindex="-1" aria-labelledby="artikelModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="artikelModalLabel">Judul Artikel</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-          </div>
-          <div class="modal-body">
-            <img id="modalGambar" class="img-fluid rounded mb-3" style="margin:auto;" src="" alt="Gambar Artikel">
-            <div class="fs-6 fw-light text-body-tertiary mb-3" id="sumberArtikel"></div>
-            <div id="kontenArtikel"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    
-    <section id="peraturan" class="services section light-background">
-
-
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Kebijakan</h2>
-        <p>Halaman ini berisi aturan dan pedoman keamanan informasi pemerintah.</p>
-      </div>
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row g-4">
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-card d-flex">
-              <div class="icon flex-shrink-0">
-              <span class="material-symbols-outlined">gavel</span>
-              </div>
-              <div>
-                <h3>Peraturan Walikota Keamanan Informasi</h3>
-                <p>Peraturan Walikota tentang Keamanan Informasi merupakan regulasi yang mengatur perlindungan dan pengelolaan informasi di lingkungan Pemerintah Kota guna mencegah ancaman siber, kebocoran data, serta penyalahgunaan informasi. Peraturan ini menetapkan standar keamanan sistem elektronik, tata kelola akses, serta kewajiban perangkat daerah dalam menjaga kerahasiaan, integritas, dan ketersediaan informasi.</p>
-                <a href="" onclick="unduhPDF('perwa-pedoman-pelaksanaan-manajemen-keamanan-informasi-spbe.pdf')" class="read-more"><span class="material-symbols-outlined">file_save</span> Unduh </a>
-                <!-- <button class="btn btn-outline-primary" onclick="unduhPDF('perwa-pedoman-pelaksanaan-manajemen-keamanan-informasi-spbe.pdf')">
-                  <i class="mdi mdi-download"></i> Unduh PDF
-                </button> -->
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-card d-flex">
-              <div class="icon flex-shrink-0">
-              <span class="material-symbols-outlined">drag_indicator</span>
-              </div>
-              <div>
-                <h3>SOP Keamanan Informasi</h3>
-                <p>SOP Keamanan Informasi adalah pedoman operasional yang mengatur prosedur perlindungan, pengelolaan, dan pemantauan keamanan informasi di lingkungan Pemerintah Kota. SOP ini mencakup standar pengamanan sistem elektronik, pengelolaan akses pengguna, penanganan insiden siber, serta mitigasi risiko kebocoran data.</p>
-                <a href="" onclick="unduhPDF('sop-manajemen-keamanan-informasi.pdf')" class="read-more"><span class="material-symbols-outlined">file_save</span> Unduh </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-card d-flex">
-              <div class="icon flex-shrink-0">
-              <span class="material-symbols-outlined">person_apron</span>
-              </div>
-              <div>
-                <h3>Surat Keputusan Walikota TTIS</h3>
-                <p>Surat Keputusan Walikota tentang TTIS merupakan dokumen resmi yang menetapkan pembentukan Tim Tanggap Insiden Siber (TTIS) di lingkungan Pemerintah Kota. SK ini mengatur struktur organisasi, tugas, dan tanggung jawab TTIS dalam mendeteksi, merespons, serta memitigasi insiden keamanan siber yang dapat mengancam sistem informasi pemerintah daerah.</p>
-                <a href="" onclick="unduhPDF('sk-ttis-tebing-tinggi.pdf')" class="read-more"><span class="material-symbols-outlined">file_save</span> Unduh </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-card d-flex">
-              <div class="icon flex-shrink-0">
-                <i class="bi bi-clipboard-data"></i>
-              </div>
-              <div>
-                <h3>SOP Spesifikasi Infrastruktur</h3>
-                <p>SOP Spesifikasi Infrastruktur adalah pedoman teknis yang menetapkan standar dan persyaratan infrastruktur teknologi informasi di lingkungan Pemerintah Kota. SOP ini mencakup spesifikasi perangkat keras, perangkat lunak, jaringan, serta sistem keamanan yang harus dipenuhi untuk memastikan kinerja, ketersediaan, dan perlindungan data dalam layanan pemerintahan. Selain itu, SOP ini juga mengatur tata kelola pemeliharaan, peningkatan kapasitas, serta prosedur mitigasi risiko terhadap gangguan atau ancaman siber guna mendukung operasional yang andal dan aman.</p>
-                <a href="#" class="read-more"><span class="material-symbols-outlined">file_save</span> Unduh </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
     <section id="lapor" class="contact section light-background">
 
 
@@ -555,33 +451,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-                <h3>Laporkan Insiden Siber</h3>
-                <p>Jika Anda menemukan atau mengalami insiden siber pada layanan dan sistem informasi milik Pemerintah Kota Tebing Tinggi, segera laporkan ke TTIS Pemko Tebing Tinggi untuk tindakan cepat dan penanganan yang tepat.</p>
-                {{-- <form action="{{ route('send.email') }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row gy-4">
-                    <div class="col-md-6">
-                        <input type="text" name="pelapor" class="form-control" placeholder="Pelapor" required>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="email" name="email" class="form-control" placeholder="Email Pelapor" required>
-                    </div>
-                    <div class="col-12">
-                        <input type="text" name="subjek" class="form-control" placeholder="Insiden Terjadi" required>
-                    </div>
-                    <div class="col-12">
-                        <textarea name="isi" class="form-control" rows="6" placeholder="Keterangan" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <input class="form-control" type="file" name="attachment[]" id="formFileMultiple" multiple>
-                    </div>
-                    <div class="col-12 text-center">
-                        <button type="submit" class="btn">Laporkan</button>
-                    </div>
-                    </div>
-                </form> --}}
-
-
+                <h3>Semangat PKK Bandarsono</h3>
+                <p>PKK Bandarsono hadir sebagai penggerak kebaikan di tengah masyarakat. Dengan semangat kebersamaan dan gotong royong, kita bergandengan tangan membangun keluarga yang kuat, sehat, dan sejahtera, demi mewujudkan masa depan yang lebih baik bagi generasi yang akan datang.</p>
             </div>
           </div>
 

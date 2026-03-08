@@ -1137,7 +1137,7 @@
                 const id      = btn.dataset.id;
                 const uraian   = btn.dataset.uraian;
                 const tanggal = btn.dataset.tanggal;
-                console.log(id);
+
                 document.getElementById('kegiatanId').value = id;
                 document.getElementById('detailUraian').innerText = uraian;
                 document.getElementById('detailTanggal').innerText = tanggal;
@@ -1257,317 +1257,210 @@
         });
     </script>
 
-<script>
+    <script>
 
-function resetSelect(target, placeholder){
+        function resetSelect(target, placeholder){
 
-    $(target).selectpicker('destroy');
+            $(target).selectpicker('destroy');
 
-    $(target).html('<option value="">'+placeholder+'</option>');
+            $(target).html('<option value="">'+placeholder+'</option>');
 
-    $(target).prop('disabled', true);
+            $(target).prop('disabled', true);
 
-    $(target).selectpicker({
-        liveSearch: true
-    });
+            $(target).selectpicker({
+                liveSearch: true
+            });
 
-}
-
-
-function loadKabupaten(provinsi_id, selected=null){
-
-    resetSelect('#kabupaten','Pilih Kabupaten');
-    resetSelect('#kecamatan','Pilih Kecamatan');
-    resetSelect('#kelurahan','Pilih Kelurahan');
-
-    if(!provinsi_id) return;
-
-    $.get('/kabupaten/' + provinsi_id, function(data){
-
-        let html = '<option value="">Pilih Kabupaten</option>';
-
-        data.forEach(function(item){
-            html += `<option value="${item.id}">${item.nama}</option>`;
-        });
-
-        $('#kabupaten').selectpicker('destroy');
-
-        $('#kabupaten').html(html);
-
-        $('#kabupaten').prop('disabled', false);
-
-        $('#kabupaten').selectpicker({
-            liveSearch:true
-        });
-
-        if(selected){
-            $('#kabupaten').selectpicker('val', selected);
         }
 
-    });
 
-}
+        function loadKabupaten(provinsi_id, selected=null){
 
+            resetSelect('#kabupaten','Pilih Kabupaten');
+            resetSelect('#kecamatan','Pilih Kecamatan');
+            resetSelect('#kelurahan','Pilih Kelurahan');
 
-function loadKecamatan(kabupaten_id, selected=null){
+            if(!provinsi_id) return;
 
-    resetSelect('#kecamatan','Pilih Kecamatan');
-    resetSelect('#kelurahan','Pilih Kelurahan');
+            $.get('/kabupaten/' + provinsi_id, function(data){
 
-    if(!kabupaten_id) return;
+                let html = '<option value="">Pilih Kabupaten</option>';
 
-    $.get('/kecamatan/' + kabupaten_id, function(data){
-
-        let html = '<option value="">Pilih Kecamatan</option>';
-
-        data.forEach(function(item){
-            html += `<option value="${item.id}">${item.nama}</option>`;
-        });
-
-        $('#kecamatan').selectpicker('destroy');
-
-        $('#kecamatan').html(html);
-
-        $('#kecamatan').prop('disabled', false);
-
-        $('#kecamatan').selectpicker({
-            liveSearch:true
-        });
-
-        if(selected){
-            $('#kecamatan').selectpicker('val', selected);
-        }
-
-    });
-
-}
-
-
-function loadKelurahan(kecamatan_id, selected=null){
-
-    resetSelect('#kelurahan','Pilih Kelurahan');
-
-    if(!kecamatan_id) return;
-
-    $.get('/kelurahan/' + kecamatan_id, function(data){
-
-        let html = '<option value="">Pilih Kelurahan</option>';
-
-        data.forEach(function(item){
-            html += `<option value="${item.id}">${item.nama}</option>`;
-        });
-
-        $('#kelurahan').selectpicker('destroy');
-
-        $('#kelurahan').html(html);
-
-        $('#kelurahan').prop('disabled', false);
-
-        $('#kelurahan').selectpicker({
-            liveSearch:true
-        });
-
-        if(selected){
-            $('#kelurahan').selectpicker('val', selected);
-        }
-
-    });
-
-}
-
-
-$(document).ready(function(){
-
-/* =====================
-EVENT CHANGE
-===================== */
-
-$('#provinsi').on('change', function(){
-
-    let id = $(this).val();
-
-    loadKabupaten(id);
-
-});
-
-
-$('#kabupaten').on('change', function(){
-
-    let id = $(this).val();
-
-    loadKecamatan(id);
-
-});
-
-
-$('#kecamatan').on('change', function(){
-
-    let id = $(this).val();
-
-    loadKelurahan(id);
-
-});
-// $('#provinsi').on('changed.bs.select', function(){
-
-//     let id = $(this).val();
-
-//     loadKabupaten(id);
-
-// });
-
-
-// $('#kabupaten').on('changed.bs.select', function(){
-
-//     let id = $(this).val();
-
-//     loadKecamatan(id);
-
-// });
-
-
-// $('#kecamatan').on('changed.bs.select', function(){
-
-//     let id = $(this).val();
-
-//     loadKelurahan(id);
-
-// });
-
-
-/* =====================
-EDIT MODE
-===================== */
-
-let provinsi  = $('#edit_provinsi').val();
-let kabupaten = $('#edit_kabupaten').val();
-let kecamatan = $('#edit_kecamatan').val();
-let kelurahan = $('#edit_kelurahan').val();
-
-if(provinsi){
-
-    $('#provinsi').selectpicker('val', provinsi);
-
-    loadKabupaten(provinsi, kabupaten);
-
-    setTimeout(function(){
-
-        if(kabupaten){
-            loadKecamatan(kabupaten, kecamatan);
-        }
-
-    },300);
-
-
-    setTimeout(function(){
-
-        if(kecamatan){
-            loadKelurahan(kecamatan, kelurahan);
-        }
-
-    },600);
-
-}
-
-});
-
-</script>
-            <!-- <script>
-                $(document).ready(function(){
-
-                // ================= PROVINSI -> KABUPATEN =================
-                    $('#provinsi').change(function(){
-
-                        let provinsi_id = $(this).val();
-
-                        $('#kabupaten').prop('disabled', true);
-                        // $('#kabupaten').html('<option value="">Loading...</option>');
-                        $('#kabupaten').selectpicker('refresh');
-
-                        if(provinsi_id){
-
-                            $.get('/get-kabupaten/' + provinsi_id, function(data){
-
-                                let html = '<option value="">Pilih Kabupaten</option>';
-                                data.forEach(function(item){
-                                    let selected = item.nama === 'SUMATERA UTARA' ? 'selected' : '';
-                                    // html += `<option value="${item.id}" >${item.nama}</option>`;
-                                    html += `<option value="${item.id}" ${selected}>${item.nama}</option>`;
-                                });
-
-                                $('#kabupaten').html(html);
-                                $('#kabupaten').prop('disabled', false);
-
-                                // WAJIB untuk selectpicker
-                                $('#kabupaten').selectpicker('refresh');
-
-                            });
-
-                        }
-
-                    });
-
-
-                    // ================= KABUPATEN -> KECAMATAN =================
-                    $('#kabupaten').change(function(){
-
-                        let kabupaten_id = $(this).val();
-
-                        $('#kecamatan').prop('disabled', true);
-                        // $('#kecamatan').html('<option value="">Loading...</option>');
-                        $('#kecamatan').selectpicker('refresh');
-
-                        if(kabupaten_id){
-
-                            $.get('/get-kecamatan/' + kabupaten_id, function(data){
-
-                                let html = '<option value="">Pilih Kecamatan</option>';
-
-                                data.forEach(function(item){
-                                    html += `<option value="${item.id}">${item.nama}</option>`;
-                                });
-
-                                $('#kecamatan').html(html);
-                                $('#kecamatan').prop('disabled', false);
-                                $('#kecamatan').selectpicker('refresh');
-
-                            });
-
-                        }
-
-                    });
-
-
-                    // ================= KECAMATAN -> KELURAHAN =================
-                    $('#kecamatan').change(function(){
-
-                        let kecamatan_id = $(this).val();
-
-                        $('#kelurahan').prop('disabled', true);
-                        // $('#kelurahan').html('<option value="">Loading...</option>');
-                        $('#kelurahan').selectpicker('refresh');
-
-                        if(kecamatan_id){
-
-                            $.get('/get-kelurahan/' + kecamatan_id, function(data){
-
-                                let html = '<option value="">Pilih Kelurahan</option>';
-
-                                data.forEach(function(item){
-                                    html += `<option value="${item.id}">${item.nama}</option>`;
-                                });
-
-                                $('#kelurahan').html(html);
-                                $('#kelurahan').prop('disabled', false);
-                                $('#kelurahan').selectpicker('refresh');
-
-                            });
-
-                        }
-
-                    });
-
+                data.forEach(function(item){
+                    html += `<option value="${item.id}">${item.nama}</option>`;
                 });
-            </script> -->
+
+                $('#kabupaten').selectpicker('destroy');
+
+                $('#kabupaten').html(html);
+
+                $('#kabupaten').prop('disabled', false);
+
+                $('#kabupaten').selectpicker({
+                    liveSearch:true
+                });
+
+                if(selected){
+                    $('#kabupaten').selectpicker('val', selected);
+                }
+
+            });
+
+        }
+
+
+        function loadKecamatan(kabupaten_id, selected=null){
+
+            resetSelect('#kecamatan','Pilih Kecamatan');
+            resetSelect('#kelurahan','Pilih Kelurahan');
+
+            if(!kabupaten_id) return;
+
+            $.get('/kecamatan/' + kabupaten_id, function(data){
+
+                let html = '<option value="">Pilih Kecamatan</option>';
+
+                data.forEach(function(item){
+                    html += `<option value="${item.id}">${item.nama}</option>`;
+                });
+
+                $('#kecamatan').selectpicker('destroy');
+
+                $('#kecamatan').html(html);
+
+                $('#kecamatan').prop('disabled', false);
+
+                $('#kecamatan').selectpicker({
+                    liveSearch:true
+                });
+
+                if(selected){
+                    $('#kecamatan').selectpicker('val', selected);
+                }
+
+            });
+
+        }
+
+
+        function loadKelurahan(kecamatan_id, selected=null){
+
+            resetSelect('#kelurahan','Pilih Kelurahan');
+
+            if(!kecamatan_id) return;
+
+            $.get('/kelurahan/' + kecamatan_id, function(data){
+
+                let html = '<option value="">Pilih Kelurahan</option>';
+
+                data.forEach(function(item){
+                    html += `<option value="${item.id}">${item.nama}</option>`;
+                });
+
+                $('#kelurahan').selectpicker('destroy');
+
+                $('#kelurahan').html(html);
+
+                $('#kelurahan').prop('disabled', false);
+
+                $('#kelurahan').selectpicker({
+                    liveSearch:true
+                });
+
+                if(selected){
+                    $('#kelurahan').selectpicker('val', selected);
+                }
+
+            });
+
+        }
+
+
+        $(document).ready(function(){
+
+            /* =====================
+            EVENT CHANGE
+            ===================== */
+
+            $('#provinsi').on('change', function(){
+
+                let id = $(this).val();
+
+                loadKabupaten(id);
+
+            });
+
+
+            $('#kabupaten').on('change', function(){
+
+                let id = $(this).val();
+
+                loadKecamatan(id);
+
+            });
+
+
+            $('#kecamatan').on('change', function(){
+
+                let id = $(this).val();
+
+                loadKelurahan(id);
+
+            });
+
+            /* =====================
+            EDIT MODE
+            ===================== */
+
+            let provinsi  = $('#edit_provinsi').val();
+            let kabupaten = $('#edit_kabupaten').val();
+            let kecamatan = $('#edit_kecamatan').val();
+            let kelurahan = $('#edit_kelurahan').val();
+
+            if(provinsi){
+
+                $('#provinsi').selectpicker('val', provinsi);
+
+                loadKabupaten(provinsi, kabupaten);
+
+                setTimeout(function(){
+
+                    if(kabupaten){
+                        loadKecamatan(kabupaten, kecamatan);
+                    }
+
+                },300);
+
+
+                setTimeout(function(){
+
+                    if(kecamatan){
+                        loadKelurahan(kecamatan, kelurahan);
+                    }
+
+                },600);
+
+            }
+
+        });
+
+         
+        document.addEventListener('change', function(e){
+
+            if(e.target.classList.contains('no_kk_insert')){
+
+                const select = e.target;
+                const option = select.options[select.selectedIndex];
+
+                const nama = option ? option.dataset.nama : '';
+
+                document.getElementById('nama_keluarga').value = nama || '';
+
+            }
+
+        });
+
+    </script>
 
             
                 <script>
@@ -1616,6 +1509,58 @@ if(provinsi){
 
                     });
                     </script>
+
+    <script>
+
+        $('#formDasawisma').on('submit', function(e){
+
+            e.preventDefault();
+
+            let form = $('#formDasawisma')[0];
+            let formData = new FormData(form);
+
+            $.ajax({
+
+                url: "{{ route('dasawisma.store') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+
+                success: function(response){
+
+                    if(response.success){
+
+                        // kosongkan form
+                        form.reset();
+
+                        showAlert('success', response.message);
+
+                    }else{
+
+                        showAlert('danger', response.message);
+
+                    }
+
+                },
+
+                error: function(xhr){
+
+                    let message = "Terjadi kesalahan saat menyimpan data";
+
+                    if(xhr.responseJSON && xhr.responseJSON.message){
+                        message = xhr.responseJSON.message;
+                    }
+
+                    showAlert('danger', message);
+
+                }
+
+            });
+
+        });
+
+    </script>
 </body>
 
 </html>
