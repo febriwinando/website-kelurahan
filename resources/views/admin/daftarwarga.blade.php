@@ -80,14 +80,12 @@
                                     </h4>
                                     @else
                                     <div class="card-body">
-                                        <table class="table mt-4 table-responsive table-hover" id="tabelJabatan">
+                                        <table class="table mt-4 table-responsive table-hover w-100" id="tabelJabatan">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>No. Registrasi</th>
                                                     <th>Kepala Keluarga</th>
                                                     <th>No. KK</th>
-                                                    <th>Dasa Wisma</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
@@ -95,15 +93,13 @@
                                             @foreach($wargas as $key => $warga)
                                             <tr id="row-{{ $warga->id }}">
                                                 <td>{{ $key + 1 }}</td>
-                                                <td>{{ $warga->no_registrasi }}</td>
                                                 <td>{{ $warga->nama_kepala_keluarga }}</td>
                                                 <td>{{ $warga->no_kk }}</td>
-                                                <td>{{ $warga->dasa_wisma }}</td>
                                                 <td>
                                                     @role('administrator', 'user')
-                                                        <a href="{{ route('warga.edit', $warga->id) }}" 
+                                                        <a href="{{ route('warga.lihat', $warga->no_kk) }}" 
                                                             class="btn btn-warning btn-sm">
-                                                            Edit
+                                                            Lihat
                                                         </a>
                                                     @endrole
                                                         

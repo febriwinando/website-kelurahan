@@ -62,7 +62,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="card-title fw-semibold mb-0">Data Barang</h5>
                                         <div>
-                                            <a href="/inventaris/create" class="btn btn-info">Tambah Barang</a>
+                                            <a href="/dasawisma/create" class="btn btn-info">Pendataan Dasawisma</a>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                             </div>
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Daftar Barang</h5>
-                                @if($inventariss->isEmpty())
+                                @if($dasas->isEmpty())
                                     <h4 class="text-center mt-5 mb-5">
                                         Belum ada data inventaris ...
                                     </h4>
@@ -83,35 +83,23 @@
                                         <thead class="table-light">
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama</th>
-                                                <th>Diterima/Dibeli dari</th>
-                                                <th>Tanggal Penerimaan/Pembelian</th>
-                                                <th>Jumlah</th>
-                                                <th>Tempat Penyimpanan</th>
-                                                <th>Kondisi</th>
-                                                <th>Status</th>
-                                                <th>Keterangan</th>
+                                                <th>Kepala Keluarga</th>
+                                                <th>No. KK</th>
                                                 @role('administrator', 'user')
                                                 <th>Aksi</th>
                                                 @endrole
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($inventariss as $key => $inventaris)
-                                        <tr id="row-{{ $inventaris->id }}">
+                                        @foreach($dasas as $key => $dasa)
+                                        <tr id="row-{{ $dasa->id }}">
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $inventaris->nama_barang }}</td>
-                                            <td>{{ $inventaris->diterima_dari }}</td>
-                                            <td>{{ $inventaris->tanggal_penerimaan->isoFormat('dddd, D MMMM Y') }}</td>
-                                            <td>{{ $inventaris->jumlah }}</td>
-                                            <td>{{ $inventaris->tempat_penyimpanan }}</td>
-                                            <td>{{ $inventaris->kondisi }}</td>
-                                            <td>{{ $inventaris->status }}</td>
-                                            <td>{{ $inventaris->keterangan }}</td>
+                                            <td>{{ $dasa->nama_keluarga }}</td>
+                                            <td>{{ $dasa->no_kk }}</td>
                                             
                                             @role('administrator', 'user')
                                                 <td>
-                                                    <a href="{{ route('inventaris.edit', $inventaris->id) }}" 
+                                                    <a href="{{ route('dasawisma.edit', $dasa->id) }}" 
                                                         class="btn btn-warning btn-sm">
                                                         Edit
                                                         </a>

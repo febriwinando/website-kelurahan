@@ -74,7 +74,7 @@
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Daftar Kegiatan</h5>
                                 <div class="card-body">
-                                    @if($kegiatans->isEmpty())
+                                    @if($wargas->isEmpty())
                                     <h4 class="text-center mt-5 mb-5">
                                         Belum ada arsip notulen ...
                                     </h4>
@@ -84,60 +84,25 @@
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Uraian</th>
-                                                    <th>Tanggal</th>
-                                                    <th>Status</th>
+                                                    <th>No. KK</th>
+                                                    <th>Kepala Keluarga</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($kegiatans as $key => $kegiatan)
-                                            <tr id="row-{{ $kegiatan->id }}">
+                                            @foreach($wargas as $key => $warga)
+                                            <tr id="row-{{ $warga->id }}">
                                                 <td>{{ $key + 1 }}</td>
-                                                <td>{{ $kegiatan->uraian_kegiatan }}</td>
-                                                <td>{{ $kegiatan->tanggal->isoFormat('dddd, D MMMM Y')  }}</td>
-                                                <td class="status-col">
-                                                    @if($kegiatan->status == 'belum diverifikasi')
-                                                        <span class="badge bg-warning p-2 rounded">
-                                                            {{ $kegiatan->status }}
-                                                        </span>
-                                                    @elseif($kegiatan->status == 'verifikasi ditolak')
-                                                        <span class="badge bg-danger p-2 rounded">
-                                                            {{ $kegiatan->status }}
-                                                        </span>
-                                                    @else
-                                                        <span class="badge bg-success p-2 rounded">
-                                                            {{ $kegiatan->status }}
-                                                        </span>
-                                                    @endif
-                                                </td>
+                                                <td>{{ $warga->no_kk }}</td>
+                                                <td>{{ $warga->nama_kepala_keluarga  }}</td>
                                                 <td>
-                                                        @if($kegiatan->status == 'belum diverifikasi')
+                                                        
                                                             @role('administrator', 'user')
-                                                                <a href="{{ route('kegiatan.edit', $kegiatan->id) }}" 
+                                                                <a href="{{ route('dasawisma.edit', $warga->id) }}" 
                                                                 class="btn btn-warning btn-sm">
-                                                                Edit
+                                                                Lihat
                                                                 </a>
                                                             @endrole
-                                                        @endif
-                                                        @role('verifikator')
-                                                            <a href="{{ route('kegiatan.edit', $kegiatan->id) }}" 
-                                                                class="btn btn-warning btn-sm">
-                                                                Buka
-                                                                </a>
-                                                        @endrole
-                                                        @role('verifikator')
-                                                            @if(!in_array($kegiatan->status, ['terverifikasi', 'verifikasi ditolak']))
-                                                            <button 
-                                                                class="btn btn-warning btn-sm btnVerifikasiKegiatan"
-                                                                data-id="{{ $kegiatan->id }}"
-                                                                data-tanggal="{{ \Carbon\Carbon::parse($kegiatan->tanggal)->format('d-m-Y')}}"
-                                                                data-uraian="{{ $kegiatan->uraian_kegiatan }}"
-                                                            >
-                                                                Verifikasi
-                                                            </button>
-                                                            @endif
-                                                        @endrole
 
                                                 </td>
                                             </tr>

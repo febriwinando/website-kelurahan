@@ -18,6 +18,9 @@ class WargaController extends Controller
         $provinsis = Provinsi::orderBy('nama')->get();
         $kecamatans = Kabupaten::with('provinsi')->get();
         $wargas = Warga::latest()->paginate(10);
+        $wargas = Warga::selectRaw('MIN(id) as id, no_kk, nama_kepala_keluarga')
+        ->groupBy('no_kk','nama_kepala_keluarga')
+        ->paginate(10);
         return view('admin.daftarwarga', compact('wargas', 'kecamatans','provinsis'));
     }
 
@@ -60,6 +63,14 @@ class WargaController extends Controller
         ]);
     }
 
+    public function lihat($no_kk)
+    {
+        $wargas = Warga::where('no_kk', $no_kk)->get();
+        
+        return view('admin.editwarga', compact(
+                'wargas',
+        ));
+    }
     public function edit($id)
     {
         $warga = Warga::findOrFail($id);

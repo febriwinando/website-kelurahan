@@ -79,15 +79,13 @@
                             </div>
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Daftar Anggota</h5>
-                                
-
                                 @if($anggotas->isEmpty())
                                     <h4 class="text-center mt-5 mb-5">
                                             Tidak ada anggota aktif yang terdaftar ...
                                     </h4>
                                 @else
                                     <div class="card-body">
-                                        <table class="table mt-4 table-responsive table-hover" id="tabelJabatan">
+                                        <table class="table mt-4 table-responsive table-hover w-100" id="tabelJabatan">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>No</th>

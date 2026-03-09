@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('dasawisma_wargas', function (Blueprint $table) {
             $table->id();
-            $table->string('no_kk'); // relasi ke tabel warga
+            $table->string('no_kk')->unique();; // relasi ke tabel warga
             // Identitas
             $table->string('nama_keluarga')->nullable();
             $table->string('rw')->nullable();
@@ -54,6 +54,7 @@ return new class extends Migration
             $table->integer('non_beras')->default(0);
 
             // Kegiatan warga
+            $table->boolean('up2k')->default(false);
             $table->boolean('pemanfaatan_tanaman_pekarangan')->default(false);
             $table->boolean('industri_rumah_tangga')->default(false);
             $table->boolean('kesehatan_lingkungan')->default(false);

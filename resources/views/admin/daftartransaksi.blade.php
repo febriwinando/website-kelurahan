@@ -85,7 +85,7 @@
                                     </h4>
                                 @else
                                 <div class="card-body">
-                                    <table class="table mt-4 table-responsive table-hover" id="tabelTransaksi">
+                                    <table class="table mt-4 table-responsive table-hover w-100" id="tabelTransaksi">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>No</th>

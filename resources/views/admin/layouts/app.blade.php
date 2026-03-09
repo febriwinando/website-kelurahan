@@ -1510,7 +1510,83 @@
                     });
                     </script>
 
-    <script>
+<script>
+    $('#formDasawisma').on('submit', function(e){
+
+    e.preventDefault();
+
+    let form = $('#formDasawisma')[0];
+    let formData = new FormData(form);
+
+    let id = $('#dasa_id').val();
+
+    let url = "{{ route('dasawisma.store') }}";
+    let method = "POST";
+
+    // jika ada id berarti update
+    if(id){
+        url = "/dasawisma/" + id;
+        formData.append('_method', 'PUT');
+    }
+
+    $.ajax({
+
+        url: url,
+        type: method,
+        data: formData,
+        processData: false,
+        contentType: false,
+
+        success: function(response){
+
+            if(response.success){
+
+                form.reset();
+
+                $('.selectpicker').selectpicker('refresh');
+
+                showAlert('success', response.message);
+
+            }else{
+
+                showAlert('danger', response.message);
+
+            }
+
+        },
+
+        error: function(xhr){
+
+            if(xhr.status === 422){
+
+                let errors = xhr.responseJSON.errors;
+                let message = '';
+
+                $.each(errors, function(key, value){
+                    message += value[0] + '<br>';
+                });
+
+                showAlert('danger', message);
+
+            }else{
+
+                let message = "Terjadi kesalahan saat menyimpan data";
+
+                if(xhr.responseJSON && xhr.responseJSON.message){
+                    message = xhr.responseJSON.message;
+                }
+
+                showAlert('danger', message);
+
+            }
+
+        }
+
+    });
+
+});
+</script>
+    <!-- <script>
 
         $('#formDasawisma').on('submit', function(e){
 
@@ -1560,7 +1636,7 @@
 
         });
 
-    </script>
+    </script> -->
 </body>
 
 </html>

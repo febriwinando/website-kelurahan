@@ -54,7 +54,7 @@
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h5 class="card-title fw-semibold mb-0">Tambah Data Warga TP-PKK</h5>
                                         <div>
-                                            <a href="/notulen" class="btn btn-info">Arsip Notulen</a>
+                                            <a href="/warga" class="btn btn-info">Data Warga TP-PKK</a>
                                         </div>
                                     </div>
                                 </div>

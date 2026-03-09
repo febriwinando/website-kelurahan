@@ -49,6 +49,7 @@ Route::put('/verifikasi/kegiatan/{id}', [KegiatanController::class, 'verifikasi'
 Route::resource('kegiatan', KegiatanController::class);
 
 // Warga
+Route::get('warga/{no_kk}/lihat', [WargaController::class, 'lihat'])->name('warga.lihat');
 Route::post('/warga/store', [WargaController::class, 'store'])->name('warga.store');
 Route::resource('warga', WargaController::class);
 

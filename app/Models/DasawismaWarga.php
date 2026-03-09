@@ -41,6 +41,7 @@ class DasawismaWarga extends Model
         'beras',
         'non_beras',
 
+        'up2k',
         'pemanfaatan_tanaman_pekarangan',
         'industri_rumah_tangga',
         'kesehatan_lingkungan'
