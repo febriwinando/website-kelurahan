@@ -11,7 +11,7 @@ class UserController extends Controller
     
     public function index()
     {
-        $users = User::latest()->get();
+        $users = User::where('level', '!=','administrator')->latest()->get();
 
         return view('admin.daftaruser', compact('users'));
     }
