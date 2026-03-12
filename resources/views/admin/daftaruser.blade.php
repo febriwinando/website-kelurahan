@@ -66,10 +66,10 @@
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-semibold mb-0">Arsip Notulen</h5>
-                                        <div>
-                                            <a href="/notulen/create" class="btn btn-info">Buat Catatan Rapat</a>
-                                        </div>
+                                        <h5 class="card-title fw-semibold mb-0">Pengguna</h5>
+                                        <!-- <div>
+                                            <a href="/keuangan/create" class="btn btn-info">Tambah Transaksi</a>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -78,74 +78,60 @@
                                 <span id="pelapor"></span>
                             </div>
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Daftar Arsip</h5>
-                                @if($notulens->isEmpty())
+                                <h5 class="card-title fw-semibold card-header">Daftar Pengguna</h5>
+                                @if($users->isEmpty())
                                     <h4 class="text-center mt-5 mb-5">
                                         Belum ada arsip notulen ...
                                     </h4>
                                 @else
                                 <div class="card-body">
-                                    <table class="table mt-4 table-responsive table-hover w-100" id="tabelJabatan">
+                                    <table class="table mt-4 table-responsive table-hover w-100" id="tabelTransaksi">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>No</th>
-                                                <th>Macam</th>
-                                                <th>Pimpinan Rapat</th>
-                                                <th>Tanggal/Waktu</th>
-                                                <th>Jumlah Undangan</th>
-                                                <th>Jumlah Hadir</th>
+                                                <th>Nama</th>
+                                                <th>Email</th>
+                                                <th>Level Pengguna</th>
                                                 <th>Status</th>
                                                 <th>Aksi</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($notulens as $key => $notulen)
-                                        <tr id="row-{{ $notulen->id }}">
+                                        @foreach($users as $key => $user)
+                                        <tr id="row-{{ $user->id }}">
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $notulen->macam }}</td>
-                                            <td>{{ $notulen->nama_anggota }}</td>
-                                            <td>{{ $notulen->tanggal->isoFormat('dddd, D MMMM Y') }} - 
-                                                {{ \Carbon\Carbon::parse($notulen->waktu)->format('H:i') }}</td>
-                                            <td>{{ $notulen->jumlah_diundang }}</td>
-                                            <td>{{ $notulen->jumlah_hadir }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->level }}</td>
                                             <td class="status-col">
-                                                 @if($notulen->status == 'belum diverifikasi')
+                                                 @if($user->status == 'belum diverifikasi')
                                                     <span class="badge bg-warning p-2 rounded">
-                                                        {{ $notulen->status }}
+                                                        {{ $user->status }}
                                                     </span>
-                                                @elseif($notulen->status == 'verifikasi ditolak')
+                                                @elseif($user->status == 'verifikasi ditolak')
                                                     <span class="badge bg-danger p-2 rounded">
-                                                        {{ $notulen->status }}
+                                                        {{ $user->status }}
                                                     </span>
                                                 @else
                                                     <span class="badge bg-success p-2 rounded">
-                                                        {{ $notulen->status }}
+                                                        {{ $user->status }}
                                                     </span>
                                                 @endif
                                             </td>
+                                            @role('administrator', 'user')
                                             <td>
-                                                    @role('administrator', 'admin')
-                                                        <a href="{{ route('notulen.edit', $notulen->id) }}" 
-                                                        class="btn btn-warning btn-sm">
+                                                <button 
+                                                        class="btn btn-warning btn-sm btnEditPengguna"
+                                                        data-id="{{ $user->id }}"
+                                                        data-name="{{ $user->name }}"
+                                                        data-level="{{ $user->level }}"
+                                                        data-email="{{ $user->email }}"
+                                                    >
                                                         Edit
-                                                        </a>
-                                                    @endrole
-                                                    @role('ketua')
-                                                        @if(!in_array($notulen->status, ['terverifikasi', 'verifikasi ditolak']))
-                                                        <button 
-                                                            class="btn btn-warning btn-sm btnEdit"
-                                                            data-id="{{ $notulen->id }}"
-                                                            data-macam="{{ $notulen->macam }}"
-                                                            data-tanggal="{{ \Carbon\Carbon::parse($notulen->tanggal)->format('d-m-Y')}}"
-                                                            data-nama="{{ $notulen->nama_anggota }}"
-                                                            data-hadir="{{ $notulen->jumlah_hadir }}"
-                                                        >
-                                                            Verifikasi
-                                                        </button>
-                                                        @endif
-                                                    @endrole
-
+                                                    </button>
                                             </td>
+                                            @endrole
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -158,13 +144,14 @@
                 </div>
                 
             </div>
-            <div class="modal fade" id="modalEdit" tabindex="-1">
+
+            <div class="modal fade" id="modalVerifikasi" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="formEditNotulen">
+                        <form id="formVerifikasi">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" id="edit_id" name="id">
+                            <input type="hidden" id="verifikasi_id" name="id">
                             <div class="modal-header">
                                 <h5>Verifikasi Notulen</h5>
                             </div>
@@ -172,7 +159,7 @@
                             <div class="modal-body">
 
                                 <div class="mb-2">
-                                    <h6 class="fw-light">Apakah anda yakin akan memverifikasi <span id="detailMacam"></span>? yang dilaksanakan pada <span id="detailTanggal"></span>, dipimpin oleh <span id="detailNama"></span> dengan jumlah peserta yang hadir sebanyak <span id="detailHadir"></span> orang</h6>
+                                    <h6 class="fw-light">Apakah anda yakin akan memverifikasi <span class="fw-semibold" id="detaiJenis"></span> tersebut? yang dilaksanakan pada <span class="fw-semibold" id="detailTanggal"></span>, Nomor Invoice: <span class="fw-semibold" id="detailInvoice"></span> sebesar: <span class="fw-semibold" id="detailJumlah"></span></h6>
                                 </div>
 
                             </div>
@@ -180,6 +167,54 @@
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">
                                     Ya
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalEditPengguna" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formEditPengguna">
+                            @csrf
+                            @method('PUT')
+
+                            <input type="hidden" id="edit_id">
+
+                            <div class="modal-header">
+                                <h5>Edit Pengguna</h5>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="mb-2">
+                                    <label>Nama</label>
+                                    <input type="text" id="edit_name" name="name" class="form-control">
+                                </div>
+                                <div class="mb-2">
+                                    <label>Email</label>
+                                    <input type="text" id="edit_email" name="email" class="form-control">
+                                </div>
+
+                                <div class="mb-2">
+                                    <label>Level Pegguna</label>
+                                    <select id="edit_level" class="form-control">
+                                        <option value="administrator">Administrator</option>
+                                        <option value="verifikator">Verifikator</option>
+                                        <option value="user">User</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label>Email</label>
+                                    <input type="password" id="edit_password" name="password" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    Simpan
                                 </button>
                             </div>
 

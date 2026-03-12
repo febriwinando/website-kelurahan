@@ -91,7 +91,7 @@
                                                 <th>Kondisi</th>
                                                 <th>Status</th>
                                                 <th>Keterangan</th>
-                                                @role('administrator', 'user')
+                                                @role('administrator', 'admin')
                                                 <th>Aksi</th>
                                                 @endrole
                                             </tr>
@@ -109,7 +109,7 @@
                                             <td>{{ $inventaris->status }}</td>
                                             <td>{{ $inventaris->keterangan }}</td>
                                             
-                                            @role('administrator', 'user')
+                                            @role('administrator', 'admin')
                                                 <td>
                                                     <a href="{{ route('inventaris.edit', $inventaris->id) }}" 
                                                         class="btn btn-warning btn-sm">

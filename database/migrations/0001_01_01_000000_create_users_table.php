@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('level', ['administrator', 'user', 'verifikator'])->default('user');
+            $table->enum('level', ['administrator', 'admin', 'ketua', 'kepling'])->default('admin');
+            $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
             $table->text('fcm_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
@@ -36,16 +37,19 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
+            $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
-    }
+    // public function down(): void
+    // {
+    //     Schema::dropIfExists('users');
+    //     Schema::dropIfExists('password_reset_tokens');
+    //     Schema::dropIfExists('sessions');
+    // }
+
+    
 };

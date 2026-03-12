@@ -113,7 +113,7 @@
                                                 </td>
                                                 <td>
                                                         @if($kegiatan->status == 'belum diverifikasi')
-                                                            @role('administrator', 'user')
+                                                            @role('administrator', 'admin')
                                                                 <a href="{{ route('kegiatan.edit', $kegiatan->id) }}" 
                                                                 class="btn btn-warning btn-sm">
                                                                 Edit
@@ -126,7 +126,7 @@
                                                                 Buka
                                                                 </a>
                                                         @endrole
-                                                        @role('verifikator')
+                                                        @role('ketua')
                                                             @if(!in_array($kegiatan->status, ['terverifikasi', 'verifikasi ditolak']))
                                                             <button 
                                                                 class="btn btn-warning btn-sm btnVerifikasiKegiatan"

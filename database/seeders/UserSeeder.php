@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'Administrator',
-                'email' => 'admin@gmail.com',
+                'email' => 'administrator@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'level' => 'administrator',
@@ -27,11 +27,11 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'User Biasa',
-                'email' => 'user@gmail.com',
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
-                'level' => 'user',
+                'level' => 'admin',
                 'fcm_token' => null,
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
@@ -41,12 +41,22 @@ class UserSeeder extends Seeder
                 'email' => 'ketua@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
-                'level' => 'verifikator',
+                'level' => 'ketua',
                 'fcm_token' => null,
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
+            ],[
+                'name' => 'Kepling 1',
+                'email' => 'kepling1@gmail.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+                'level' => 'kepling',
+                'fcm_token' => null,
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
         ]);
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\DasawismaWargaController;
+use App\Http\Controllers\UserController;
 
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
@@ -56,19 +57,9 @@ Route::resource('warga', WargaController::class);
 // Dasawisma Warga
 Route::resource('dasawisma', DasawismaWargaController::class);
 
-
-// Route::get('/get-kabupaten/{provinsi_id}', function ($provinsi_id) {
-//     return Kabupaten::where('provinsi_id', $provinsi_id)->get();
-// });
-
-// Route::get('/get-kecamatan/{kabupaten_id}', function ($kabupaten_id) {
-//     return Kecamatan::where('kabupaten_id', $kabupaten_id)->get();
-// });
-
-// Route::get('/get-kelurahan/{kecamatan_id}', function ($kecamatan_id) {
-//     return Kelurahan::where('kecamatan_id', $kecamatan_id)->get();
-// });
-
+// User
+Route::put('/pengguna/{id}', [UserController::class, 'update']);
+Route::resource('pengguna', UserController::class);
 
 Route::middleware(['auth', 'role:administrator,user'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');    

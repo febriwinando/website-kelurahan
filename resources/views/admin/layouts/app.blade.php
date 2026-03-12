@@ -42,7 +42,7 @@
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Dasawisma</span>
             </li>
-            @role('administrator', 'user')
+            @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/warga/create" aria-expanded="false">
                 <span>
@@ -54,7 +54,7 @@
             </li>
             
             @endrole
-            @role('administrator', 'user', 'verifikator')
+            @role('administrator', 'admin', 'ketua')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/warga" aria-expanded="false">
                 <span>
@@ -87,7 +87,7 @@
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">TIM PKK</span>
             </li>
-            @role('administrator', 'user')
+            @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/anggota" aria-expanded="false">
                 <span>
@@ -98,7 +98,7 @@
               </a>
             </li>
             @endrole
-            @role('administrator', 'user', 'verifikator')
+            @role('administrator', 'admin', 'ketua')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/daftar-anggota" aria-expanded="false">
                 <span>
@@ -109,7 +109,7 @@
               </a>
             </li>
             @endrole
-            @role('administrator', 'user')
+            @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/jabatan-anggota" aria-expanded="false">
                 <span>
@@ -126,7 +126,7 @@
               <span class="hide-menu">Inventaris</span>
             </li>
 
-            @role('administrator', 'user')
+            @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/inventaris/create" aria-expanded="false">
                 <span>
@@ -136,7 +136,7 @@
               </a>
             </li>
             @endrole
-            @role('administrator', 'user', 'verifikator')
+            @role('administrator', 'admin', 'ketua')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/inventaris" aria-expanded="false">
                 <span>
@@ -150,7 +150,7 @@
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Notulen</span>
             </li>
-            @role('administrator', 'user')
+            @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/notulen/create" aria-expanded="false">
                 <span>
@@ -160,7 +160,7 @@
               </a>
             </li>
             @endrole
-            @role('administrator', 'user', 'verifikator')
+            @role('administrator', 'admin', 'ketua')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/notulen" aria-expanded="false">
                 <span>
@@ -174,7 +174,7 @@
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Keuangan</span>
             </li>
-            @role('administrator', 'user')
+            @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/keuangan/create" aria-expanded="false">
                 <span>
@@ -184,7 +184,7 @@
               </a>
             </li>
             @endrole
-            @role('administrator', 'user', 'verifikator')
+            @role('administrator', 'admin', 'ketua')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/keuangan" aria-expanded="false">
                 <span>
@@ -199,7 +199,7 @@
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Kegiatan</span>
             </li>
-            @role('administrator', 'user')
+            @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/kegiatan/create" aria-expanded="false">
                 <span>
@@ -209,13 +209,37 @@
               </a>
             </li>
             @endrole
-            @role('administrator', 'user', 'verifikator')
+            @role('administrator', 'admin', 'ketua')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/kegiatan" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/kegiatan.svg') }}">
                 </span>
                 <span class="hide-menu">Daftar Kegiatan</span>
+              </a>
+            </li>
+            @endrole
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+              <span class="hide-menu">Pengaturan</span>
+            </li>
+            @role('administrator', 'admin')
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/pengguna" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/user.svg') }}">
+                </span>
+                <span class="hide-menu">Pengguna</span>
+              </a>
+            </li>
+            @endrole
+            @role('administrator', 'admin', 'ketua')
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/kegiatan" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/beranda.svg') }}">
+                </span>
+                <span class="hide-menu">Profil</span>
               </a>
             </li>
             @endrole
@@ -1586,57 +1610,60 @@
 
 });
 </script>
-    <!-- <script>
+    <script>
+        $(document).on('click', '.btnEditPengguna', function(){
 
-        $('#formDasawisma').on('submit', function(e){
+            $('#edit_id').val($(this).data('id'));
+            $('#edit_name').val($(this).data('name'));
+            $('#edit_level').val($(this).data('level'));
+            $('#edit_email').val($(this).data('email'));
 
-            e.preventDefault();
-
-            let form = $('#formDasawisma')[0];
-            let formData = new FormData(form);
-
-            $.ajax({
-
-                url: "{{ route('dasawisma.store') }}",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-
-                success: function(response){
-
-                    if(response.success){
-
-                        // kosongkan form
-                        form.reset();
-
-                        showAlert('success', response.message);
-
-                    }else{
-
-                        showAlert('danger', response.message);
-
-                    }
-
-                },
-
-                error: function(xhr){
-
-                    let message = "Terjadi kesalahan saat menyimpan data";
-
-                    if(xhr.responseJSON && xhr.responseJSON.message){
-                        message = xhr.responseJSON.message;
-                    }
-
-                    showAlert('danger', message);
-
-                }
-
-            });
-
+            $('#modalEditPengguna').modal('show');
         });
 
-    </script> -->
+
+        $('#formEditPengguna').submit(function(e){
+            e.preventDefault();
+            let id = $('#edit_id').val();
+            $.ajax({
+                url: '/pengguna/' + id,
+                type: 'PUT',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    name: $('#edit_name').val(),
+                    level: $('#edit_level').val(),
+                    email: $('#edit_email').val(),
+                    password: $('#edit_password').val()
+                },
+                success: function(response){
+                    if(response.success){
+
+                        let row = $('#row-' + response.data.id);
+
+                        // Update isi kolom
+                        row.find('td:eq(1)').text(response.data.name);
+                        row.find('td:eq(2)').text(response.data.email);
+                        row.find('td:eq(3)').text(response.data.level);
+                        // row.find('td:eq(4)').text(response.data.jumlah);
+
+                        // Update juga data-* di tombol edit
+                        let btn = row.find('.btnEdit');
+                        btn.data('name', response.data.name);
+                        btn.data('email', response.data.email);
+                        btn.data('level', response.data.level);
+                        // btn.data('jumlah', $('#edit_jumlah').val());
+
+                        $('#modalEditPengguna').modal('hide');
+
+                        showAlert('success', 'Data pengguna berhasil diperbaharui');
+                    }
+                },
+                error: function(){
+                    alert('Gagal update data');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
