@@ -178,7 +178,7 @@
             <div class="modal fade" id="modalEditPengguna" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="formEditPengguna">
+                        <form id="formEditPengguna" autocomplete="off" >
                             @csrf
                             @method('PUT')
 
@@ -204,12 +204,13 @@
                                     <select id="edit_level" class="form-control">
                                         <option value="administrator">Administrator</option>
                                         <option value="verifikator">Verifikator</option>
-                                        <option value="user">User</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="kepling">Kepling</option>
                                     </select>
                                 </div>
                                 <div class="mb-2">
-                                    <label>Email</label>
-                                    <input type="password" id="edit_password" name="password" class="form-control">
+                                    <label>Password</label>
+                                    <input type="password" id="edit_password" name="password" class="form-control" autocomplete="new-password">
                                 </div>
                             </div>
                             <div class="modal-footer">

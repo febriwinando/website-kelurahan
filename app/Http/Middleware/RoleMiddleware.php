@@ -47,14 +47,22 @@ class RoleMiddleware
     // }
 
     public function handle(Request $request, Closure $next, ...$roles)
-{
-    if (!auth()->check()) {
-        return redirect('/login');
-    }
+    {
+        if (!auth()->check()) {
+            return redirect('/login');
+        }
 
-    if (!in_array(auth()->user()->level, $roles)) {
-        abort(403, 'Akses ditolak');
-    }
+        if (!in_array(auth()->user()->level, $roles)) {
+            abort(403, 'Akses ditolak');
+        }
+
+        // if (Auth::check()) {
+
+        //         // cek 2FA
+            if (Auth::user()->google2fa_enabled && !session('2fa_passed')) {
+                return redirect()->route('login');
+            }
+        // }
 
     return $next($request);
 }

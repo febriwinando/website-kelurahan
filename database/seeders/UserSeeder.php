@@ -25,6 +25,16 @@ class UserSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
+            ],[
+                'name' => 'Admin',
+                'email' => 'febriwinando@gmail.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+                'level' => 'admin',
+                'fcm_token' => null,
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => 'Admin',
