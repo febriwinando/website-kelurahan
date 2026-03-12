@@ -86,7 +86,7 @@
                                                 <th width="5%">No</th>
                                                 <th>Nama</th>
                                                 <th>Jabatan</th>
-                                                @role('administrator', 'user')
+                                                @role('administrator', 'admin')
                                                 <th width="15%">Aksi</th>
                                                 @endrole
                                             </tr>
@@ -97,7 +97,7 @@
                                                 <td>{{ $key + 1 }}</td>
                                                 <td class="nama">{{ $warga->nama }}</td>
                                                 <td class="jabatan">{{ $warga->nik }}</td>
-                                                @role('administrator', 'user')
+                                                @role('administrator', 'admin')
                                                 <td>
                                                     <a href="{{ route('warga.edit', $warga->id) }}" 
                                                             class="btn btn-warning btn-sm">

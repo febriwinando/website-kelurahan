@@ -96,14 +96,14 @@
                                                 <td>{{ $warga->nama_kepala_keluarga }}</td>
                                                 <td>{{ $warga->no_kk }}</td>
                                                 <td>
-                                                    @role('administrator', 'user')
+                                                    @role('administrator', 'admin')
                                                         <a href="{{ route('warga.lihat', $warga->no_kk) }}" 
                                                             class="btn btn-warning btn-sm">
                                                             Lihat
                                                         </a>
                                                     @endrole
                                                         
-                                                    @role('verifikator')
+                                                    @role('ketua')
                                                         <a href="{{ route('warga.edit', $warga->id) }}" 
                                                             class="btn btn-warning btn-sm">
                                                             Buka

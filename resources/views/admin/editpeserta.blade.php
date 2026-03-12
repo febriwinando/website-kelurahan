@@ -86,7 +86,7 @@
                                                 <th width="5%">No</th>
                                                 <th>Nama</th>
                                                 <th>Jabatan</th>
-                                                @role('administrator', 'user')
+                                                @role('administrator', 'admin')
                                                 <th width="15%">Aksi</th>
                                                 @endrole
                                             </tr>
@@ -97,7 +97,7 @@
                                                 <td>{{ $index+1 }}</td>
                                                 <td class="nama">{{ $peserta->nama }}</td>
                                                 <td class="jabatan">{{ $peserta->jabatan }}</td>
-                                                @role('administrator', 'user')
+                                                @role('administrator', 'admin')
                                                 <td>
                                                     <button class="btn btn-warning btn-sm btnEditPeserta"
                                                             data-id="{{ $peserta->id }}"

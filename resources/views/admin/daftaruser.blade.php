@@ -119,7 +119,7 @@
                                                     </span>
                                                 @endif
                                             </td>
-                                            @role('administrator', 'user')
+                                            @role('administrator', 'admin')
                                             <td>
                                                 <button 
                                                         class="btn btn-warning btn-sm btnEditPengguna"
