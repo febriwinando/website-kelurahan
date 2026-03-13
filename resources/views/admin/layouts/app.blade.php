@@ -92,7 +92,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="sub-lingkungan" aria-expanded="false">
+              <a class="sidebar-link" href="sublingkungan" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/environment.svg') }}">
                   {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}

@@ -18,6 +18,7 @@ use App\Http\Controllers\LingkunganController;
 use App\Http\Controllers\SubLingkunganController;
 
 use App\Models\Kabupaten;
+use App\Models\Lingkungan;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 
@@ -77,6 +78,11 @@ Route::middleware(['auth','role:administrator,admin'])->group(function () {
         return Kabupaten::where('provinsi_id', $provinsi_id)->get();
     });
 
+
+    Route::get('/lingkungan/{lingkungan_id}', function ($lingkungan_id) {
+        return Lingkungan::where('id', $lingkungan_id)->get();
+    });
+
     Route::get('/kecamatan/{kabupaten_id}', function ($kabupaten_id) {
         return Kecamatan::where('kabupaten_id', $kabupaten_id)->get();
     });
@@ -88,7 +94,7 @@ Route::middleware(['auth','role:administrator,admin'])->group(function () {
 
     //Lingkungan
     Route::resource('/lingkungan', LingkunganController::class);
-    Route::resource('/sub-lingkungan', SubLingkunganController::class);
+    Route::resource('/sublingkungan', SubLingkunganController::class);
 });
 
 
