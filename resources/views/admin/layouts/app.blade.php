@@ -82,6 +82,24 @@
                 <span class="hide-menu">Data Dasawisma</span>
               </a>
             </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="lingkungan" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/environment.svg') }}">
+                  {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
+                </span>
+                <span class="hide-menu">Lingkungan</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="sub-lingkungan" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/environment.svg') }}">
+                  {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
+                </span>
+                <span class="hide-menu">Sub Lingkungan</span>
+              </a>
+            </li>
             @endrole
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
@@ -419,12 +437,12 @@
 
         });
 
-    function updateRowNumbers() {
-        const rows = document.querySelectorAll('#tabelJabatan tbody tr');
-        rows.forEach((row, index) => {
-            row.children[0].innerText = index + 1;
-        });
-    }
+        function updateRowNumbers() {
+            const rows = document.querySelectorAll('#tabelJabatan tbody tr');
+            rows.forEach((row, index) => {
+                row.children[0].innerText = index + 1;
+            });
+        }
 
 
         // ================= EDIT =================
@@ -751,7 +769,6 @@
                 }
             })
             .then(response => {
-                console.log(response.status); // 🔥 lihat statusnya
                     return response.json();
                 if(!response.ok){
                     throw new Error('Gagal menghapus data');
@@ -801,7 +818,6 @@
 
             const selectJabatan = document.querySelector('select[name="jabatan_id"]');
             const inputNamaJabatan = document.getElementById('nama_jabatan');
-            console.log("nama_jabatan");
             function updateNamaJabatan() {
                 const selectedOption = selectJabatan.options[selectJabatan.selectedIndex];
                 const nama = selectedOption.getAttribute('data-nama') || '';
@@ -1664,6 +1680,7 @@
             });
         });
     </script>
+    
 </body>
 
 </html>

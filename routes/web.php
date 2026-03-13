@@ -14,6 +14,8 @@ use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\DasawismaWargaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LingkunganController;
+use App\Http\Controllers\SubLingkunganController;
 
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
@@ -82,6 +84,11 @@ Route::middleware(['auth','role:administrator,admin'])->group(function () {
     Route::get('/kelurahan/{kecamatan_id}', function ($kecamatan_id) {
         return Kelurahan::where('kecamatan_id', $kecamatan_id)->get();
     });
+
+
+    //Lingkungan
+    Route::resource('/lingkungan', LingkunganController::class);
+    Route::resource('/sub-lingkungan', SubLingkunganController::class);
 });
 
 
