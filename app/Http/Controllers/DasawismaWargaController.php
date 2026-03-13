@@ -87,7 +87,8 @@ class DasawismaWargaController extends Controller
 
                 'balita_l' => $request->balita_l ?? 0,
                 'balita_p' => $request->balita_p ?? 0,
-
+                'buta_l' => $request->buta_p ?? 0,
+                'buta_p' => $request->buta_p ?? 0,
                 'pus' => $request->pus ?? 0,
                 'wus' => $request->wus ?? 0,
                 'ibu_hamil' => $request->ibu_hamil ?? 0,
@@ -117,7 +118,7 @@ class DasawismaWargaController extends Controller
 
                 'pemanfaatan_tanaman_pekarangan' => $request->has('pemanfaatan_tanaman_pekarangan'),
                 'industri_rumah_tangga' => $request->has('industri_rumah_tangga'),
-                'kesehatan_lingkungan' => 0
+                'kesehatan_lingkungan' => $request->has('kesehatan_lingkungan')
 
             ]);
 
@@ -171,9 +172,10 @@ class DasawismaWargaController extends Controller
                 'no_kk' => $request->no_kk,
                 'nama_keluarga' => $request->nama_keluarga,
 
-                'balita_l' => $request->balita_l ?? 0,
-                'balita_p' => $request->balita_p ?? 0,
-
+                'balita_l' => $request->balita_l,
+                'balita_p' => $request->balita_p,
+                'buta_l' => $request->buta_l,
+                'buta_p' => $request->buta_p,
                 'pus' => $request->pus ?? 0,
                 'wus' => $request->wus ?? 0,
                 'ibu_hamil' => $request->ibu_hamil ?? 0,

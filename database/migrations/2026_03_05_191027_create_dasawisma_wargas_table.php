@@ -58,7 +58,6 @@ return new class extends Migration
             $table->boolean('pemanfaatan_tanaman_pekarangan')->default(false);
             $table->boolean('industri_rumah_tangga')->default(false);
             $table->boolean('kesehatan_lingkungan')->default(false);
-
             $table->timestamps();
         });
     }

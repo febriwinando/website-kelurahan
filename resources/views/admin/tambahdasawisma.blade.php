@@ -93,16 +93,6 @@
                                         <h5>Jumlah Anggota Keluarga</h5>
 
                                         <div class="row">
-
-                                            <div class="col-md-2 mb-3">
-                                                <label>Balita Laki-laki</label>
-                                                <input type="number" name="balita_l" class="form-control" value="{{ $dasa->balita_l ?? '0' }}">
-                                            </div>
-                                            <div class="col-md-2 mb-3">
-                                                <label>Balita Perempuan</label>
-                                                <input type="number" name="balita_p" class="form-control" value="{{ $dasa->balita_p ?? '0' }}">
-                                            </div>
-
                                             <div class="col-md-2 mb-3">
                                                 <label>PUS</label>
                                                 <input type="number" name="pus" class="form-control" value="{{ $dasa->pus ?? '0' }}">
@@ -126,6 +116,26 @@
                                             <div class="col-md-2 mb-3">
                                                 <label>Lansia</label>
                                                 <input type="number" name="lansia" class="form-control" value="{{ $dasa->lansia ?? '0' }}">
+                                            </div>
+                                            <hr>
+                                            <h6>Balita</h6>
+                                             <div class="col-md-2 mb-3">
+                                                <label>Laki-laki</label>
+                                                <input type="number" name="balita_l" class="form-control" value="{{ $dasa->balita_l ?? '0' }}">
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label>Perempuan</label>
+                                                <input type="number" name="balita_p" class="form-control" value="{{ $dasa->balita_p ?? '0' }}">
+                                            </div>
+                                            <hr>
+                                             <h6>Buta</h6>
+                                            <div class="col-md-2 mb-3">
+                                                <label>Laki-Laki</label>
+                                                <input type="number" name="buta_l" class="form-control" value="{{ $dasa->buta_l ?? '0' }}">
+                                            </div>
+                                             <div class="col-md-2 mb-3">
+                                                <label>Perempuan</label>
+                                                <input type="number" name="buta_p" class="form-control" value="{{ $dasa->buta_p ?? '0' }}">
                                             </div>
 
                                         </div>
@@ -244,6 +254,12 @@
                                                 <label>
                                                     <input type="checkbox" name="industri_rumah_tangga" value="1" {{ isset($dasa) && $dasa->industri_rumah_tangga ? 'checked' : '' }}>
                                                     Industri Rumah Tangga
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>
+                                                    <input type="checkbox" name="kesehatan_lingkungan" value="1" {{ isset($dasa) && $dasa->kesehatan_lingkungan ? 'checked' : '' }}>
+                                                    Kesehatan Lingkungan
                                                 </label>
                                             </div>
                                         </div>
