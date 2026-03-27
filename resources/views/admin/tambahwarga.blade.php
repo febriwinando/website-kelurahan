@@ -83,6 +83,7 @@
                                         <input type="hidden" id="edit_kecamatan" value="{{ $warga->kecamatan }}">
                                         <input type="hidden" id="edit_kelurahan" value="{{ $warga->kelurahan }}">
                                         @endif
+                                        
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
@@ -239,7 +240,6 @@
                                                             id="provinsi"
                                                             data-live-search="true"
                                                             title="Pilih Provinsi" name="provinsi">
-
                                                         @foreach($provinsis as $provinsi)
                                                             <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
                                                         @endforeach

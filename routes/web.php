@@ -73,14 +73,13 @@ Route::middleware(['auth','role:administrator,admin'])->group(function () {
     Route::get('/get-kecamatan/{kabupaten}', [WargaController::class, 'kecamatan']);
     Route::get('/get-kelurahan/{kecamatan}', [WargaController::class, 'kelurahan']);
 
-
     Route::get('/kabupaten/{provinsi_id}', function ($provinsi_id) {
         return Kabupaten::where('provinsi_id', $provinsi_id)->get();
     });
 
 
-    Route::get('/lingkungan/{lingkungan_id}', function ($lingkungan_id) {
-        return Lingkungan::where('id', $lingkungan_id)->get();
+    Route::get('/lingkunganedit', function () {
+        return Lingkungan::latest()->get();
     });
 
     Route::get('/kecamatan/{kabupaten_id}', function ($kabupaten_id) {

@@ -6,129 +6,253 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PragmaRX\Google2FA\Google2FA;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 
 
 class LoginController extends Controller
 {
 
+    public function login(Request $request)
+    {
 
+        $google2fa = new Google2FA();
 
-public function login(Request $request)
-{
+        $key = 'login-attempt:'.Str::lower($request->email).'|'.$request->ip();
 
-    $google2fa = new Google2FA();
+        // ==========================
+        // RATE LIMIT LOGIN
+        // ==========================
+        if (RateLimiter::tooManyAttempts($key, 5)) {
 
-    // ==========================
-    // STEP 1 LOGIN EMAIL PASSWORD
-    // ==========================
-    if (!$request->has('otp')) {
-
-        $credentials = $request->validate([
-            'email' => ['required','email'],
-            'password' => ['required'],
-        ]);
-
-        if (!Auth::attempt($credentials)) {
+            $seconds = RateLimiter::availableIn($key);
 
             return back()->withErrors([
-                'email' => 'Email atau password salah.'
+                'email' => "Terlalu banyak percobaan login. Coba lagi dalam $seconds detik."
+            ]);
+
+        }
+
+        // ==========================
+        // STEP 1 LOGIN EMAIL PASSWORD
+        // ==========================
+        if (!$request->has('otp')) {
+
+            $credentials = $request->validate([
+                'email' => ['required','email'],
+                'password' => ['required'],
+            ]);
+
+            if (!Auth::attempt($credentials)) {
+
+                RateLimiter::hit($key, 60); // blok 60 detik
+
+                return back()->withErrors([
+                    'email' => 'Email atau password salah.'
+                ]);
+            }
+
+            // reset jika sukses
+            RateLimiter::clear($key);
+
+            $request->session()->regenerate();
+
+            $user = Auth::user();
+
+            // ==========================
+            // JIKA BELUM AKTIF 2FA
+            // ==========================
+            if (!$user->google2fa_enabled) {
+
+                if (!$user->google2fa_secret) {
+
+                    $user->google2fa_secret = $google2fa->generateSecretKey();
+                    $user->save();
+
+                }
+
+                $qrUrl = $google2fa->getQRCodeUrl(
+                    'SIAP Bandarsono',
+                    $user->email,
+                    $user->google2fa_secret
+                );
+
+                $QR_Image = QrCode::size(200)->generate($qrUrl);
+
+                return view('admin.login',[
+                    'step'=>'setup2fa',
+                    'QR_Image'=>$QR_Image
+                ]);
+            }
+
+            // ==========================
+            // JIKA SUDAH AKTIF
+            // ==========================
+            return view('admin.login',[
+                'step'=>'verify2fa'
             ]);
         }
 
-        $request->session()->regenerate();
+        // ==========================
+        // STEP 2 VERIFIKASI OTP
+        // ==========================
 
         $user = Auth::user();
 
-        // ==========================
-        // JIKA BELUM AKTIF 2FA
-        // ==========================
-        if (!$user->google2fa_enabled) {
+        $otpKey = 'otp-attempt:'.$user->id.'|'.$request->ip();
 
-            if (!$user->google2fa_secret) {
+        if (RateLimiter::tooManyAttempts($otpKey, 5)) {
 
-                $user->google2fa_secret = $google2fa->generateSecretKey();
-                $user->save();
+            $seconds = RateLimiter::availableIn($otpKey);
 
-            }
+            Auth::logout();
 
-            $qrUrl = $google2fa->getQRCodeUrl(
-                'SIAP Bandarsono',
-                $user->email,
-                $user->google2fa_secret
-            );
-
-            $QR_Image = QrCode::size(200)->generate($qrUrl);
-
-            return view('admin.login',[
-                'step'=>'setup2fa',
-                'QR_Image'=>$QR_Image
-            ]);
+            return redirect('/masuk')
+                ->with('error',"Terlalu banyak percobaan OTP. Coba lagi dalam $seconds detik");
         }
 
-        // ==========================
-        // JIKA SUDAH AKTIF
-        // ==========================
+        $valid = $google2fa->verifyKey(
+            $user->google2fa_secret,
+            $request->otp
+        );
 
-        return view('admin.login',[
-            'step'=>'verify2fa'
-        ]);
-    }
+        if (!$valid) {
 
-    // ==========================
-    // STEP 2 VERIFIKASI OTP
-    // ==========================
+            RateLimiter::hit($otpKey, 60);
 
-    $user = Auth::user();
+            return back()->with('error','Kode OTP salah');
+        }
 
-    if ($user->otp_attempt >= 5) {
+        // reset limit OTP
+        RateLimiter::clear($otpKey);
 
-        Auth::logout();
+        // aktifkan jika pertama kali
+        if (!$user->google2fa_enabled) {
 
-        return redirect('/masuk')
-            ->with('error','Terlalu banyak percobaan OTP');
-    }
+            $user->google2fa_enabled = 1;
 
-    $valid = $google2fa->verifyKey(
-        $user->google2fa_secret,
-        $request->otp
-    );
+        }
 
-    if (!$valid) {
-
-        $user->otp_attempt += 1;
         $user->save();
 
-        return back()->with('error','Kode OTP salah');
-    }
+        $request->session()->regenerate();
 
-    // reset attempt
-    $user->otp_attempt = 0;
+        $request->session()->put('2fa_passed', true);
 
-    // aktifkan jika pertama kali
-    if (!$user->google2fa_enabled) {
-
-        $user->google2fa_enabled = 1;
+        return redirect()->intended('/anggota');
 
     }
+    // public function login(Request $request)
+    // {
 
-    $user->save();
+    //     $google2fa = new Google2FA();
 
-    if($valid){
+    //     // ==========================
+    //     // STEP 1 LOGIN EMAIL PASSWORD
+    //     // ==========================
+    //     if (!$request->has('otp')) {
 
-    $request->session()->regenerate();
+    //         $credentials = $request->validate([
+    //             'email' => ['required','email'],
+    //             'password' => ['required'],
+    //         ]);
 
-$request->session()->put('2fa_passed', true);
+    //         if (!Auth::attempt($credentials)) {
 
-return redirect()->intended('/anggota');
+    //             return back()->withErrors([
+    //                 'email' => 'Email atau password salah.'
+    //             ]);
+    //         }
 
-        // $request->session()->regenerate();
+    //         $request->session()->regenerate();
 
-        // session(['2fa_passed'=>true]);
-        // return redirect()->intended('/anggota');
-    }
+    //         $user = Auth::user();
+
+    //         // ==========================
+    //         // JIKA BELUM AKTIF 2FA
+    //         // ==========================
+    //         if (!$user->google2fa_enabled) {
+
+    //             if (!$user->google2fa_secret) {
+
+    //                 $user->google2fa_secret = $google2fa->generateSecretKey();
+    //                 $user->save();
+
+    //             }
+
+    //             $qrUrl = $google2fa->getQRCodeUrl(
+    //                 'SIAP Bandarsono',
+    //                 $user->email,
+    //                 $user->google2fa_secret
+    //             );
+
+    //             $QR_Image = QrCode::size(200)->generate($qrUrl);
+
+    //             return view('admin.login',[
+    //                 'step'=>'setup2fa',
+    //                 'QR_Image'=>$QR_Image
+    //             ]);
+    //         }
+
+    //             // ==========================
+    //             // JIKA SUDAH AKTIF
+    //             // ==========================
+
+    //             return view('admin.login',[
+    //                 'step'=>'verify2fa'
+    //             ]);
+    //     }
+
+    //     // ==========================
+    //     // STEP 2 VERIFIKASI OTP
+    //     // ==========================
+
+    //     $user = Auth::user();
+
+    //     if ($user->otp_attempt >= 5) {
+
+    //         Auth::logout();
+
+    //         return redirect('/masuk')
+    //             ->with('error','Terlalu banyak percobaan OTP');
+    //     }
+
+    //     $valid = $google2fa->verifyKey(
+    //         $user->google2fa_secret,
+    //         $request->otp
+    //     );
+
+    //     if (!$valid) {
+
+    //         $user->otp_attempt += 1;
+    //         $user->save();
+
+    //         return back()->with('error','Kode OTP salah');
+    //     }
+
+    //     // reset attempt
+    //     $user->otp_attempt = 0;
+
+    //     // aktifkan jika pertama kali
+    //     if (!$user->google2fa_enabled) {
+
+    //         $user->google2fa_enabled = 1;
+
+    //     }
+
+    //     $user->save();
+
+    //     if($valid){
+    //         $request->session()->regenerate();
+
+    //         $request->session()->put('2fa_passed', true);
+
+    //         return redirect()->intended('/anggota');
+
+    //     }
     
     
-}
+    // }
    
 
     public function logout(Request $request)

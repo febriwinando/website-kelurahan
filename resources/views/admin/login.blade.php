@@ -24,24 +24,78 @@
                   <img src="{{ asset('storage/assets/images/logos/siap.png') }}" alt="" style="width:150px;">
                 </a>
                 
+                <!-- @if ($errors->any())
+                <div class="alert alert-danger">
+                  <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                </div>
+                @endif -->
+                <!-- @if(session('error'))
+                  <div class="alert alert-danger alert-dismissible fade show">
+                      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+                      <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                          <li>{{ session('error') }}</li>
+                        @endforeach
+                      </ul>
+
+                    </div>
+                  
+                @endif
+
+                @if ($errors->any())
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+                    <ul class="mb-0">
+                      @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+
+                  </div>
+                @endif -->
+
+                @if ($errors->any() || session('error'))
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+                    <ul class="mb-0">
+
+                      @if(session('error'))
+                        <li>{{ session('error') }}</li>
+                      @endif
+
+                      @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                      @endforeach
+
+                    </ul>
+
+                  </div>
+                @endif
                 @if(!isset($step))
 
-                <form method="POST" action="{{ route('login.post') }}">
-                  @csrf
+                  <form method="POST" action="{{ route('login.post') }}">
+                    @csrf
 
-                  <div class="mb-3">
-                    <label>Email</label>
-                    <input type="email" class="form-control" name="email" required>
-                  </div>
+                    <div class="mb-3">
+                      <label>Email</label>
+                      <input type="email" class="form-control" name="email" required>
+                    </div>
 
-                  <div class="mb-3">
-                    <label>Password</label>
-                    <input type="password" class="form-control" name="password" required>
-                  </div>
+                    <div class="mb-3">
+                      <label>Password</label>
+                      <input type="password" class="form-control" name="password" required>
+                    </div>
 
-                  <button class="btn btn-primary w-100">Login</button>
+                    <button class="btn btn-primary w-100">Login</button>
 
-                </form>
+                  </form>
 
                 @endif
 
@@ -76,7 +130,7 @@
                 <h5 class="text-center">Verifikasi 2FA</h5>
 
                 <p class="text-center">
-                Masukkan kode dari Google Authenticator
+                  Masukkan kode dari Google Authenticator
                 </p>
 
                 <form method="POST" action="{{ route('login.post') }}">
@@ -92,44 +146,6 @@
                 </form>
 
                 @endif
-<!-- 
-                @if(isset($step) && $step == 'setup2fa')
-
-                <h5 class="text-center">Aktifkan 2FA</h5>
-
-                <p class="text-center">
-                Scan QR Code menggunakan Google Authenticator
-                </p>
-
-                <div class="text-center mb-3">
-                {!! $QR_Image !!}
-                </div>
-
-                <form method="POST" action="{{ route('login.post') }}">
-                @csrf
-
-                <div class="mb-3">
-                <label>Kode OTP</label>
-                <input type="text" class="form-control" name="otp" required>
-                </div>
-
-                <button class="btn btn-success w-100">Aktifkan 2FA</button>
-
-                </form>
-
-                @endif -->
-                <!-- <form method="POST" action="{{ route('login.post') }}">
-                  @csrf
-                  <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                  </div>
-                  <div class="mb-4">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                  </div>
-                  <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4">Login</button>
-                </form> -->
 
               </div>
             </div>
