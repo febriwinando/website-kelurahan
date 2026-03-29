@@ -56,14 +56,10 @@ class RoleMiddleware
             abort(403, 'Akses ditolak');
         }
 
-        // if (Auth::check()) {
 
-        //         // cek 2FA
             if (Auth::user()->google2fa_enabled && !session('2fa_passed')) {
                 return redirect()->route('login');
             }
-        // }
-
-    return $next($request);
-}
+        return $next($request);
+    }
 }

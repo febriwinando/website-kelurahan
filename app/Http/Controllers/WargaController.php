@@ -11,6 +11,8 @@ use App\Models\Provinsi;
 use App\Models\Kelurahan;
 use App\Models\SubLingkungan;
 use App\Models\Lingkungan;
+use App\Models\KepalaKeluarga;
+use Illuminate\Support\Facades\DB;
 
 class WargaController extends Controller
 {
@@ -18,10 +20,10 @@ class WargaController extends Controller
     {
         $provinsis = Provinsi::orderBy('nama')->get();
         $kecamatans = Kabupaten::with('provinsi')->get();
-        $wargas = Warga::latest()->paginate(10);
-        $wargas = Warga::selectRaw('MIN(id) as id, no_kk, nama_kepala_keluarga')
-        ->groupBy('no_kk','nama_kepala_keluarga')
-        ->paginate(10);
+        $wargas = KepalaKeluarga::latest()->paginate(10);
+        // $wargas = Warga::selectRaw('MIN(id) as id, no_kk, nama_kepala_keluarga')
+        // ->groupBy('no_kk','nama_kepala_keluarga')
+        // ->paginate(10);
 
 
         $sublingkungans = SubLingkungan::with('lingkungan')
@@ -50,11 +52,26 @@ class WargaController extends Controller
         return view('admin.tambahwarga', compact('wargas', 'kabupatens','provinsis','sublingkungans'));
     }
 
-    public function store(Request $request)
+    public function storeanggotakk(Request $request)
     {
+
+        
+        // ================= VALIDASI =================
+        $request->validate([
+            'nik' => 'required|string|unique:wargas,nik',
+            'nama' => 'required|string',
+            'no_kk' => 'required|string',
+        ], [
+            // ================= PESAN CUSTOM =================
+            'nik.required' => 'NIK wajib diisi',
+            'nik.unique'   => 'NIK sudah terdaftar, tidak boleh sama',
+            'nama.required' => 'Nama wajib diisi',
+            'no_kk.required' => 'No KK wajib diisi',
+        ]);
+
         $data = $request->all();
 
-        // checkbox boolean handling
+        // ================= HANDLE CHECKBOX =================
         $checkboxes = [
             'akseptor_kb',
             'aktif_posyandu',
@@ -65,14 +82,11 @@ class WargaController extends Controller
             'ikut_koperasi'
         ];
 
-        // foreach ($checkboxes as $check) {
-        //     $data[$check] = $request->has($check) ? 1 : 0;
-        // }
-
         foreach ($checkboxes as $check) {
-            $data[$check] = $request->$check;
+            $data[$check] = $request->has($check) ? 1 : 0;
         }
 
+        // ================= INSERT =================
         Warga::create($data);
 
         return response()->json([
@@ -81,21 +95,171 @@ class WargaController extends Controller
         ]);
     }
 
+
+
+    // public function store(Request $request)
+    // {
+    //     // ================= VALIDASI =================
+    //     $request->validate([
+    //         'no_kk' => 'required|string',
+    //         'nik' => 'required|string',
+    //         'nama' => 'required|string',
+    //         'nama_kepala_keluarga' => 'nullable|string',
+    //     ]);
+
+    //     DB::beginTransaction();
+
+    //     try {
+
+    //         // ================= AMBIL DATA =================
+    //         $data = $request->all();
+
+    //         // ================= HANDLE CHECKBOX =================
+    //         $checkboxes = [
+    //             'akseptor_kb',
+    //             'aktif_posyandu',
+    //             'ikut_bkb',
+    //             'memiliki_tabungan',
+    //             'ikut_kelompok_belajar',
+    //             'ikut_paud',
+    //             'ikut_koperasi'
+    //         ];
+
+    //         foreach ($checkboxes as $check) {
+    //             $data[$check] = $request->has($check) ? 1 : 0;
+    //         }
+
+    //         // ================= INSERT / CEK KEPALA KELUARGA =================
+    //         $kk = KepalaKeluarga::firstOrCreate(
+    //             ['no_kk' => $data['no_kk']],
+    //             [
+    //                 'dasa_wisma' => $data['dasa_wisma'] ?? null,
+    //                 'nama_kepala_keluarga' => $data['nama_kepala_keluarga'] ?? $data['nama'],
+    //                 'no_registrasi' => $data['no_registrasi'] ?? null,
+    //                 'nik' => $data['nik'] ?? null,
+    //             ]
+    //         );
+
+    //         // ================= INSERT WARGA =================
+    //         $warga = Warga::create($data);
+
+    //         DB::commit();
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Data berhasil disimpan',
+    //             'data' => [
+    //                 'kepala_keluarga' => $kk,
+    //                 'warga' => $warga
+    //             ]
+    //         ]);
+
+    //     } catch (\Exception $e) {
+
+    //         DB::rollBack();
+
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Gagal menyimpan data',
+    //             'error' => $e->getMessage() // boleh dihapus di production
+    //         ]);
+    //     }
+    // }
+
+    public function store(Request $request)
+    {
+        // ================= VALIDASI =================
+        $request->validate([
+            'no_kk' => 'required|string',
+            'nik' => 'required|string',
+            'nama' => 'required|string',
+            'nama_kepala_keluarga' => 'nullable|string',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+            $data = $request->all();
+
+            // ================= HANDLE CHECKBOX =================
+            $checkboxes = [
+                'akseptor_kb',
+                'aktif_posyandu',
+                'ikut_bkb',
+                'memiliki_tabungan',
+                'ikut_kelompok_belajar',
+                'ikut_paud',
+                'ikut_koperasi'
+            ];
+
+            foreach ($checkboxes as $check) {
+                $data[$check] = $request->has($check) ? 1 : 0;
+            }
+
+            // ================= CEK KEPALA KELUARGA =================
+            $kk = KepalaKeluarga::where('no_kk', $data['no_kk'])->first();
+
+            if ($kk) {
+                DB::rollBack();
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menyimpan, No. KK sudah terdaftar!'
+                ]);
+            }
+
+            // ================= INSERT KEPALA KELUARGA =================
+            $kk = KepalaKeluarga::create([
+                'dasa_wisma' => $data['dasa_wisma'] ?? null,
+                'nama_kepala_keluarga' => $data['nama_kepala_keluarga'] ?? $data['nama'],
+                'no_registrasi' => $data['no_registrasi'] ?? null,
+                'no_kk' => $data['no_kk'],
+                'nik' => $data['nik'] ?? null,
+            ]);
+
+            // ================= INSERT WARGA =================
+            $warga = Warga::create($data);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil disimpan',
+                'data' => [
+                    'kepala_keluarga' => $kk,
+                    'warga' => $warga
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menyimpan data',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
     public function lihat($no_kk)
     {
         $wargas = Warga::where('no_kk', $no_kk)->get();
         
         return view('admin.editwarga', compact(
-                'wargas',
+                'wargas','no_kk',
         ));
     }
-    public function edit($id)
+
+
+    public function tambahanggota($no_kk)
     {
-        $warga = Warga::findOrFail($id);
-
+        $no_kk = KepalaKeluarga::where('no_kk', $no_kk)->first();
         $provinsis = Provinsi::orderBy('nama')->get();
-
-        $kabupatens = Kabupaten::get();
+        $kabupatens = Kabupaten::with('provinsi')->get();
+        $wargas = Warga::latest()->get();
 
         $sublingkungans = SubLingkungan::with('lingkungan')
                         ->where('status', 'active')
@@ -104,36 +268,29 @@ class WargaController extends Controller
                         })
                         ->get();
 
-        // $kecamatans = Kecamatan::where('kabupaten_id', $warga->kabupaten_id)->get();
+        return view('admin.tambahanggotakk', compact('no_kk','wargas', 'kabupatens','provinsis','sublingkungans'));
+    }
 
-        // $kelurahans = Kelurahan::where('kecamatan_id', $warga->kecamatan_id)->get();
+
+    public function edit($id)
+    {
+        $warga = Warga::findOrFail($id);
+        $provinsis = Provinsi::orderBy('nama')->get();
+        $kabupatens = Kabupaten::get();
+        $sublingkungans = SubLingkungan::with('lingkungan')
+                        ->where('status', 'active')
+                        ->whereHas('lingkungan', function ($q) {
+                            $q->where('status', 1);
+                        })
+                        ->get();
 
         return view('admin.tambahwarga', compact(
             'warga',
             'provinsis',
             'kabupatens',
-            'sublingkungans',
-            // 'kecamatans',
-            // 'kelurahans'
+            'sublingkungans'
         ));
     }
-    // public function edit($id)
-    // {
-    //     $warga = Warga::findOrFail($id);
-
-    //     $provinsis = Provinsi::all();
-    //     $kabupatens = Kabupaten::with('provinsi')->where('id', $warga->kabupaten)->get();
-    //     $kecamatans = Kecamatan::with('kabupaten')->where('id',$warga->kecamatan)->get();
-    //     $kelurahans = Kelurahan::where('id',$warga->kelurahan)->get();
-
-    //     return view('admin.tambahwarga', compact(
-    //         'warga',
-    //         'provinsis',
-    //         'kabupatens',
-    //         'kecamatans',
-    //         'kelurahans'
-    //     ));
-    // }
 
     public function update(Request $request, $id)
 {

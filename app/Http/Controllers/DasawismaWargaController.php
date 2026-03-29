@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DasawismaWarga;
 use App\Models\Warga;
+use App\Models\KepalaKeluarga;
 use Illuminate\Http\Request;
 
 class DasawismaWargaController extends Controller
@@ -22,7 +23,7 @@ class DasawismaWargaController extends Controller
      */
     public function create()
     {
-        $wargas = Warga::latest()->get();
+        $wargas = KepalaKeluarga::latest()->get();
         return view('admin.tambahdasawisma', compact('wargas'));
     }
 
@@ -151,7 +152,7 @@ class DasawismaWargaController extends Controller
     public function edit($id)
     {
         $dasa = DasawismaWarga::findOrFail($id);
-        $wargas = Warga::latest()->get();
+        $wargas = KepalaKeluarga::latest()->get();
         // dd($dasa);
         return view('admin.tambahdasawisma', compact(
                 'dasa', 'wargas'

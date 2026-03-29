@@ -54,7 +54,8 @@
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h5 class="card-title fw-semibold mb-0">Tambah Data Warga TP-PKK</h5>
                                         <div>
-                                            <a href="/warga" class="btn btn-info">Data Warga TP-PKK</a>
+                                            <a href="{{ route('warga.lihat', $no_kk->no_kk) }}" class="btn btn-success">
+                                                Daftar Anggota Keluarga {{$no_kk->nama_kepala_keluarga}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -64,7 +65,7 @@
                                 <h5 class="card-title fw-semibold card-header">Form TP-PKK </h5>
 
                                 <div class="card-body">
-                                   <form id="formWarga" method="POST" action="{{ isset($warga) ? route('warga.update',$warga->id) : route('warga.store')}}">
+                                   <form id="formTambahAnggotaKK" method="POST" action="{{ isset($warga) ? route('warga.update',$warga->id) : route('warga.tambahanggotakk')}}">
                                         @csrf
                                         @if(isset($warga))
                                             @method('PUT')
@@ -83,6 +84,10 @@
                                         <input type="hidden" id="edit_kelurahan" value="{{ $warga->kelurahan }}">
                                         <input type="hidden" id="edit_dasa_wisma" value="{{ $warga->dasa_wisma }}">
                                         @endif
+
+                                        @if($no_kk)
+                                            <input type="hidden" id="edit_dasa_wisma" value="{{ $no_kk->dasa_wisma }}">
+                                        @endif
                                         
                                         <div class="row">
                                             <!-- <div class="col-md-6">
@@ -92,11 +97,11 @@
                                                 </div>
                                             </div> -->
                                             <div class="col-md-6">
-                                                    <label class="form-label">Sub Lingkungan</label>
+                                                    <label>Sub Lingkungan</label>
                                                     <select class="selectpicker form-control"
                                                             id="dasa_wisma"
                                                             data-live-search="true"
-                                                            title="Pilih Dasa Wisma" name="dasa_wisma">
+                                                            title="Pilih Dasa Wisma" name="dasa_wisma" readonly>
                                                         @foreach($sublingkungans as $sublingkungan)
                                                             <option value="{{ $sublingkungan->nama_sub_lingkungan }}">{{ $sublingkungan->nama_sub_lingkungan }}</option>
                                                         @endforeach
@@ -106,18 +111,20 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Nama Kepala Keluarga</label>
-                                                    <input type="text" name="nama_kepala_keluarga" value="{{ $warga->nama_kepala_keluarga ?? '' }}" class="form-control rounded-pill">
+                                                    <input type="text" name="nama_kepala_keluarga" value="{{ $no_kk->nama_kepala_keluarga ?? '' }}" class="form-control rounded-pill" readonly>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">No. Kartu Keluara</label>
-                                                    <input type="text" name="no_kk" value="{{ $warga->no_kk ?? '' }}" class="form-control rounded-pill">
+                                                    <input type="text" name="no_kk" value="{{ $no_kk->no_kk ?? '' }}" class="form-control rounded-pill" readonly>
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                         <hr>
+
                                         <div class="row">
                                         
                                             <div class="col-md-6">
@@ -246,7 +253,7 @@
                                                 <div class="row">
 
                                                     <div class="col-md-3">
-                                                    <label class="form-label">Provinsi</label>
+                                                    <label>Provinsi</label>
                                                     <select class="selectpicker form-control"
                                                             id="provinsi"
                                                             data-live-search="true"
@@ -260,7 +267,7 @@
 
 
                                                     <div class="col-md-3">
-                                                    <label class="form-label">Kabupaten</label>
+                                                    <label>Kabupaten</label>
                                                     <select class="selectpicker form-control"
                                                             id="kabupaten"
                                                             data-live-search="true"
@@ -271,7 +278,7 @@
 
 
                                                     <div class="col-md-3">
-                                                    <label class="form-label">Kecamatan</label>
+                                                    <label>Kecamatan</label>
                                                     <select class="selectpicker form-control"
                                                             id="kecamatan"
                                                             data-live-search="true"
@@ -282,7 +289,7 @@
 
 
                                                     <div class="col-md-3">
-                                                    <label class="form-label">Kelurahan</label>
+                                                    <label>Kelurahan</label>
                                                     <select class="selectpicker form-control"
                                                             id="kelurahan"
                                                             data-live-search="true"
@@ -375,13 +382,13 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jenis Kelompok Belajar</label>
-                                                    <input type="text" name="jenis_kelompok_belajar" class="form-control" value="-">
+                                                    <input type="text" name="jenis_kelompok_belajar" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jenis Koperasi</label>
-                                                    <input type="text" name="jenis_koperasi" class="form-control" value="-">
+                                                    <input type="text" name="jenis_koperasi" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -402,7 +409,5 @@
                 </div>
             </div>
             {{-- @endif --}}
-            <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>
-            
-            
+            <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>            
         @endsection

@@ -58,22 +58,14 @@ Route::middleware(['auth','role:administrator,admin'])->group(function () {
     Route::put('/verifikasi/kegiatan/{id}', [KegiatanController::class, 'verifikasi'])->name('kegiatan.verifikasi');
     Route::resource('kegiatan', KegiatanController::class);
 
-    // Warga
-    Route::get('warga/{no_kk}/lihat', [WargaController::class, 'lihat'])->name('warga.lihat');
-    Route::post('/warga/store', [WargaController::class, 'store'])->name('warga.store');
-    Route::resource('warga', WargaController::class);
-
-    // Dasawisma Warga
-    Route::resource('dasawisma', DasawismaWargaController::class);
+    
 
     // User
     Route::put('/pengguna/{id}', [UserController::class, 'update']);
     Route::resource('pengguna', UserController::class);
 
 
-    Route::get('/get-kabupaten/{provinsi}', [WargaController::class, 'kabupaten']);
-    Route::get('/get-kecamatan/{kabupaten}', [WargaController::class, 'kecamatan']);
-    Route::get('/get-kelurahan/{kecamatan}', [WargaController::class, 'kelurahan']);
+
 
     Route::get('/kabupaten/{provinsi_id}', function ($provinsi_id) {
         return Kabupaten::where('provinsi_id', $provinsi_id)->get();
@@ -104,6 +96,25 @@ Route::middleware(['auth','role:administrator,admin'])->group(function () {
 
         return $sub;
     });
+
+
+});
+
+Route::middleware(['auth','role:administrator,admin,kepling'])->group(function () {
+    // Warga
+    Route::get('warga/{no_kk}/lihat', [WargaController::class, 'lihat'])->name('warga.lihat');
+    Route::get('tambah/{no_kk}/anggota', [WargaController::class, 'tambahanggota'])->name('tambah.anggotakk');
+    Route::post('/warga/store', [WargaController::class, 'store'])->name('warga.store');
+    Route::post('/warga/tambahanggotakk', [WargaController::class, 'storeanggotakk'])->name('warga.tambahanggotakk');
+    Route::resource('warga', WargaController::class);
+
+    // Dasawisma Warga
+    Route::resource('dasawisma', DasawismaWargaController::class);
+
+    Route::get('/get-kabupaten/{provinsi}', [WargaController::class, 'kabupaten']);
+    Route::get('/get-kecamatan/{kabupaten}', [WargaController::class, 'kecamatan']);
+    Route::get('/get-kelurahan/{kecamatan}', [WargaController::class, 'kelurahan']);
+
 
     //Lingkungan
     Route::resource('/lingkungan', LingkunganController::class);

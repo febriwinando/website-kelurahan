@@ -62,7 +62,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="card-title fw-semibold mb-0">Detail Kegiatan</h5>
                                         <div>
-                                            <a href="/tambahanggota"class="btn btn-success">
+                                            <a href="{{ route('tambah.anggotakk', $no_kk) }}" class="btn btn-success">
                                                 + Tambah Anggota Keluraga</a>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                                 <th width="5%">No</th>
                                                 <th>Nama</th>
                                                 <th>Jabatan</th>
-                                                @role('administrator', 'admin')
+                                                @role('administrator', 'admin','kepling')
                                                 <th width="15%">Aksi</th>
                                                 @endrole
                                             </tr>
@@ -94,7 +94,7 @@
                                                 <td>{{ $key + 1 }}</td>
                                                 <td class="nama">{{ $warga->nama }}</td>
                                                 <td class="jabatan">{{ $warga->nik }}</td>
-                                                @role('administrator', 'admin')
+                                                @role('administrator', 'admin', 'kepling')
                                                 <td>
                                                     <a href="{{ route('warga.edit', $warga->id) }}" 
                                                             class="btn btn-warning btn-sm">

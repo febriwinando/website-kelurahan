@@ -39,19 +39,18 @@
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Dasawisma</span>
             </li>
-            @role('administrator', 'admin')
+            @role('administrator', 'admin', 'kepling')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/warga/create" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/addpeople.svg') }}">
                   {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
                 </span>
-                <span class="hide-menu">Tambah Warga TP-PKK</span>
+                <span class="hide-menu">Tambah Kepala Keluarga</span>
               </a>
             </li>
-            
             @endrole
-            @role('administrator', 'admin', 'ketua')
+            @role('administrator', 'admin', 'ketua', 'kepling')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/warga" aria-expanded="false">
                 <span>
@@ -79,6 +78,8 @@
                 <span class="hide-menu">Data Dasawisma</span>
               </a>
             </li>
+            @endrole
+            @role('administrator', 'admin', 'ketua')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/lingkungan" aria-expanded="false">
                 <span>
@@ -97,10 +98,13 @@
               </a>
             </li>
             @endrole
+            @role('administrator', 'admin', 'ketua')
+
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">TIM PKK</span>
             </li>
+            @endrole
             @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/anggota" aria-expanded="false">
@@ -135,10 +139,12 @@
               </a>
             </li>
             @endrole
+            @role('administrator', 'admin', 'ketua')
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Inventaris</span>
             </li>
+            @endrole
 
             @role('administrator', 'admin')
             <li class="sidebar-item">
@@ -160,10 +166,12 @@
               </a>
             </li>
             @endrole
+            @role('administrator', 'admin', 'ketua')
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Notulen</span>
             </li>
+            @endrole
             @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/notulen/create" aria-expanded="false">
@@ -184,10 +192,13 @@
               </a>
             </li>
             @endrole
+            @role('administrator', 'admin', 'ketua')
+
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Keuangan</span>
             </li>
+            @endrole
             @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/keuangan/create" aria-expanded="false">
@@ -208,11 +219,12 @@
               </a>
             </li>
             @endrole
-            
+            @role('administrator', 'admin', 'ketua')
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Kegiatan</span>
             </li>
+            @endrole
             @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/kegiatan/create" aria-expanded="false">
@@ -233,10 +245,12 @@
               </a>
             </li>
             @endrole
+            @role('administrator', 'admin', 'ketua')
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
               <span class="hide-menu">Pengaturan</span>
             </li>
+            @endrole
             @role('administrator', 'admin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="/pengguna" aria-expanded="false">
@@ -1583,7 +1597,54 @@
                         });
 
                     });
-                    </script>
+                </script>
+
+                <script>
+                    $('#formTambahAnggotaKK').submit(function(e){
+
+                        e.preventDefault();
+
+                        let form = $(this);
+                        let url = form.attr('action');
+
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            data: form.serialize(),
+
+                            success: function(response){
+
+                                showAlert('success', response.message ?? 'Data warga berhasil disimpan');
+
+                                $('#formWarga')[0].reset();
+
+                                $('.selectpicker').selectpicker('refresh');
+
+                            },
+
+                            error: function(xhr){
+
+                                let message = 'Terjadi kesalahan pada sistem';
+
+                                if(xhr.status === 422){
+
+                                    let errors = xhr.responseJSON.errors;
+                                    message = '<ul>';
+
+                                    $.each(errors, function(key, value){
+                                        message += '<li>' + value[0] + '</li>';
+                                    });
+
+                                    message += '</ul>';
+                                }
+
+                                showAlert('danger', message);
+                            }
+
+                        });
+
+                    });
+                </script>
 
 <script>
     $('#formDasawisma').on('submit', function(e){

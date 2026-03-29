@@ -55,4 +55,10 @@ class Warga extends Model
         return $this->hasMany(DasawismaWarga::class, 'no_kk', 'no_kk');
     }
 
+
+    public function kepalaKeluarga()
+    {
+        return $this->belongsTo(KepalaKeluarga::class, 'no_kk', 'no_kk');
+    }
+
 }

@@ -85,7 +85,7 @@
                                                 <th>No</th>
                                                 <th>Kepala Keluarga</th>
                                                 <th>No. KK</th>
-                                                @role('administrator', 'admin')
+                                                @role('administrator', 'admin','kepling')
                                                 <th>Aksi</th>
                                                 @endrole
                                             </tr>
@@ -97,7 +97,7 @@
                                             <td>{{ $dasa->nama_keluarga }}</td>
                                             <td>{{ $dasa->no_kk }}</td>
                                             
-                                            @role('administrator', 'admin')
+                                            @role('administrator', 'admin', 'kepling')
                                                 <td>
                                                     <a href="{{ route('dasawisma.edit', $dasa->id) }}" 
                                                         class="btn btn-warning btn-sm">

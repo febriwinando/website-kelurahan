@@ -71,7 +71,7 @@
                                         <div class="row">
 
                                         <div class="col-md-6 mb-3">
-                                            <label>No KK</label>
+                                            <label class="form-label">No KK</label>
                                             <select name="no_kk" class="selectpicker form-control no_kk_insert" id="no_kk" data-live-search="true" required>
                                                 <option value="">Pilih No KK</option>
                                                 @foreach($wargas as $warga)
@@ -82,8 +82,8 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label>Nama Keluarga</label>
-                                            <input type="text" name="nama_keluarga" id="nama_keluarga" class="form-control" value="{{ $dasa->nama_keluarga ?? '' }}">
+                                            <label class="form-label">Nama Kepala Keluarga</label>
+                                            <input type="text" name="nama_keluarga" id="nama_keluarga" class="form-control" value="{{ $dasa->nama_keluarga ?? '' }}" readonly>
                                         </div>
 
                                         </div>
@@ -94,47 +94,47 @@
 
                                         <div class="row">
                                             <div class="col-md-2 mb-3">
-                                                <label>PUS</label>
+                                                <label class="form-label">PUS</label>
                                                 <input type="number" name="pus" class="form-control" value="{{ $dasa->pus ?? '0' }}">
                                             </div>
 
                                             <div class="col-md-2 mb-3">
-                                                <label>WUS</label>
+                                                <label class="form-label">WUS</label>
                                                 <input type="number" name="wus" class="form-control" value="{{ $dasa->wus ?? '0' }}">
                                             </div>
 
                                             <div class="col-md-2 mb-3">
-                                                <label>Ibu Hamil</label>
+                                                <label class="form-label">Ibu Hamil</label>
                                                 <input type="number" name="ibu_hamil" class="form-control" value="{{ $dasa->ibu_hamil ?? '0' }}">
                                             </div>
 
                                             <div class="col-md-2 mb-3">
-                                                <label>Ibu Menyusui</label>
+                                                <label class="form-label">Ibu Menyusui</label>
                                                 <input type="number" name="ibu_menyusui" class="form-control" value="{{ $dasa->ibu_menyusui ?? '0' }}">
                                             </div>
 
                                             <div class="col-md-2 mb-3">
-                                                <label>Lansia</label>
+                                                <label class="form-label">Lansia</label>
                                                 <input type="number" name="lansia" class="form-control" value="{{ $dasa->lansia ?? '0' }}">
                                             </div>
                                             <hr>
                                             <h6>Balita</h6>
                                              <div class="col-md-2 mb-3">
-                                                <label>Laki-laki</label>
+                                                <label class="form-label">Laki-laki</label>
                                                 <input type="number" name="balita_l" class="form-control" value="{{ $dasa->balita_l ?? '0' }}">
                                             </div>
                                             <div class="col-md-2 mb-3">
-                                                <label>Perempuan</label>
+                                                <label class="form-label">Perempuan</label>
                                                 <input type="number" name="balita_p" class="form-control" value="{{ $dasa->balita_p ?? '0' }}">
                                             </div>
                                             <hr>
                                              <h6>Buta</h6>
                                             <div class="col-md-2 mb-3">
-                                                <label>Laki-Laki</label>
+                                                <label class="form-label">Laki-Laki</label>
                                                 <input type="number" name="buta_l" class="form-control" value="{{ $dasa->buta_l ?? '0' }}">
                                             </div>
                                              <div class="col-md-2 mb-3">
-                                                <label>Perempuan</label>
+                                                <label class="form-label">Perempuan</label>
                                                 <input type="number" name="buta_p" class="form-control" value="{{ $dasa->buta_p ?? '0' }}">
                                             </div>
 
@@ -147,27 +147,27 @@
 
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="rumah_sehat" value="1"  {{ isset($dasa) && $dasa->rumah_sehat ? 'checked' : '' }}>
                                                     Sehat
                                                 </label>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="rumah_kurang_sehat" value="1"  {{ isset($dasa) && $dasa->rumah_kurang_sehat ? 'checked' : '' }}>
                                                     Kurang Sehat
                                                 </label>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="memiliki_tps" value="1" {{ isset($dasa) && $dasa->memiliki_spal ? 'checked' : '' }}>
                                                     Memiliki TPS
                                                 </label>
                                             </div>
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="pembuangan_sampah" value="1" {{ isset($dasa) && $dasa->memiliki_tempat_sampah ? 'checked' : '' }}   >
                                                     Pembuangan Sampah
                                                 </label>
@@ -183,28 +183,28 @@
                                         <div class="row">
 
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="pdam" value="1"  {{ isset($dasa) && $dasa->air_pdam ? 'checked' : '' }}    >
                                                     PDAM
                                                 </label>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="sumur" value="1" {{ isset($dasa) && $dasa->air_sumur ? 'checked' : '' }}  >
                                                     Sumur
                                                 </label>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="sungai" value="1" {{ isset($dasa) && $dasa->air_sungai ? 'checked' : '' }}  >
                                                     Sungai
                                                 </label>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="lainnya_air" value="1" {{ isset($dasa) && $dasa->air_lainnya ? 'checked' : '' }}  >
                                                     Lainnya
                                                 </label>
@@ -218,14 +218,14 @@
 
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="beras" value="1" {{ isset($dasa) && $dasa->beras ? 'checked' : '' }}>
                                                     Beras
                                                 </label>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="non_beras" value="1" {{ isset($dasa) && $dasa->non_beras ? 'checked' : '' }}>
                                                     Non Beras
                                                 </label>
@@ -238,26 +238,26 @@
 
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="up2k" value="1" {{ isset($dasa) && $dasa->beras ? 'checked' : '' }}>
                                                     UP2K
                                                 </label>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="pemanfaatan_tanaman_pekarangan" value="1" {{ isset($dasa) && $dasa->pemanfaatan_tanaman_pekarangan ? 'checked' : '' }}>
                                                     Pemanfaatan Tanaman Pekarangan
                                                 </label>
                                             </div>
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="industri_rumah_tangga" value="1" {{ isset($dasa) && $dasa->industri_rumah_tangga ? 'checked' : '' }}>
                                                     Industri Rumah Tangga
                                                 </label>
                                             </div>
                                             <div class="col-md-3">
-                                                <label>
+                                                <label class="form-label">
                                                     <input type="checkbox" name="kesehatan_lingkungan" value="1" {{ isset($dasa) && $dasa->kesehatan_lingkungan ? 'checked' : '' }}>
                                                     Kesehatan Lingkungan
                                                 </label>
@@ -266,7 +266,7 @@
 
                                         <hr>
 
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary w-100">
                                         Simpan Data
                                         </button>
 

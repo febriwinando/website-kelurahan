@@ -62,17 +62,13 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="card-title fw-semibold mb-0">TP-PKK</h5>
                                         <div>
-                                            <a href="/warga/create" class="btn btn-info">Tambah TP-PKK</a>
+                                            <a href="/warga/create" class="btn btn-info">Tambah Kepala Keluarga</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="card-text mb-3 fs-5 mt-2">
-                                <span id="pelapor"></span>
-                            </div>
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Daftar TP-PKK</h5>
+                                <h5 class="card-title fw-semibold card-header">Daftar Kepala Keluarga</h5>
                                 <div class="card-body">
                                     @if($wargas->isEmpty())
                                     <h4 class="text-center mt-5 mb-5">
@@ -80,7 +76,7 @@
                                     </h4>
                                     @else
                                     <div class="card-body">
-                                        <table class="table mt-4 table-responsive table-hover w-100" id="tabelJabatan">
+                                        <table class="table table-responsive table-hover w-100" id="tabelJabatan">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>No</th>
@@ -96,7 +92,7 @@
                                                 <td>{{ $warga->nama_kepala_keluarga }}</td>
                                                 <td>{{ $warga->no_kk }}</td>
                                                 <td>
-                                                    @role('administrator', 'admin')
+                                                    @role('administrator', 'admin', 'kepling')
                                                         <a href="{{ route('warga.lihat', $warga->no_kk) }}" 
                                                             class="btn btn-warning btn-sm">
                                                             Lihat
