@@ -73,7 +73,6 @@
                                             <input type="hidden" name="kabupaten_id" id="kabupaten_id" value="{{ $warga->kabupaten ?? '' }}">
                                             <input type="hidden" name="kecamatan_id" id="kecamatan_id" value="{{ $warga->kecamatan ?? '' }}">
                                             <input type="hidden" name="kelurahan_id" id="kelurahan_id" value="{{ $warga->kelurahan ?? '' }}"> -->
-
                                             
                                         @endif
                                         
@@ -82,16 +81,28 @@
                                         <input type="hidden" id="edit_kabupaten" value="{{ $warga->kabupaten }}">
                                         <input type="hidden" id="edit_kecamatan" value="{{ $warga->kecamatan }}">
                                         <input type="hidden" id="edit_kelurahan" value="{{ $warga->kelurahan }}">
+                                        <input type="hidden" id="edit_dasa_wisma" value="{{ $warga->dasa_wisma }}">
                                         @endif
                                         
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Dasa Wisma</label>
                                                     <input type="text" name="dasa_wisma" value="{{ $warga->dasa_wisma ?? '' }}" class="form-control rounded-pill">
                                                 </div>
-                                            </div>
-                                            
+                                            </div> -->
+                                            <div class="col-md-6">
+                                                    <label>Sub Lingkungan</label>
+                                                    <select class="selectpicker form-control"
+                                                            id="dasa_wisma"
+                                                            data-live-search="true"
+                                                            title="Pilih Dasa Wisma" name="dasa_wisma">
+                                                        @foreach($sublingkungans as $sublingkungan)
+                                                            <option value="{{ $sublingkungan->nama_sub_lingkungan }}">{{ $sublingkungan->nama_sub_lingkungan }}</option>
+                                                        @endforeach
+
+                                                    </select>
+                                                    </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Nama Kepala Keluarga</label>

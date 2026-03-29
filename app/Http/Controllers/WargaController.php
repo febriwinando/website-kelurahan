@@ -9,7 +9,8 @@ use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\Provinsi;
 use App\Models\Kelurahan;
-
+use App\Models\SubLingkungan;
+use App\Models\Lingkungan;
 
 class WargaController extends Controller
 {
@@ -21,7 +22,16 @@ class WargaController extends Controller
         $wargas = Warga::selectRaw('MIN(id) as id, no_kk, nama_kepala_keluarga')
         ->groupBy('no_kk','nama_kepala_keluarga')
         ->paginate(10);
-        return view('admin.daftarwarga', compact('wargas', 'kecamatans','provinsis'));
+
+
+        $sublingkungans = SubLingkungan::with('lingkungan')
+                        ->where('status', 'active')
+                        ->whereHas('lingkungan', function ($q) {
+                            $q->where('status', 1);
+                        })
+                        ->get();
+
+        return view('admin.daftarwarga', compact('wargas', 'kecamatans','provinsis','sublingkungans'));
     }
 
     public function create()
@@ -29,7 +39,15 @@ class WargaController extends Controller
         $provinsis = Provinsi::orderBy('nama')->get();
         $kabupatens = Kabupaten::with('provinsi')->get();
         $wargas = Warga::latest()->paginate(10);
-        return view('admin.tambahwarga', compact('wargas', 'kabupatens','provinsis'));
+
+        $sublingkungans = SubLingkungan::with('lingkungan')
+                        ->where('status', 'active')
+                        ->whereHas('lingkungan', function ($q) {
+                            $q->where('status', 1);
+                        })
+                        ->get();
+
+        return view('admin.tambahwarga', compact('wargas', 'kabupatens','provinsis','sublingkungans'));
     }
 
     public function store(Request $request)
@@ -79,6 +97,13 @@ class WargaController extends Controller
 
         $kabupatens = Kabupaten::get();
 
+        $sublingkungans = SubLingkungan::with('lingkungan')
+                        ->where('status', 'active')
+                        ->whereHas('lingkungan', function ($q) {
+                            $q->where('status', 1);
+                        })
+                        ->get();
+
         // $kecamatans = Kecamatan::where('kabupaten_id', $warga->kabupaten_id)->get();
 
         // $kelurahans = Kelurahan::where('kecamatan_id', $warga->kecamatan_id)->get();
@@ -87,6 +112,7 @@ class WargaController extends Controller
             'warga',
             'provinsis',
             'kabupatens',
+            'sublingkungans',
             // 'kecamatans',
             // 'kelurahans'
         ));

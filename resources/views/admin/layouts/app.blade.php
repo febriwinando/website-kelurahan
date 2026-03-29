@@ -8,13 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title', 'Aplikasi Absensi')</title>
   <link rel="shortcut icon" type="image/png" href="{{ asset('storage/assets/images/logos/siap.png') }}" />
-  {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> --}}
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('storage/assets/css/styles.min.css') }}" />
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.2/dist/bootstrap-table.min.css">
-
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
   
 </head>
@@ -83,16 +80,15 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="lingkungan" aria-expanded="false">
+              <a class="sidebar-link" href="/lingkungan" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/environment.svg') }}">
-                  {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
                 </span>
                 <span class="hide-menu">Lingkungan</span>
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="sublingkungan" aria-expanded="false">
+              <a class="sidebar-link" href="/sublingkungan" aria-expanded="false">
                 <span>
                   <img src="{{ asset('storage/assets/svg/environment.svg') }}">
                   {{-- <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon> --}}
@@ -1455,6 +1451,46 @@
             let kabupaten = $('#edit_kabupaten').val();
             let kecamatan = $('#edit_kecamatan').val();
             let kelurahan = $('#edit_kelurahan').val();
+            let dasa_wisma = $('#edit_dasa_wisma').val();
+
+            if(dasa_wisma){
+                // console.log(dasa_wisma);
+                $('#dasa_wisma').selectpicker('val', dasa_wisma);
+                // loadDasaWisma(dasa_wisma);
+            }
+
+
+            function loadDasaWisma(nama_sub_lingkungan){
+
+                resetSelect('#dasa_wisma','Pilih Dasa Wisma Nya');
+
+                if(!dasa_wisma) return;
+
+                $.get('/dasa_wisma/' + nama_sub_lingkungan, function(data){
+
+                    let html = '<option value="">Pilih Dasa Wisma Ya</option>';
+
+                    data.forEach(function(item){
+                        html += `<option value="${item.id}">${item.nama_sub_lingkungan}</option>`;
+                    });
+
+                    $('#dasa_wisma').selectpicker('destroy');
+
+                    $('#dasa_wisma').html(html);
+
+                    $('#dasa_wisma').prop('disabled', false);
+
+                    $('#dasa_wisma').selectpicker({
+                        liveSearch:true
+                    });
+
+                    if(selected){
+                        $('#dasa_wisma').selectpicker('val', selected);
+                    }
+
+                });
+
+            }
 
             if(provinsi){
 

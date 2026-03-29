@@ -21,6 +21,8 @@ use App\Models\Kabupaten;
 use App\Models\Lingkungan;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
+use App\Models\SubLingkungan;
+
 
 // Beranda SI-AP
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
@@ -90,6 +92,18 @@ Route::middleware(['auth','role:administrator,admin'])->group(function () {
         return Kelurahan::where('kecamatan_id', $kecamatan_id)->get();
     });
 
+    Route::get('/dasa_wisma/{nama_sub_lingkungan}', function ($nama_sub_lingkungan) {
+        
+        $sub = SubLingkungan::with('lingkungan')
+                        ->where('status', 'active')
+                        ->where('nama_sub_lingkungan', $nama_sub_lingkungan)
+                        ->whereHas('lingkungan', function ($q) {
+                            $q->where('status', 1);
+                        })
+                        ->get();
+
+        return $sub;
+    });
 
     //Lingkungan
     Route::resource('/lingkungan', LingkunganController::class);

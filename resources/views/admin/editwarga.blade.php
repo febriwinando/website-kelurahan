@@ -62,11 +62,8 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="card-title fw-semibold mb-0">Detail Kegiatan</h5>
                                         <div>
-                                            <a href="/kegiatan/create" class="btn btn-info">Tambah Kegiatan</a>
-                                            <a href="/kegiatan" class="btn btn-info">Daftar Kegiatan</a>
-                                            <button class="btn btn-success" id="btnTambahPeserta">
-                                                + Tambah Peserta
-                                            </button>
+                                            <a href="/tambahanggota"class="btn btn-success">
+                                                + Tambah Anggota Keluraga</a>
                                         </div>
                                     </div>
                                 </div>
