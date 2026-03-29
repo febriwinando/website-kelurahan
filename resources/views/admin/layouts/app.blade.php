@@ -1729,7 +1729,7 @@
             $('#edit_name').val($(this).data('name'));
             $('#edit_level').val($(this).data('level'));
             $('#edit_email').val($(this).data('email'));
-
+            $('#edit_status').val($(this).data('status'));
             $('#modalEditPengguna').modal('show');
         });
 
@@ -1776,7 +1776,137 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+
+            const formPengguna = document.getElementById('formTambahPengguna');
+
+            if(!formPengguna){
+                console.error('Form tidak ditemukan!');
+                return;
+            }
+
+            const csrf = '{{ csrf_token() }}';
+
+            formPengguna.addEventListener('submit', function(e){
+
+                e.preventDefault();
+
+                let formData = new FormData(formPengguna);
+
+                fetch("{{ url('pengguna') }}",{
+                    method: 'POST',
+                    headers:{
+                        'X-CSRF-TOKEN': csrf,
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+
+                .then(res => {
+                    if(!res.ok){
+                        return res.json().then(err => { throw err });
+                    }
+                    return res.json();
+                })
+
+                .then(data => {
+
+
+                    if(!data.success){
+                        showAlert('danger','Gagal menambahkan user');
+                        return;
+                    }
+                    let user = data.data;
+
+                    let row = `
+                    <tr id="row-${user.id}">
+                        <td></td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.level}</td>
+                        <td>
+                            ${user.status === 'inactive'
+                                ? `<span class="badge bg-danger">${user.status}</span>`
+                                : `<span class="badge bg-success">${user.status}</span>`
+                            }
+                        </td>
+                        <td>
+                        <button 
+                            class="btn btn-warning btn-sm btnEditPengguna"
+                            data-id="${user.id}"
+                            data-name="${user.name}"
+                            data-email="${user.email}"
+                            data-level="${user.level}"
+                            data-status="${user.status}">
+                            Edit
+                        </button>
+                    </td>
+                    </tr>
+                    `;
+
+                    document.querySelector('#tabelPengguna tbody')
+                        .insertAdjacentHTML('beforeend', row);
+
+                    updateNomorTabel();
+
+                    formPengguna.reset();
+                    showAlert('success','User berhasil ditambahkan');
+
+                })
+
+                .catch(err => {
+                    console.log(err);
+                });
+
+            });
+
+        });
+        function updateNomorTabel(){
+
+            let rows = document.querySelectorAll('#tabelPengguna tbody tr');
+
+            rows.forEach((row,index)=>{
+                row.children[0].innerText = index + 1;
+            });
+
+        }
+    </script>
     
+            <script>
+               $('#formAreaUser').on('submit', function (e) {
+                e.preventDefault();
+
+                let formData = $(this).serialize();
+
+                console.log(formData); // 🔥 DEBUG
+
+                $.ajax({
+                    url: '/area-user/store',
+                    method: 'POST',
+                    data: formData,
+                    success: function (res) {
+                        alert(res.message);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr); // 🔥 DEBUG
+
+                        let errors = xhr.responseJSON?.errors;
+                        let msg = '';
+
+                        if (errors) {
+                            $.each(errors, function (key, val) {
+                                msg += val[0] + '\n';
+                            });
+                        } else {
+                            msg = 'Terjadi kesalahan';
+                        }
+
+                        alert(msg);
+                    }
+                });
+            });
+            </script>
 </body>
 
 </html>

@@ -29,4 +29,13 @@ class KepalaKeluarga extends Model
     {
         return $query->where('no_kk', $no_kk);
     }
+
+    public function subLingkungan()
+    {
+        return $this->belongsTo(
+            SubLingkungan::class,
+            'dasa_wisma',
+            'nama_sub_lingkungan'
+        );
+    }
 }

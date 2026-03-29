@@ -64,9 +64,6 @@ Route::middleware(['auth','role:administrator,admin'])->group(function () {
     Route::put('/pengguna/{id}', [UserController::class, 'update']);
     Route::resource('pengguna', UserController::class);
 
-
-
-
     Route::get('/kabupaten/{provinsi_id}', function ($provinsi_id) {
         return Kabupaten::where('provinsi_id', $provinsi_id)->get();
     });
@@ -97,6 +94,9 @@ Route::middleware(['auth','role:administrator,admin'])->group(function () {
         return $sub;
     });
 
+    Route::get('pengguna/{no_kk}/area', [UserController::class, 'area'])->name('pengguna.area');
+    Route::post('/area-user/store', [UserController::class, 'storearea']);
+    Route::get('/area-user/{user}', [UserController::class, 'getarea']);
 
 });
 

@@ -81,17 +81,17 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Nama Jabatan</label>
-                                            <input type="text" class="form-control" id="namaJabatan" name="nama_jabatan">
+                                            <input type="text" class="form-control rounded-pill" id="namaJabatan" name="nama_jabatan">
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Deskripsi Jabatan</label>
-                                            <textarea class="form-control" id="deskripsi" name="deskripsi"></textarea>
+                                            <textarea class="form-control rounded-pill" id="deskripsi" name="deskripsi"></textarea>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Hierarki Jabatan</label>
-                                            <select class="form-select" id="urutan" name="urutan">
+                                            <select class="form-select rounded-pill" id="urutan" name="urutan">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -103,13 +103,13 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Status</label>
-                                            <select class="form-select" id="is_active" name="is_active">
+                                            <select class="form-select rounded-pill" id="is_active" name="is_active">
                                                 <option value="true">Aktif</option>
                                                 <option value="false">Tidak Aktif</option>
                                             </select>
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary" id="btnSubmit">
+                                        <button type="submit" class="btn btn-primary w-100" id="btnSubmit">
                                             Tambah Jabatan
                                         </button>
                                     </form>

@@ -218,7 +218,7 @@
                                             <div class="col-sm-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Keterangan</label>
-                                                    <textarea class="form-control" name="keterangan" >{{ $anggota->keterangan ?? '' }}</textarea>
+                                                    <textarea class="form-control rounded-pill" name="keterangan" >{{ $anggota->keterangan ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
@@ -226,7 +226,7 @@
                                                     <label class="form-label">Upload Foto</label>
 
                                                     <input type="file"
-                                                        class="form-control"
+                                                        class="form-control rounded-pill"
                                                         id="imageInput"
                                                         name="foto"
                                                         accept="image/*">
@@ -243,7 +243,7 @@
                                             </div>
                                             <div class="col-sm-12">
 
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary w-100">
                                                 {{ isset($anggota) ? 'Update' : 'Tambah' }}
                                             </button>
                                             </div>

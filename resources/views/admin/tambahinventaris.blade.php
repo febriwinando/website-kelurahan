@@ -134,7 +134,7 @@
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Keterangan</label>
-                                                    <textarea class="form-control" name="keterangan" >{{ $inventaris->keterangan ?? '' }}</textarea>
+                                                    <textarea class="form-control rounded-pill" name="keterangan" >{{ $inventaris->keterangan ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
@@ -142,7 +142,7 @@
                                                     <label class="form-label">Upload Foto Inventaris</label>
 
                                                     <input type="file"
-                                                        class="form-control"
+                                                        class="form-control rounded-pill"
                                                         id="imageInput"
                                                         name="foto_inventaris"
                                                         accept="image/*">
@@ -158,7 +158,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
-                                                <button type="submit" class="btn btn-primary">
+                                                <button type="submit" class="btn btn-primary w-100">
                                                     {{ isset($inventaris) ? 'Update' : 'Tambah' }}
                                                 </button>
                                             </div>

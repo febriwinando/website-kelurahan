@@ -57,6 +57,7 @@ class User extends Authenticatable
         'email',
         'password',
         'level',
+        'status',
         'fcm_token'
     ];
 
@@ -90,4 +91,24 @@ class User extends Authenticatable
     {
         return $this->level === 'verifikator';
     }
+
+    // public function subLingkungans()
+    // {
+    //     return $this->belongsToMany(
+    //         SubLingkungan::class,
+    //         'area_sub_lingkungans',
+    //         'user_id',
+    //         'sub_lingkungan_id'
+    //     );
+    // }
+
+    public function subLingkungans()
+{
+    return $this->belongsToMany(
+        SubLingkungan::class,
+        'area_sub_lingkungans'
+    );
+}
+
+    
 }

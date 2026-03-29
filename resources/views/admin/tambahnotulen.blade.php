@@ -112,7 +112,7 @@
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label for="anggota_id" class="form-label">Pemimpin Rapat:</label>
-                                                    <select id="anggota_id" name="anggota_id" class="selectpicker form-control" data-live-search="true" title="pilih pemimpin rapat">
+                                                    <select id="anggota_id" name="anggota_id" class="selectpicker form-control rounded-pill" data-live-search="true" title="pilih pemimpin rapat">
                                                         @foreach($anggotas as $anggota)
                                                             <option value="{{ $anggota->id }}" data-name="{{ $anggota->nama }}" {{ isset($notulen) && $notulen->anggota_id == $anggota->id ? 'selected' : '' }}>
                                                                 {{ $anggota->nama }}
@@ -140,25 +140,25 @@
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Susunan Acara</label>
-                                                    <textarea class="form-control" name="susunan_acara" style="height: 200px">{{ $notulen->susunan_acara ?? '' }}</textarea>
+                                                    <textarea class="form-control rounded-pill" name="susunan_acara" style="height: 200px">{{ $notulen->susunan_acara ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                              <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Keputusan</label>
-                                                    <textarea class="form-control" name="keputusan" style="height: 200px">{{ $notulen->keputusan ?? '' }}</textarea>
+                                                    <textarea class="form-control rounded-pill" name="keputusan" style="height: 200px">{{ $notulen->keputusan ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Lain-lain</label>
-                                                    <textarea class="form-control" name="lain_lain" style="height: 200px">{{ $notulen->lain_lain ?? '' }}</textarea>
+                                                    <textarea class="form-control rounded-pill" name="lain_lain" style="height: 200px">{{ $notulen->lain_lain ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Penutup</label>
-                                                    <textarea class="form-control" name="penutup" style="height: 200px">{{ $notulen->penutup ?? '' }}</textarea>
+                                                    <textarea class="form-control rounded-pill" name="penutup" style="height: 200px">{{ $notulen->penutup ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                             <hr>
@@ -169,7 +169,7 @@
                                                     <label class="form-label">Upload Foto</label>
 
                                                    <input type="file"
-                                                        class="form-control"
+                                                        class="form-control rounded-pill"
                                                         id="imageInputMulti"
                                                         multiple
                                                         name="foto_dokumentasi[]"
@@ -206,7 +206,7 @@
                                             </div>
 
                                         </div>
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary w-100">
                                                 {{ isset($anggota) ? 'Update' : 'Tambah' }}
                                             </button>
                                         

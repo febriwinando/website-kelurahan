@@ -72,7 +72,7 @@
 
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label">No KK</label>
-                                            <select name="no_kk" class="selectpicker form-control no_kk_insert" id="no_kk" data-live-search="true" required>
+                                            <select name="no_kk" class="selectpicker form-control rounded-pill no_kk_insert" id="no_kk" data-live-search="true" required>
                                                 <option value="">Pilih No KK</option>
                                                 @foreach($wargas as $warga)
                                                     <option value="{{ $warga->no_kk }}" data-nama="{{ $warga->nama_kepala_keluarga }}" {{ isset($dasa) && $warga->no_kk == $dasa->no_kk ? 'selected' : '' }}>
@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label">Nama Kepala Keluarga</label>
-                                            <input type="text" name="nama_keluarga" id="nama_keluarga" class="form-control" value="{{ $dasa->nama_keluarga ?? '' }}" readonly>
+                                            <input type="text" name="nama_keluarga" id="nama_keluarga" class="form-control rounded-pill" value="{{ $dasa->nama_keluarga ?? '' }}" readonly>
                                         </div>
 
                                         </div>
@@ -95,47 +95,47 @@
                                         <div class="row">
                                             <div class="col-md-2 mb-3">
                                                 <label class="form-label">PUS</label>
-                                                <input type="number" name="pus" class="form-control" value="{{ $dasa->pus ?? '0' }}">
+                                                <input type="number" name="pus" class="form-control rounded-pill" value="{{ $dasa->pus ?? '0' }}">
                                             </div>
 
                                             <div class="col-md-2 mb-3">
                                                 <label class="form-label">WUS</label>
-                                                <input type="number" name="wus" class="form-control" value="{{ $dasa->wus ?? '0' }}">
+                                                <input type="number" name="wus" class="form-control rounded-pill" value="{{ $dasa->wus ?? '0' }}">
                                             </div>
 
                                             <div class="col-md-2 mb-3">
                                                 <label class="form-label">Ibu Hamil</label>
-                                                <input type="number" name="ibu_hamil" class="form-control" value="{{ $dasa->ibu_hamil ?? '0' }}">
+                                                <input type="number" name="ibu_hamil" class="form-control rounded-pill" value="{{ $dasa->ibu_hamil ?? '0' }}">
                                             </div>
 
                                             <div class="col-md-2 mb-3">
                                                 <label class="form-label">Ibu Menyusui</label>
-                                                <input type="number" name="ibu_menyusui" class="form-control" value="{{ $dasa->ibu_menyusui ?? '0' }}">
+                                                <input type="number" name="ibu_menyusui" class="form-control rounded-pill" value="{{ $dasa->ibu_menyusui ?? '0' }}">
                                             </div>
 
                                             <div class="col-md-2 mb-3">
                                                 <label class="form-label">Lansia</label>
-                                                <input type="number" name="lansia" class="form-control" value="{{ $dasa->lansia ?? '0' }}">
+                                                <input type="number" name="lansia" class="form-control rounded-pill" value="{{ $dasa->lansia ?? '0' }}">
                                             </div>
                                             <hr>
                                             <h6>Balita</h6>
                                              <div class="col-md-2 mb-3">
                                                 <label class="form-label">Laki-laki</label>
-                                                <input type="number" name="balita_l" class="form-control" value="{{ $dasa->balita_l ?? '0' }}">
+                                                <input type="number" name="balita_l" class="form-control rounded-pill" value="{{ $dasa->balita_l ?? '0' }}">
                                             </div>
                                             <div class="col-md-2 mb-3">
                                                 <label class="form-label">Perempuan</label>
-                                                <input type="number" name="balita_p" class="form-control" value="{{ $dasa->balita_p ?? '0' }}">
+                                                <input type="number" name="balita_p" class="form-control rounded-pill" value="{{ $dasa->balita_p ?? '0' }}">
                                             </div>
                                             <hr>
                                              <h6>Buta</h6>
                                             <div class="col-md-2 mb-3">
                                                 <label class="form-label">Laki-Laki</label>
-                                                <input type="number" name="buta_l" class="form-control" value="{{ $dasa->buta_l ?? '0' }}">
+                                                <input type="number" name="buta_l" class="form-control rounded-pill" value="{{ $dasa->buta_l ?? '0' }}">
                                             </div>
                                              <div class="col-md-2 mb-3">
                                                 <label class="form-label">Perempuan</label>
-                                                <input type="number" name="buta_p" class="form-control" value="{{ $dasa->buta_p ?? '0' }}">
+                                                <input type="number" name="buta_p" class="form-control rounded-pill" value="{{ $dasa->buta_p ?? '0' }}">
                                             </div>
 
                                         </div>

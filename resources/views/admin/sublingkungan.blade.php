@@ -82,7 +82,7 @@
                                             <label class="form-label">Lingkungan</label>
                                             <select id="lingkungan_id"
                                                     name="lingkungan_id"
-                                                    class="selectpicker form-control"
+                                                    class="selectpicker form-control rounded-pill"
                                                     data-live-search="true"
                                                     title="Pilih Lingkungan">
 
@@ -93,46 +93,32 @@
                                                 @endforeach
 
                                             </select>
-                                            <!-- <select id="lingkungan_id"
-                                                    name="lingkungan_id"
-                                                    class="selectpicker form-control"
-                                                    data-live-search="true"
-                                                    title="Pilih Lingkungan">
-
-                                                @foreach($lingkungans as $lingkungan)
-                                                    <option value="{{ $lingkungan->id }}">
-                                                        {{ $lingkungan->nama_lingkungan }}
-                                                    </option>
-                                                @endforeach
-
-                                            </select> -->
                                         </div>
-
                                         <div class="mb-3">
                                             <label class="form-label">Nama Sub Lingkungan</label>
                                             <input type="text"
-                                                class="form-control"
+                                                class="form-control rounded-pill"
                                                 id="nama_sub_lingkungan"
                                                 name="nama_sub_lingkungan">
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Keterangan</label>
-                                            <textarea class="form-control"
+                                            <textarea class="form-control rounded-pill"
                                                     id="keterangan"
                                                     name="keterangan"></textarea>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Status</label>
-                                            <select class="form-select" id="status" name="status">
+                                            <select class="form-select rounded-pill" id="status" name="status">
                                                 <option value="true">Aktif</option>
                                                 <option value="false">Tidak Aktif</option>
                                             </select>
                                         </div>
 
                                         <button type="submit"
-                                                class="btn btn-primary"
+                                                class="btn btn-primary w-100"
                                                 id="btnSubmitSubLingkungan">
                                             Tambah Sub Lingkungan
                                         </button>

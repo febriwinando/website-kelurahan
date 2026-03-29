@@ -172,7 +172,7 @@
                                              <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal Lahir</label>
-                                                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', isset($warga) ? $warga->tanggal_lahir?->format('Y-m-d') : '') }}" class="form-control">
+                                                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', isset($warga) ? $warga->tanggal_lahir?->format('Y-m-d') : '') }}" class="form-control rounded-pill">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -239,7 +239,7 @@
                                             <div class="col-md-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Alamat</label>
-                                                    <textarea name="alamat" class="form-control"> {{ $warga->alamat ?? '' }} </textarea>
+                                                    <textarea name="alamat" class="form-control rounded-pill"> {{ $warga->alamat ?? '' }} </textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -375,13 +375,13 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jenis Kelompok Belajar</label>
-                                                    <input type="text" name="jenis_kelompok_belajar" class="form-control" value="-">
+                                                    <input type="text" name="jenis_kelompok_belajar" class="form-control rounded-pill" value="-">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jenis Koperasi</label>
-                                                    <input type="text" name="jenis_koperasi" class="form-control" value="-">
+                                                    <input type="text" name="jenis_koperasi" class="form-control rounded-pill" value="-">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">

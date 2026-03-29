@@ -81,22 +81,22 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Nama Lingkungan</label>
-                                            <input type="text" class="form-control" id="nama_lingkungan" name="nama_lingkungan">
+                                            <input type="text" class="form-control rounded-pill" id="nama_lingkungan" name="nama_lingkungan">
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Deskripsi Lingkungan</label>
-                                            <textarea class="form-control" id="keterangan" name="keterangan"></textarea>
+                                            <textarea class="form-control rounded-pill" id="keterangan" name="keterangan"></textarea>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Status</label>
-                                            <select class="form-select" id="status" name="status">
+                                            <select class="form-select rounded-pill" id="status" name="status">
                                                 <option value="true">Aktif</option>
                                                 <option value="false">Tidak Aktif</option>
                                             </select>
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary" id="btnSubmitLingkungan">
+                                        <button type="submit" class="btn btn-primary w-100" id="btnSubmitLingkungan">
                                             Tambah Lingkungan
                                         </button>
                                     </form>

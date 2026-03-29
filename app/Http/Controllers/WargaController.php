@@ -13,6 +13,7 @@ use App\Models\SubLingkungan;
 use App\Models\Lingkungan;
 use App\Models\KepalaKeluarga;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class WargaController extends Controller
 {
@@ -20,18 +21,29 @@ class WargaController extends Controller
     {
         $provinsis = Provinsi::orderBy('nama')->get();
         $kecamatans = Kabupaten::with('provinsi')->get();
-        $wargas = KepalaKeluarga::latest()->paginate(10);
-        // $wargas = Warga::selectRaw('MIN(id) as id, no_kk, nama_kepala_keluarga')
-        // ->groupBy('no_kk','nama_kepala_keluarga')
-        // ->paginate(10);
+        // $wargas = KepalaKeluarga::latest()->paginate(10);
 
+        // $sublingkungans = SubLingkungan::with('lingkungan')
+        //                 ->where('status', 'active')
+        //                 ->whereHas('lingkungan', function ($q) {
+        //                     $q->where('status', 1);
+        //                 })
+        //                 ->get();
 
-        $sublingkungans = SubLingkungan::with('lingkungan')
-                        ->where('status', 'active')
-                        ->whereHas('lingkungan', function ($q) {
-                            $q->where('status', 1);
-                        })
-                        ->get();
+        $wargas = KepalaKeluarga::whereHas('subLingkungan.users', function ($q) {
+            $q->where('users.id', Auth::id());
+        })->get();
+        
+
+        $user = Auth::user();
+
+        $sublingkungans = $user->subLingkungans()
+            ->with('lingkungan')
+            ->where('status', 'active')
+            ->whereHas('lingkungan', function ($q) {
+                $q->where('status', 1);
+            })
+            ->get();
 
         return view('admin.daftarwarga', compact('wargas', 'kecamatans','provinsis','sublingkungans'));
     }
@@ -40,14 +52,28 @@ class WargaController extends Controller
     {
         $provinsis = Provinsi::orderBy('nama')->get();
         $kabupatens = Kabupaten::with('provinsi')->get();
-        $wargas = Warga::latest()->paginate(10);
+        // $wargas = Warga::latest()->paginate(10);
 
-        $sublingkungans = SubLingkungan::with('lingkungan')
-                        ->where('status', 'active')
-                        ->whereHas('lingkungan', function ($q) {
-                            $q->where('status', 1);
-                        })
-                        ->get();
+        // $sublingkungans = SubLingkungan::with('lingkungan')
+        //                 ->where('status', 'active')
+        //                 ->whereHas('lingkungan', function ($q) {
+        //                     $q->where('status', 1);
+        //                 })
+        //                 ->get();
+
+        $wargas = KepalaKeluarga::whereHas('subLingkungan.users', function ($q) {
+            $q->where('users.id', Auth::id());
+        })->get();
+
+        $user = Auth::user();
+
+        $sublingkungans = $user->subLingkungans()
+            ->with('lingkungan')
+            ->where('status', 'active')
+            ->whereHas('lingkungan', function ($q) {
+                $q->where('status', 1);
+            })
+            ->get();
 
         return view('admin.tambahwarga', compact('wargas', 'kabupatens','provinsis','sublingkungans'));
     }

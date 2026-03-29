@@ -55,37 +55,87 @@
                     </ul>
                 @endif
             </div>
-
-            {{-- @if($messages->isEmpty())
-                <div class="alert alert-primary" role="alert">
-                    Tidak aduan yang diterima.
-                </div>
-            @else --}}
             <div class="row">
                 <div class="col-lg-12" id="informasi-container">
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="card-title fw-semibold mb-0">Pengguna</h5>
-                                        <!-- <div>
-                                            <a href="/keuangan/create" class="btn btn-info">Tambah Transaksi</a>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
+                            <div class="card">
+                                <h5 class="card-title fw-semibold card-header">Tambah Pengguna</h5>
 
-                            <div class="card-text mb-3 fs-5 mt-2">
-                                <span id="pelapor"></span>
+                                <div class="card-body">
+                                    <form id="formTambahPengguna">
+                                        @csrf
+                                        <div class="row">
+                                        <div class="col-md-6">
+                                            <!-- ID untuk mode edit -->
+                                            <input type="hidden" id="jabatan_id">
+                                            <div class="mb-3">
+                                                <label class="form-label">Nama Pengguna</label>
+                                                <input type="text" class="form-control rounded-pill" id="name" name="name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control rounded-pill" id="email" name="email">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Level</label>
+                                                <select id="level" name="level" class="form-control rounded-pill">
+                                                    <option selected>Pilih Level</option>
+                                                    <option value="ketua">Ketua</option>
+                                                    <option value="verifikator">Verifikator</option>
+                                                    <option value="admin">Admin</option>
+                                                    <option value="kepling">Kepling</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Status</label>
+                                                <select class="form-control rounded-pill" id="status" name="status">
+                                                    <option selected>Pilih Status</option>
+
+                                                    <option value="active">Aktif</option>
+                                                    <option value="inactive">Tidak Aktif</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Password</label>
+                                                <input type="password" class="form-control rounded-pill" id="password" name="password">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Entri Ulang Password</label>
+                                                <input type="password" class="form-control rounded-pill" id="repassword" name="repassword">
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100" id="btnSubmit">
+                                            Tambah Pengguna
+                                        </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                             <div class="card">
                                 <h5 class="card-title fw-semibold card-header">Daftar Pengguna</h5>
                                 @if($users->isEmpty())
                                     <h4 class="text-center mt-5 mb-5">
-                                        Belum ada arsip notulen ...
+                                        Tidak ada daftar pengguna ...
                                     </h4>
                                 @else
                                 <div class="card-body">
-                                    <table class="table mt-4 table-responsive table-hover w-100" id="tabelTransaksi">
+                                    <table class="table mt-4 table-responsive table-hover w-100" id="tabelPengguna">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>No</th>
@@ -105,11 +155,7 @@
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->level }}</td>
                                             <td class="status-col">
-                                                 @if($user->status == 'belum diverifikasi')
-                                                    <span class="badge bg-warning p-2 rounded">
-                                                        {{ $user->status }}
-                                                    </span>
-                                                @elseif($user->status == 'verifikasi ditolak')
+                                                 @if($user->status == 'inactive')
                                                     <span class="badge bg-danger p-2 rounded">
                                                         {{ $user->status }}
                                                     </span>
@@ -127,9 +173,14 @@
                                                         data-name="{{ $user->name }}"
                                                         data-level="{{ $user->level }}"
                                                         data-email="{{ $user->email }}"
+                                                        data-status="{{ $user->status }}"
                                                     >
                                                         Edit
                                                     </button>
+                                                    <a href="{{ route('pengguna.area', $user->id) }}" 
+                                                            class="btn btn-warning btn-sm">
+                                                            Lihat
+                                                        </a>
                                             </td>
                                             @endrole
                                         </tr>
@@ -140,38 +191,6 @@
                                 </div>
                                 @endif
                             </div>
-
-                </div>
-                
-            </div>
-
-            <div class="modal fade" id="modalVerifikasi" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form id="formVerifikasi">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" id="verifikasi_id" name="id">
-                            <div class="modal-header">
-                                <h5>Verifikasi Notulen</h5>
-                            </div>
-
-                            <div class="modal-body">
-
-                                <div class="mb-2">
-                                    <h6 class="fw-light">Apakah anda yakin akan memverifikasi <span class="fw-semibold" id="detaiJenis"></span> tersebut? yang dilaksanakan pada <span class="fw-semibold" id="detailTanggal"></span>, Nomor Invoice: <span class="fw-semibold" id="detailInvoice"></span> sebesar: <span class="fw-semibold" id="detailJumlah"></span></h6>
-                                </div>
-
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">
-                                    Ya
-                                </button>
-                            </div>
-
-                        </form>
-                    </div>
                 </div>
             </div>
 
@@ -181,36 +200,40 @@
                         <form id="formEditPengguna" autocomplete="off" >
                             @csrf
                             @method('PUT')
-
                             <input type="hidden" id="edit_id">
-
                             <div class="modal-header">
                                 <h5>Edit Pengguna</h5>
                             </div>
-
                             <div class="modal-body">
 
                                 <div class="mb-2">
-                                    <label>Nama</label>
-                                    <input type="text" id="edit_name" name="name" class="form-control">
+                                    <label class="form-label">Nama</label>
+                                    <input type="text" id="edit_name" name="name" class="form-control rounded-pill">
                                 </div>
                                 <div class="mb-2">
-                                    <label>Email</label>
-                                    <input type="text" id="edit_email" name="email" class="form-control">
+                                    <label class="form-label">Email</label>
+                                    <input type="text" id="edit_email" name="email" class="form-control rounded-pill">
                                 </div>
 
                                 <div class="mb-2">
-                                    <label>Level Pegguna</label>
-                                    <select id="edit_level" class="form-control">
-                                        <option value="administrator">Administrator</option>
+                                    <label class="form-label">Level Pegguna</label>
+                                    <select id="edit_level" class="form-control rounded-pill">
                                         <option value="verifikator">Verifikator</option>
                                         <option value="admin">Admin</option>
                                         <option value="kepling">Kepling</option>
+                                        <option value="ketua">Ketua</option>
                                     </select>
                                 </div>
                                 <div class="mb-2">
-                                    <label>Password</label>
-                                    <input type="password" id="edit_password" name="password" class="form-control" autocomplete="new-password">
+                                    <label class="form-label">Status User</label>
+                                    <select id="edit_status" class="form-control rounded-pill">
+                                        <option value="active">Aktif</option>
+                                        <option value="inactive">Tidak Aktif</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" id="edit_password" name="password" class="form-control rounded-pill" autocomplete="new-password">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -227,7 +250,3 @@
             <div id="alertBox" class="alert d-none position-fixed top-0 start-50 translate-middle-x mt-3 shadow alert-primary" style="z-index: 9999; min-width:300px;" role="alert"></div>
 
         @endsection
-
-        {{-- @section('scripts')
-            <script src="{{ asset('storage/assets/js/scriptlapor.js') }}"></script>
-        @endsection --}}

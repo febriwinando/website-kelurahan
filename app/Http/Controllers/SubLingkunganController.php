@@ -14,7 +14,7 @@ class SubLingkunganController extends Controller
      */
     public function index()
     {
-        $lingkungans = Lingkungan::latest()->get();
+        $lingkungans = Lingkungan::where('status', '1')->latest()->get();
         $sublingkungans = SubLingkungan::latest()->get();
         return view('admin.sublingkungan', compact('sublingkungans', 'lingkungans'));
     }

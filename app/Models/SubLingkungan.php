@@ -19,4 +19,22 @@ class SubLingkungan extends Model
     {
         return $this->belongsTo(Lingkungan::class);
     }
+
+    // public function users()
+    // {
+    //     return $this->belongsToMany(
+    //         User::class,
+    //         'area_sub_lingkungans',
+    //         'sub_lingkungan_id',
+    //         'user_id'
+    //     );
+    // }
+
+    public function users()
+{
+    return $this->belongsToMany(
+        User::class,
+        'area_sub_lingkungans'
+    );
+}
 }
