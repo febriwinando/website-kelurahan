@@ -128,3 +128,6 @@ Route::middleware(['guest.redirect'])->group(function () {
     Route::post('/masuk', [LoginController::class, 'login'])->name('login.post');
 });
 
+Route::get('/kk/{kode_unik}', [WargaController::class, 'showByKode'])
+    ->name('kk.show');
+

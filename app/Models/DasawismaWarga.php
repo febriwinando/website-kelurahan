@@ -57,4 +57,6 @@ class DasawismaWarga extends Model
     {
         return $this->belongsTo(Warga::class, 'no_kk', 'no_kk');
     }
+
+    
 }

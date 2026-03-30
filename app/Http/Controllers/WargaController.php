@@ -14,6 +14,7 @@ use App\Models\Lingkungan;
 use App\Models\KepalaKeluarga;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 
 class WargaController extends Controller
@@ -122,75 +123,25 @@ class WargaController extends Controller
         ]);
     }
 
+    
 
-
-    // public function store(Request $request)
+    // protected static function booted()
     // {
-    //     // ================= VALIDASI =================
-    //     $request->validate([
-    //         'no_kk' => 'required|string',
-    //         'nik' => 'required|string',
-    //         'nama' => 'required|string',
-    //         'nama_kepala_keluarga' => 'nullable|string',
-    //     ]);
+    //     static::creating(function ($model) {
+    //         $model->kode_unik = Str::uuid(); // 🔥 dijamin unik
+    //     });
+    // }
+    // protected static function booted()
+    // {
+    //     static::creating(function ($model) {
 
-    //     DB::beginTransaction();
+    //         // 🔥 generate sampai benar-benar unik
+    //         do {
+    //             $kode = 'KK-' . strtoupper(Str::random(8));
+    //         } while (self::where('kode_unik', $kode)->exists());
 
-    //     try {
-
-    //         // ================= AMBIL DATA =================
-    //         $data = $request->all();
-
-    //         // ================= HANDLE CHECKBOX =================
-    //         $checkboxes = [
-    //             'akseptor_kb',
-    //             'aktif_posyandu',
-    //             'ikut_bkb',
-    //             'memiliki_tabungan',
-    //             'ikut_kelompok_belajar',
-    //             'ikut_paud',
-    //             'ikut_koperasi'
-    //         ];
-
-    //         foreach ($checkboxes as $check) {
-    //             $data[$check] = $request->has($check) ? 1 : 0;
-    //         }
-
-    //         // ================= INSERT / CEK KEPALA KELUARGA =================
-    //         $kk = KepalaKeluarga::firstOrCreate(
-    //             ['no_kk' => $data['no_kk']],
-    //             [
-    //                 'dasa_wisma' => $data['dasa_wisma'] ?? null,
-    //                 'nama_kepala_keluarga' => $data['nama_kepala_keluarga'] ?? $data['nama'],
-    //                 'no_registrasi' => $data['no_registrasi'] ?? null,
-    //                 'nik' => $data['nik'] ?? null,
-    //             ]
-    //         );
-
-    //         // ================= INSERT WARGA =================
-    //         $warga = Warga::create($data);
-
-    //         DB::commit();
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'message' => 'Data berhasil disimpan',
-    //             'data' => [
-    //                 'kepala_keluarga' => $kk,
-    //                 'warga' => $warga
-    //             ]
-    //         ]);
-
-    //     } catch (\Exception $e) {
-
-    //         DB::rollBack();
-
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Gagal menyimpan data',
-    //             'error' => $e->getMessage() // boleh dihapus di production
-    //         ]);
-    //     }
+    //         $model->kode_unik = $kode;
+    //     });
     // }
 
     public function store(Request $request)
@@ -237,6 +188,14 @@ class WargaController extends Controller
             }
 
             // ================= INSERT KEPALA KELUARGA =================
+            // $kk = KepalaKeluarga::create([
+            //     'dasa_wisma' => $data['dasa_wisma'] ?? null,
+            //     'nama_kepala_keluarga' => $data['nama_kepala_keluarga'] ?? $data['nama'],
+            //     'no_registrasi' => $data['no_registrasi'] ?? null,
+            //     'no_kk' => $data['no_kk'],
+            //     'nik' => $data['nik'] ?? null,
+            // ]);
+
             $kk = KepalaKeluarga::create([
                 'dasa_wisma' => $data['dasa_wisma'] ?? null,
                 'nama_kepala_keluarga' => $data['nama_kepala_keluarga'] ?? $data['nama'],
@@ -323,103 +282,115 @@ class WargaController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $warga = Warga::findOrFail($id);
+    {
+        $warga = Warga::findOrFail($id);
 
-    $validated = $request->validate([
-        'dasa_wisma' => 'nullable|string|max:100',
-        'nama_kepala_keluarga' => 'nullable|string|max:100',
-        'no_kk' => 'nullable|string|max:20',
-        'no_registrasi' => 'nullable|string|max:50',
-        'nik' => 'nullable|string|max:20',
-        'nama' => 'nullable|string|max:100',
-        'jabatan' => 'nullable|string|max:100',
-        'jenis_kelamin' => 'nullable|string',
-        'tempat_lahir' => 'nullable',
-        'tanggal_lahir' => 'nullable|date',
-        'status_perkawinan' => 'nullable|string',
-        'status_dalam_keluarga' => 'nullable|string',
-        'agama' => 'nullable|string',
-        'alamat' => 'nullable|string',
+        $validated = $request->validate([
+            'dasa_wisma' => 'nullable|string|max:100',
+            'nama_kepala_keluarga' => 'nullable|string|max:100',
+            'no_kk' => 'nullable|string|max:20',
+            'no_registrasi' => 'nullable|string|max:50',
+            'nik' => 'nullable|string|max:20',
+            'nama' => 'nullable|string|max:100',
+            'jabatan' => 'nullable|string|max:100',
+            'jenis_kelamin' => 'nullable|string',
+            'tempat_lahir' => 'nullable',
+            'tanggal_lahir' => 'nullable|date',
+            'status_perkawinan' => 'nullable|string',
+            'status_dalam_keluarga' => 'nullable|string',
+            'agama' => 'nullable|string',
+            'alamat' => 'nullable|string',
 
-        'provinsi' => 'nullable',
-        'kabupaten' => 'nullable',
-        'kecamatan' => 'nullable',
-        'kelurahan' => 'nullable',
+            'provinsi' => 'nullable',
+            'kabupaten' => 'nullable',
+            'kecamatan' => 'nullable',
+            'kelurahan' => 'nullable',
 
-        'pendidikan' => 'nullable|string',
-        'pekerjaan' => 'nullable|string',
+            'pendidikan' => 'nullable|string',
+            'pekerjaan' => 'nullable|string',
 
-        'jenis_kelompok_belajar' => 'nullable|string',
-        'jenis_koperasi' => 'nullable|string',
-    ]);
+            'jenis_kelompok_belajar' => 'nullable|string',
+            'jenis_koperasi' => 'nullable|string',
+        ]);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Boolean Fields
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | Boolean Fields
+        |--------------------------------------------------------------------------
+        */
 
-    $booleanFields = [
-        'akseptor_kb',
-        'aktif_posyandu',
-        'ikut_bkb',
-        'memiliki_tabungan',
-        'ikut_kelompok_belajar',
-        'ikut_paud',
-        'ikut_koperasi'
-    ];
+        $booleanFields = [
+            'akseptor_kb',
+            'aktif_posyandu',
+            'ikut_bkb',
+            'memiliki_tabungan',
+            'ikut_kelompok_belajar',
+            'ikut_paud',
+            'ikut_koperasi'
+        ];
 
-    foreach ($booleanFields as $field) {
-        $validated[$field] = $request->input($field, 0);
-    }
+        foreach ($booleanFields as $field) {
+            $validated[$field] = $request->input($field, 0);
+        }
 
-    $warga->update($validated);
+        $warga->update($validated);
 
-    return response()->json([
-        'message' => 'Data warga berhasil diperbarui'
-    ]);
-}
-
-
-
-public function destroy($id)
-{
-    $warga = Warga::findOrFail($id);
-
-    // 🔥 CEK apakah NIK warga = NIK kepala keluarga
-    $isKepalaKeluarga = KepalaKeluarga::where('nik', $warga->nik)->exists();
-
-    if ($isKepalaKeluarga) {
         return response()->json([
-            'success' => false,
-            'message' => 'Data tidak bisa dihapus karena merupakan Kepala Keluarga'
-        ], 422);
+            'message' => 'Data warga berhasil diperbarui'
+        ]);
     }
 
-    // ✅ Hapus jika bukan kepala keluarga
-    $warga->delete();
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Data warga berhasil dihapus'
-    ]);
-}
 
 
+    public function destroy($id)
+    {
+        $warga = Warga::findOrFail($id);
 
-public function kabupaten($provinsi_id)
-{
-    return Kabupaten::where('provinsi_id', $provinsi_id)->get();
-}
+        // 🔥 CEK apakah NIK warga = NIK kepala keluarga
+        $isKepalaKeluarga = KepalaKeluarga::where('nik', $warga->nik)->exists();
 
-public function kecamatan($kabupaten_id)
-{
-    return Kecamatan::where('kabupaten_id', $kabupaten_id)->get();
-}
+        if ($isKepalaKeluarga) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak bisa dihapus karena merupakan Kepala Keluarga'
+            ], 422);
+        }
 
-public function kelurahan($kecamatan_id)
-{
-    return Kelurahan::where('kecamatan_id', $kecamatan_id)->get();
-}
+        // ✅ Hapus jika bukan kepala keluarga
+        $warga->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data warga berhasil dihapus'
+        ]);
+    }
+
+
+
+    public function kabupaten($provinsi_id)
+    {
+        return Kabupaten::where('provinsi_id', $provinsi_id)->get();
+    }
+
+    public function kecamatan($kabupaten_id)
+    {
+        return Kecamatan::where('kabupaten_id', $kabupaten_id)->get();
+    }
+
+    public function kelurahan($kecamatan_id)
+    {
+        return Kelurahan::where('kecamatan_id', $kecamatan_id)->get();
+    }
+
+    public function showByKode($kode_unik)
+    {
+        $kk = KepalaKeluarga::with([
+                'warga.dasawisma',   // 🔥 relasi nested
+                'subLingkungan.lingkungan'
+            ])
+            ->where('kode_unik', $kode_unik)
+            ->firstOrFail();
+
+        return view('publik.barcode', compact('kk'));
+    }
 }

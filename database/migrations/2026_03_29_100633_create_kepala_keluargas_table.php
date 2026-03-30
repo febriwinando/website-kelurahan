@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('no_registrasi')->nullable();
             $table->string('no_kk')->unique();
             $table->string('nik')->unique();
+            $table->string('kode_unik')->unique()->nullable();
             $table->timestamps();
         });
     }
