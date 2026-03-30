@@ -15,6 +15,7 @@ use App\Models\KepalaKeluarga;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+
 class WargaController extends Controller
 {
     public function index()
@@ -287,12 +288,15 @@ class WargaController extends Controller
         $kabupatens = Kabupaten::with('provinsi')->get();
         $wargas = Warga::latest()->get();
 
-        $sublingkungans = SubLingkungan::with('lingkungan')
-                        ->where('status', 'active')
-                        ->whereHas('lingkungan', function ($q) {
-                            $q->where('status', 1);
-                        })
-                        ->get();
+        $user = Auth::user();
+
+        $sublingkungans = $user->subLingkungans()
+            ->with('lingkungan')
+            ->where('status', 'active')
+            ->whereHas('lingkungan', function ($q) {
+                $q->where('status', 1);
+            })
+            ->get();
 
         return view('admin.tambahanggotakk', compact('no_kk','wargas', 'kabupatens','provinsis','sublingkungans'));
     }
@@ -374,6 +378,31 @@ class WargaController extends Controller
 
     return response()->json([
         'message' => 'Data warga berhasil diperbarui'
+    ]);
+}
+
+
+
+public function destroy($id)
+{
+    $warga = Warga::findOrFail($id);
+
+    // 🔥 CEK apakah NIK warga = NIK kepala keluarga
+    $isKepalaKeluarga = KepalaKeluarga::where('nik', $warga->nik)->exists();
+
+    if ($isKepalaKeluarga) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Data tidak bisa dihapus karena merupakan Kepala Keluarga'
+        ], 422);
+    }
+
+    // ✅ Hapus jika bukan kepala keluarga
+    $warga->delete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Data warga berhasil dihapus'
     ]);
 }
 

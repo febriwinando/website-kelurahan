@@ -52,9 +52,19 @@
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h5 class="card-title fw-semibold mb-0">Tambah Data Warga TP-PKK</h5>
+                                            @if(isset($warga))
+                                                <h5 class="card-title fw-semibold mb-0">Ubah Data Warga TP-PKK</h5>
+                                            @else
+                                                <h5 class="card-title fw-semibold mb-0">Tambah Data Warga TP-PKK</h5>
+                                            @endif
+                                        
                                         <div>
-                                            <a href="/warga" class="btn btn-info">Data Warga TP-PKK</a>
+                                            @if(isset($warga))
+                                            <a href="{{ route('warga.lihat', $warga->no_kk) }}" class="btn btn-success">
+                                                Daftar Anggota Keluarga {{$warga->nama_kepala_keluarga}}</a>
+                                            @else
+                                                <a href="/warga" class="btn btn-info">Data Warga TP-PKK</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -162,7 +172,7 @@
                                                     <select id="tempatLahir" name="tempat_lahir" class="selectpicker form-control" data-live-search="true" title="pilih tempat kelahiran">
                                                         @foreach($kabupatens as $kabupaten)
                                                             <option value="{{ $kabupaten->id }}" data-name="{{ $kabupaten->nama }}" {{ isset($warga) && $warga->tempat_lahir == $kabupaten->id ? 'selected' : '' }}>
-                                                                {{ $kabupaten->nama }}- {{ $kabupaten->provinsi->nama }}   
+                                                                {{ $kabupaten->nama }} - {{ $kabupaten->provinsi->nama }}   
                                                             </option>
                                                         @endforeach   
                                                     </select>
@@ -243,7 +253,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <div class="row">
+                                                <div class="row mb-3">
 
                                                     <div class="col-md-3">
                                                     <label class="form-label">Provinsi</label>
@@ -260,7 +270,7 @@
 
 
                                                     <div class="col-md-3">
-                                                    <label class="form-label">Kabupaten</label>
+                                                    <label class="form-label">Kabupaten/Kota</label>
                                                     <select class="selectpicker form-control"
                                                             id="kabupaten"
                                                             data-live-search="true"
@@ -282,7 +292,7 @@
 
 
                                                     <div class="col-md-3">
-                                                    <label class="form-label">Kelurahan</label>
+                                                    <label class="form-label">Desa/Kelurahan</label>
                                                     <select class="selectpicker form-control"
                                                             id="kelurahan"
                                                             data-live-search="true"

@@ -1907,6 +1907,45 @@
                 });
             });
             </script>
+
+            <script>
+                $(document).on('click', '.btnHapusWarga', function () {
+                    let id = $(this).data('id');
+                    let row = $('#row-' + id);
+
+                    if (!confirm('Yakin ingin menghapus data ini?')) return;
+
+                    $.ajax({
+                        url: '/warga/' + id,
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (res) {
+
+                            // 🔥 animasi hapus biar smooth
+                            row.fadeOut(300, function () {
+                                $(this).remove();
+
+                                // 🔥 update nomor ulang
+                                updateNomor();
+                            });
+
+                            showAlert('success', res.message);
+                        },
+                        error: function (xhr) {
+                            let res = xhr.responseJSON;
+                            showAlert('success', res.message);
+                        }
+                    });
+                });
+
+                function updateNomor() {
+                    $('#daftaranggotakk tbody tr').each(function (index) {
+                        $(this).find('td:first').text(index + 1);
+                    });
+                }
+            </script>
 </body>
 
 </html>

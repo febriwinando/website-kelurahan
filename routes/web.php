@@ -106,6 +106,7 @@ Route::middleware(['auth','role:administrator,admin,kepling'])->group(function (
     Route::get('tambah/{no_kk}/anggota', [WargaController::class, 'tambahanggota'])->name('tambah.anggotakk');
     Route::post('/warga/store', [WargaController::class, 'store'])->name('warga.store');
     Route::post('/warga/tambahanggotakk', [WargaController::class, 'storeanggotakk'])->name('warga.tambahanggotakk');
+    Route::delete('/warga/{id}', [WargaController::class, 'destroy'])->name('warga.destroy');
     Route::resource('warga', WargaController::class);
 
     // Dasawisma Warga

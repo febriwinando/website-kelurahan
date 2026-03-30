@@ -77,7 +77,7 @@
                                     
                                 </h5>
                                 <div class="card-body">
-                                    <table class="table table-responsive table-hover">
+                                    <table class="table table-responsive table-hover" id="daftaranggotakk">
                                         <thead class="table-light">
                                             <tr>
                                                 <th width="5%">No</th>

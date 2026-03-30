@@ -97,28 +97,27 @@
                                                 </div>
                                             </div> -->
                                             <div class="col-md-6">
-                                                    <label>Sub Lingkungan</label>
+                                                    <label class="form-label">Sub Lingkungan</label>
                                                     <select class="selectpicker form-control"
                                                             id="dasa_wisma"
                                                             data-live-search="true"
-                                                            title="Pilih Dasa Wisma" name="dasa_wisma" readonly>
+                                                            title="Pilih Dasa Wisma" name="dasa_wisma" aria-label="readonly input" readonly>
                                                         @foreach($sublingkungans as $sublingkungan)
                                                             <option value="{{ $sublingkungan->nama_sub_lingkungan }}">{{ $sublingkungan->nama_sub_lingkungan }}</option>
                                                         @endforeach
-
                                                     </select>
                                                     </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Nama Kepala Keluarga</label>
-                                                    <input type="text" name="nama_kepala_keluarga" value="{{ $no_kk->nama_kepala_keluarga ?? '' }}" class="form-control rounded-pill" readonly>
+                                                    <input type="text" name="nama_kepala_keluarga" value="{{ $no_kk->nama_kepala_keluarga ?? '' }}" class="form-control rounded-pill" raria-label="readonly input" eadonly>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">No. Kartu Keluara</label>
-                                                    <input type="text" name="no_kk" value="{{ $no_kk->no_kk ?? '' }}" class="form-control rounded-pill" readonly>
+                                                    <input type="text" name="no_kk" value="{{ $no_kk->no_kk ?? '' }}" class="form-control rounded-pill" aria-label="readonly input" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,7 +168,7 @@
                                                     <select id="tempatLahir" name="tempat_lahir" class="selectpicker form-control" data-live-search="true" title="pilih tempat kelahiran">
                                                         @foreach($kabupatens as $kabupaten)
                                                             <option value="{{ $kabupaten->id }}" data-name="{{ $kabupaten->nama }}" {{ isset($warga) && $warga->tempat_lahir == $kabupaten->id ? 'selected' : '' }}>
-                                                                {{ $kabupaten->nama }}- {{ $kabupaten->provinsi->nama }}   
+                                                                {{ $kabupaten->nama }} - {{ $kabupaten->provinsi->nama }}   
                                                             </option>
                                                         @endforeach   
                                                     </select>
@@ -179,7 +178,7 @@
                                              <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal Lahir</label>
-                                                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', isset($warga) ? $warga->tanggal_lahir?->format('Y-m-d') : '') }}" class="form-control">
+                                                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', isset($warga) ? $warga->tanggal_lahir?->format('Y-m-d') : '') }}" class="form-control rounded-pill">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -246,14 +245,14 @@
                                             <div class="col-md-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Alamat</label>
-                                                    <textarea name="alamat" class="form-control"> {{ $warga->alamat ?? '' }} </textarea>
+                                                    <textarea name="alamat" class="form-control rounded-pill"> {{ $warga->alamat ?? '' }} </textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <div class="row">
+                                                <div class="row mb-3">
 
                                                     <div class="col-md-3">
-                                                    <label>Provinsi</label>
+                                                    <label class="form-label">Provinsi</label>
                                                     <select class="selectpicker form-control"
                                                             id="provinsi"
                                                             data-live-search="true"
@@ -267,7 +266,7 @@
 
 
                                                     <div class="col-md-3">
-                                                    <label>Kabupaten</label>
+                                                    <label class="form-label">Kabupaten/Kota</label>
                                                     <select class="selectpicker form-control"
                                                             id="kabupaten"
                                                             data-live-search="true"
@@ -278,7 +277,7 @@
 
 
                                                     <div class="col-md-3">
-                                                    <label>Kecamatan</label>
+                                                    <label class="form-label">Kecamatan</label>
                                                     <select class="selectpicker form-control"
                                                             id="kecamatan"
                                                             data-live-search="true"
@@ -289,7 +288,7 @@
 
 
                                                     <div class="col-md-3">
-                                                    <label>Kelurahan</label>
+                                                    <label class="form-label">Desa/Kelurahan</label>
                                                     <select class="selectpicker form-control"
                                                             id="kelurahan"
                                                             data-live-search="true"
@@ -382,13 +381,13 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jenis Kelompok Belajar</label>
-                                                    <input type="text" name="jenis_kelompok_belajar" class="form-control">
+                                                    <input type="text" name="jenis_kelompok_belajar" class="form-control rounded-pill">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jenis Koperasi</label>
-                                                    <input type="text" name="jenis_koperasi" class="form-control">
+                                                    <input type="text" name="jenis_koperasi" class="form-control rounded-pill">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">

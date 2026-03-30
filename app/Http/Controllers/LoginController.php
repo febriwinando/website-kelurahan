@@ -139,7 +139,7 @@ class LoginController extends Controller
 
         $request->session()->put('2fa_passed', true);
 
-        return redirect()->intended('/anggota');
+        return redirect()->intended('/warga');
 
     }
     // public function login(Request $request)
@@ -364,7 +364,7 @@ class LoginController extends Controller
             $user->google2fa_enabled = true;
             $user->save();
 
-            return redirect('/anggota');
+            return redirect('/warga');
         }
 
         return back()->with('error','Kode OTP salah');
@@ -385,7 +385,7 @@ class LoginController extends Controller
 
             session(['2fa_passed' => true]);
 
-            return redirect('/anggota');
+            return redirect('/warga');
 
         }
 
