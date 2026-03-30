@@ -40,96 +40,241 @@
         <div class="container" data-aos="fade-up" data-aos-delay="150">
 
             <div class="row align-items-center">
-                <div class="col-lg-6">
-                <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
-                    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                      <div class="carousel-inner">
-                        <div class="carousel-item active">
-                          <img src="{{ asset('storage/assets/images/products/gb1.jpg') }}" class="d-block w-100" alt="pkk1">
-                        </div>
-                        <div class="carousel-item">
-                          <img src="{{ asset('storage/assets/images/products/bg2.jpg') }}" class="d-block w-100" alt="pkk2">
-                        </div>
-                        <div class="carousel-item">
-                          <img src="{{ asset('storage/assets/images/products/bg3.jpg') }}" class="d-block w-100" alt="pkk3">
-                        </div>
-                      </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                      </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                      </button>
-                    </div>
-                    <!-- <img src="{{ asset('storage/dashboards/img/baru/section1.png')}}" alt="Hero Image" class="img-fluid"> -->
-                </div>
-            </div>
-                <div class="col-lg-6">
+                <div class="col-lg-12 mb-5">
                     <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
-                    <h1 class="mb-4">
-                        PKK
-                        <span class="accent-text">Bandarsono</span>
-                    </h1>
+                        <h1 class="mb-4">
+                            Data Kepala Keluarga
+                            <span class="accent-text">{{ $kk->nama_kepala_keluarga }}</span>
+                        </h1>
+                        <div class="hero-buttons">
+                            <span class="btn btn-primary me-0 me-sm-2 mx-1">Lingkungan: {{ $kk->subLingkungan->nama_sub_lingkungan ?? '-' }} - {{ $kk->subLingkungan->lingkungan->nama_lingkungan ?? '-' }}</span>
 
-                    <p class="mb-4 mb-md-5">
-                    SI-AP Bandarsono (Sistem Informasi Administrasi dan Pelayanan PKK Bandarsono) adalah platform digital yang digunakan untuk memudahkan pengelolaan administrasi PKK, pendataan warga, serta pelaporan kegiatan secara lebih tertib, cepat, dan terintegrasi di Kelurahan Bandarsono.
-                    </p>
-
-                    <div class="hero-buttons">
-                        <a href="#lapor" class="btn btn-primary me-0 me-sm-2 mx-1">Hubungi</a>
-
+                        </div>
                     </div>
                 </div>
-            </div>
+                <hr>
+                <div class="col-lg-12 mb-5">
+                                        
+                    <h4>Tabel Keluarga</h4>
+
+                    <table class="table table-light table-striped-columns table-hover">
+                        <tr class="table-info text-center align-middle">
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Usia</th>
+                            <th>Pendidikan</th>
+                            <th>Pekerjaan</th>
+                            <th>Akseptor KB</th>
+                            <th>Aktif Posyandu</th>
+                            <th>Mengikuti BKB</th>
+                            <th>Memiliki Tabungan</th>
+                            <th>Ikut Kelompok Belajar</th>
+                            <th>Ikut PAUD</th>
+                            <th>Ikut Koperasi</th>
+                        </tr>
+
+                        @foreach($kk->warga as $w)
+                        <tr>
+                            <td>{{ substr($w->nama, 0, 2) . str_repeat('*', max(strlen($w->nama) - 4, 0)) . substr($w->nama, -2) }}</td>
+                            <td class="text-center">{{ $w->jenis_kelamin }}</td>
+                            <td class="text-center">{{ $w->usia }} tahun</td>
+                            <td class="text-center">{{ $w->pendidikan }}</td>
+                            <td class="text-center">{{ $w->pekerjaan }}</td>
+                            <td class="text-center">
+                                @if($w->akseptor_kb == 1)
+                                    Ya
+                                @else
+                                    Tidak    
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($w->aktif_posyandu == 1)
+                                    Ya
+                                @else
+                                    Tidak    
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($w-> ikut_bkb == 1)
+                                    Ya
+                                @else
+                                    Tidak    
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($w->memiliki_tabungan == 1)
+                                    Ya
+                                @else
+                                    Tidak    
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($w->ikut_kelompok_belajar == 1)
+                                    Ya
+                                @else
+                                    Tidak    
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($w->ikut_paud == 1)
+                                    Ya
+                                @else
+                                    Tidak    
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($w->ikut_koperasi == 1)
+                                    Ya
+                                @else
+                                    Tidak    
+                                @endif
+                            </td>
+
+                            <!-- <td>
+                                {{ $w->dasawisma->first()->balita_l ?? '-' }}
+                            </td> -->
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                
+            
 
 
         </div>
 
         <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
             <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/pus.svg') }}" style="width:40px;height:40px;"></span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>PUS</h4>
+                            <p class="mb-0">{{$w->dasawisma->first()->pus}} Pasangan</p>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/wus.svg') }}" style="width:40px;height:40px;"></span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>WUS</h4>
+                            <p class="mb-0">{{$w->dasawisma->first()->wus}} Pasangan</p>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/hamil.svg') }}" style="width:40px;height:40px;"></span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>Hamil</h4>
+                            <p class="mb-0">{{$w->dasawisma->first()->ibu_hamil}}</p>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/menyusui.svg') }}" style="width:40px;height:40px;"></span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>Menyusui</h4>
+                            <p class="mb-0">{{$w->dasawisma->first()->ibu_menyusui}}</p>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/menyusui.svg') }}" style="width:40px;height:40px;"></span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>Lansia</h4>
+                            <p class="mb-0">{{$w->dasawisma->first()->lansia}}</p>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
                 <div class="stat-item">
-                <div class="stat-icon">
-                <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/team.svg') }}" style="width:40px;height:40px;"></span>
-                </div>
-                <div class="stat-content">
-                    <h4>Anggota PKK</h4>
-                    <p class="mb-0">38 anggota/pengurus</p>
-                </div>
+                    <div class="stat-icon">
+                        <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/makanan.svg') }}" style="width:40px;height:40px;"></span>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Makanan Pokok</h4>
+                        <p class="mb-0">
+                            @php
+                                    $makanan = $w->dasawisma->first();
+                                    $sumberMakanan = [];
+
+                                    if($makanan->beras == 1) $sumberMakanan[] = 'Beras';
+                                    if($makanan->non_beras == 1) $sumberMakanan[] = 'Non Beras';
+                                @endphp
+
+                                {{ implode(', ', $sumberMakanan) ?: '-' }}
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                     <div class="stat-item">
                         <div class="stat-icon">
-                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/map.svg') }}" style="width:40px;height:40px;"></span>
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/rumah.svg') }}" style="width:40px;height:40px;"></span>
                         </div>
                         <div class="stat-content">
-                            <h4>Luas Wilayah</h4>
-                            <p class="mb-0">1,3970 km<sup>2</sup></p>
+                            <h4>Kriteria Rumah</h4>
+                            
+                            <p class="mb-0">
+                            @php
+                                $rumah_sehat =  $w->dasawisma->first();
+                                $sumberRumah = [];
+
+                                if($rumah_sehat->rumah_sehat == 1) $sumberRumah[] = ' Sehat';
+                                if($rumah_sehat->rumah_tidak_sehat == 1) $sumberRumah[] = 'Kurang Sehat ';
+                                if($rumah_sehat->memiliki_tempat_sampah == 1) $sumberRumah[] = 'Memiliki TPS ';
+                            @endphp
+
+                            {{ implode(', ', $sumberRumah) ?: '-' }}
+                        </p>
                         </div>
                     </div>
             </div>
             <div class="col-lg-3 col-md-6">
                     <div class="stat-item">
                         <div class="stat-icon">
-                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/district.svg') }}" style="width:40px;height:40px;"></span>
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/wc.svg') }}" style="width:40px;height:40px;"></span>
                         </div>
                         <div class="stat-content">
-                            <h4>Lingkungan</h4>
-                            <p class="mb-0">9 Lingkungan</p>
+                            <h4>Jumlah Jamban</h4>
+                            <p class="mb-0">{{$w->dasawisma->first()->jumlah_jamban_keluarga}}</p>
                         </div>
                     </div>
             </div>
             <div class="col-lg-3 col-md-6">
                     <div class="stat-item">
                         <div class="stat-icon">
-                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svg/community.svg') }}" style="width:40px;height:40px;"></span>
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/water.svg') }}" style="width:40px;height:40px;"></span>
                         </div>
                         <div class="stat-content">
-                            <h4>Dasawisma</h4>
-                            <p class="mb-0">Jumlah Dasawisma</p>
-                        </div>
+                        <h4>Sumber Air</h4>
+                        <p class="mb-0">
+                            @php
+                                $air = $w->dasawisma->first();
+                                $sumberAir = [];
+
+                                if($air->air_pdam == 1) $sumberAir[] = 'PDAM';
+                                if($air->air_sumur == 1) $sumberAir[] = 'Air Sumur';
+                                if($air->air_sungai == 1) $sumberAir[] = 'Sungai';
+                                if($air->air_lainnya == 1) $sumberAir[] = 'Lainnya';
+                            @endphp
+
+                            {{ implode(', ', $sumberAir) ?: '-' }}
+                        </p>
+                    </div>
                     </div>
             </div>
         </div>
@@ -173,8 +318,6 @@
 <!-- <h3>Data Kepala Keluarga</h3>
 
 <p><strong>Nama:</strong> {{ $kk->nama_kepala_keluarga }}</p>
-<p><strong>No KK:</strong> {{ $kk->no_kk }}</p>
-<p><strong>Kode:</strong> {{ $kk->kode_unik }}</p>
 
 <p><strong>Sub Lingkungan:</strong> 
     {{ $kk->subLingkungan->nama_sub_lingkungan ?? '-' }}

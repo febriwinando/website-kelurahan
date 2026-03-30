@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
 class Warga extends Model
 {
     protected $fillable = [
@@ -59,6 +59,14 @@ class Warga extends Model
     public function kepalaKeluarga()
     {
         return $this->belongsTo(KepalaKeluarga::class, 'no_kk', 'no_kk');
+    }
+
+
+    
+
+    public function getUsiaAttribute()
+    {
+        return Carbon::parse($this->tanggal_lahir)->age;
     }
 
 }
