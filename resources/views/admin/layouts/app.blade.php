@@ -1543,8 +1543,11 @@
                 const option = select.options[select.selectedIndex];
 
                 const nama = option ? option.dataset.nama : '';
+                const dasawisma = option ? option.dataset.dasawisma : '';
 
                 document.getElementById('nama_keluarga').value = nama || '';
+                document.getElementById('dasa_wisma').value = dasawisma || '';
+
 
             }
 

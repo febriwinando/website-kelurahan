@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                 'email' => 'febriwinando@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
-                'level' => 'admin',
+                'level' => 'administrator',
                 'fcm_token' => null,
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Admin',
-                'email' => 'admin@gmail.com',
+                'email' => 'fannyliyani6@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'level' => 'admin',

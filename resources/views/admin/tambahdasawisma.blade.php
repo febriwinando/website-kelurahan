@@ -75,7 +75,7 @@
                                             <select name="no_kk" class="selectpicker form-control rounded-pill no_kk_insert" id="no_kk" data-live-search="true" required>
                                                 <option value="">Pilih No KK</option>
                                                 @foreach($wargas as $warga)
-                                                    <option value="{{ $warga->no_kk }}" data-nama="{{ $warga->nama_kepala_keluarga }}" {{ isset($dasa) && $warga->no_kk == $dasa->no_kk ? 'selected' : '' }}>
+                                                    <option value="{{ $warga->no_kk }}" data-nama="{{ $warga->nama_kepala_keluarga }}" data-dasawisma="{{ $warga->dasa_wisma }}" {{ isset($dasa) && $warga->no_kk == $dasa->no_kk ? 'selected' : '' }}>
                                                         {{ $warga->no_kk }}
                                                     </option>
                                                 @endforeach
@@ -84,6 +84,8 @@
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label">Nama Kepala Keluarga</label>
                                             <input type="text" name="nama_keluarga" id="nama_keluarga" class="form-control rounded-pill" value="{{ $dasa->nama_keluarga ?? '' }}" readonly>
+                                            <input type="hidden" name="dasa_wisma" id="dasa_wisma" class="form-control rounded-pill" value="{{ $dasa->dasa_wisma ?? '' }}" readonly>
+
                                         </div>
 
                                         </div>

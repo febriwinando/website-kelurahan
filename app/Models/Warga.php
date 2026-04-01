@@ -69,4 +69,6 @@ class Warga extends Model
         return Carbon::parse($this->tanggal_lahir)->age;
     }
 
+    
+
 }

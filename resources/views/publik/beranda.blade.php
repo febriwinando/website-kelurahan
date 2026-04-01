@@ -34,7 +34,7 @@
                     <li><a href="#profil">Profil</a></li>
                     <li><a href="#tugas">Tugas</a></li>
                     <li><a href="#program">Program</a></li>
-                    <li><a href="#dasawisma">Dasawisma</a></li>
+                    @if(!$lingkungans->isEmpty())<li><a href="#dasawisma">Dasawisma</a></li>@endif
                     <li><a href="#lapor">Kontak</a></li>
                     </ul>
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -401,13 +401,16 @@
       </div>
 
     </section><!-- /Features 2 Section -->
-
+      @if(!$lingkungans->isEmpty())
       <section id="dasawisma" class="about section light-background">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Dasawisma</h2>
-      </div>
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Dasawisma</h2>
+        </div>
 
       <div class="container" data-aos="fade-up" data-aos-delay="500">
+
+        
+
         @foreach($lingkungans as $lingkungan)
           <div class="row mb-5">
             <div class="col-md-12"><h3>{{ $lingkungan->nama_lingkungan }}</h3></div>
@@ -421,7 +424,7 @@
                     @php
                         $data = $sub->dasawismaWargas;
                     @endphp
-                      @php
+                      <!-- @php
                           $stats = [
                               ['label' => 'Balita', 'value' => $data->sum('balita_l') + $data->sum('balita_p')],
                               ['label' => 'PUS', 'value' => $data->sum('pus')],
@@ -446,8 +449,42 @@
                               ['label' => 'Industri RT', 'value' => $data->where('industri_rumah_tangga', 1)->count()],
                               ['label' => 'Kesehatan Lingkungan', 'value' => $data->where('kesehatan_lingkungan', 1)->count()],
                           ];
-                      @endphp
+                      @endphp -->
 
+                      @php
+                        $data = $sub->dasawismaWargas;
+                        $warga = $sub->wargas;
+
+                        $stats = [
+                            ['label' => 'Balita', 'value' => $data->sum('balita_l') + $data->sum('balita_p')],
+                            ['label' => 'PUS', 'value' => $data->sum('pus')],
+                            ['label' => 'WUS', 'value' => $data->sum('wus')],
+                            ['label' => 'Ibu Hamil', 'value' => $data->sum('ibu_hamil')],
+                            ['label' => 'Lansia', 'value' => $data->sum('lansia')],
+
+                            ['label' => 'Rumah Sehat', 'value' => $data->sum('rumah_sehat')],
+                            ['label' => 'Rumah Tidak Sehat', 'value' => $data->sum('rumah_tidak_sehat')],
+
+                            ['label' => 'Air PDAM', 'value' => $data->where('air_pdam', 1)->count()],
+                            ['label' => 'Air Sumur', 'value' => $data->where('air_sumur', 1)->count()],
+                            ['label' => 'Air Sungai', 'value' => $data->where('air_sungai', 1)->count()],
+                            ['label' => 'Air Lainnya', 'value' => $data->where('air_lainnya', 1)->count()],
+
+                            ['label' => 'Jamban', 'value' => $data->sum('jumlah_jamban_keluarga')],
+
+                            ['label' => 'Beras', 'value' => $data->sum('beras')],
+                            ['label' => 'Non Beras', 'value' => $data->sum('non_beras')],
+
+                            ['label' => 'UP2K', 'value' => $data->where('up2k', 1)->count()],
+                            ['label' => 'Industri RT', 'value' => $data->where('industri_rumah_tangga', 1)->count()],
+                            ['label' => 'Kesehatan Lingkungan', 'value' => $data->where('kesehatan_lingkungan', 1)->count()],
+
+                            // 🔥 TAMBAHAN DARI WARGA
+                            ['label' => 'Total Warga', 'value' => $warga->count()],
+                            ['label' => 'Laki-laki', 'value' => $warga->where('jenis_kelamin', 'Laki-Laki')->count()],
+                            ['label' => 'Perempuan', 'value' => $warga->where('jenis_kelamin', 'Perempuan')->count()],
+                        ];
+                    @endphp
                       <div class="row g-3">
 
                           @foreach($stats as $item)
@@ -479,6 +516,7 @@
         @endforeach
       </div>
     </section>
+    @endif
 
     <section id="lapor" class="contact section light-background">
 

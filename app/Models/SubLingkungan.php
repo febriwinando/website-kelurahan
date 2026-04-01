@@ -37,4 +37,9 @@ class SubLingkungan extends Model
             'nama_sub_lingkungan'  // local key di sub_lingkungan
         );
     }
+
+    public function wargas()
+    {
+        return $this->hasMany(Warga::class, 'dasa_wisma', 'nama_sub_lingkungan');
+    }
 }

@@ -60,7 +60,7 @@
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-semibold mb-0">Data Barang</h5>
+                                        <h5 class="card-title fw-semibold mb-0">Data Dasawisma</h5>
                                         <div>
                                             <a href="/dasawisma/create" class="btn btn-info">Pendataan Dasawisma</a>
                                         </div>
@@ -72,10 +72,10 @@
                                 <span id="pelapor"></span>
                             </div>
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Daftar Barang</h5>
+                                <h5 class="card-title fw-semibold card-header">Form Dasawisma</h5>
                                 @if($dasas->isEmpty())
                                     <h4 class="text-center mt-5 mb-5">
-                                        Belum ada data inventaris ...
+                                        Belum ada data dasawisma ...
                                     </h4>
                                 @else
                                 <div class="card-body">

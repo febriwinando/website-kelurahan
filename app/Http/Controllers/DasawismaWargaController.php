@@ -82,9 +82,9 @@ class DasawismaWargaController extends Controller
             ]);
 
             DasawismaWarga::create([
-
                 'no_kk' => $request->no_kk,
                 'nama_keluarga' => $request->nama_keluarga,
+                'dasa_wisma' => $request->dasa_wisma,
 
                 'balita_l' => $request->balita_l ?? 0,
                 'balita_p' => $request->balita_p ?? 0,

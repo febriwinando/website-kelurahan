@@ -16,11 +16,19 @@ class BerandaController extends Controller
      */
     public function index()
     {
+        // $lingkungans = Lingkungan::with([
+        //     'subLingkungan' => function ($q) {
+        //         $q->with(['dasawismaWargas']); // relasi tambahan nanti
+        //     }
+        // ])->get();
+
+
         $lingkungans = Lingkungan::with([
-            'subLingkungan' => function ($q) {
-                $q->with(['dasawismaWargas']); // relasi tambahan nanti
-            }
+            'subLingkungan.dasawismaWargas',
+            'subLingkungan.wargas'
         ])->get();
+
+        // dd($lingkungans);
 
         return view('publik.beranda', compact('lingkungans'));
     }

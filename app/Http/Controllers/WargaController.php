@@ -41,7 +41,7 @@ class WargaController extends Controller
 
         $sublingkungans = $user->subLingkungans()
             ->with('lingkungan')
-            ->where('status', 'active')
+            ->where('status', 1)
             ->whereHas('lingkungan', function ($q) {
                 $q->where('status', 1);
             })
@@ -71,11 +71,12 @@ class WargaController extends Controller
 
         $sublingkungans = $user->subLingkungans()
             ->with('lingkungan')
-            ->where('status', 'active')
+            ->where('status', 1)
             ->whereHas('lingkungan', function ($q) {
                 $q->where('status', 1);
             })
             ->get();
+            
 
         return view('admin.tambahwarga', compact('wargas', 'kabupatens','provinsis','sublingkungans'));
     }
@@ -251,7 +252,7 @@ class WargaController extends Controller
 
         $sublingkungans = $user->subLingkungans()
             ->with('lingkungan')
-            ->where('status', 'active')
+            ->where('status', 1)
             ->whereHas('lingkungan', function ($q) {
                 $q->where('status', 1);
             })
@@ -267,7 +268,7 @@ class WargaController extends Controller
         $provinsis = Provinsi::orderBy('nama')->get();
         $kabupatens = Kabupaten::get();
         $sublingkungans = SubLingkungan::with('lingkungan')
-                        ->where('status', 'active')
+                        ->where('status', 1)
                         ->whereHas('lingkungan', function ($q) {
                             $q->where('status', 1);
                         })
@@ -393,4 +394,6 @@ class WargaController extends Controller
 
         return view('publik.barcode', compact('kk'));
     }
+
+    
 }
