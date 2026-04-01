@@ -104,7 +104,8 @@ class DasawismaWargaController extends Controller
                 'memiliki_tempat_sampah' => $request->has('memiliki_tps'),
 
                 'memiliki_spal' => $request->has('pembuangan_sampah'),
-                'memiliki_stiker_p4k' => 0,
+                'memiliki_spal' => $request->has('memiliki_spal'),
+                'memiliki_stiker_p4k' => $request->has('memiliki_stiker_p4k'),
 
                 // SUMBER AIR (checkbox)
                 'air_pdam' => $request->has('pdam'),
@@ -187,7 +188,8 @@ class DasawismaWargaController extends Controller
                 'rumah_tidak_sehat' => $request->boolean('rumah_kurang_sehat'),
 
                 'memiliki_tempat_sampah' => $request->boolean('memiliki_tps'),
-                'memiliki_spal' => $request->boolean('pembuangan_sampah'),
+                'memiliki_spal' => $request->has('memiliki_spal'),
+                'memiliki_stiker_p4k' => $request->has('memiliki_stiker_p4k'),
 
                 'air_pdam' => $request->boolean('pdam'),
                 'air_sumur' => $request->boolean('sumur'),

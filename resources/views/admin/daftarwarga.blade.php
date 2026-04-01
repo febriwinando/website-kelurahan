@@ -97,6 +97,11 @@
                                                             class="btn btn-warning btn-sm">
                                                             Lihat
                                                         </a>
+                                                        <button 
+                                                            class="btn btn-primary btn-sm btnQR"
+                                                            data-kk="{{ $warga->kode_unik }}">
+                                                            QR Code
+                                                        </button>
                                                     @endrole
                                                         
                                                     @role('ketua')
@@ -150,6 +155,33 @@
                             </div>
 
                         </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal QRcode -->
+            <div class="modal fade" id="modalQR" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered text-center">
+                    <div class="modal-content">
+
+                        <h5 class="mt-5">QR Code</h5>
+
+                        <div class="">
+                            <div class="row ">
+                                <div class="col-md-12 position-relative">
+                                    <canvas id="qrCanvas" class=""></canvas>
+                                </div>
+                                <div class="col-md-12 mb-5">
+                                    <button onclick="downloadQR()" class="btn btn-success">
+                                Download</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+
+
+
+
                     </div>
                 </div>
             </div>

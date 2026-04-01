@@ -13,6 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.2/dist/bootstrap-table.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   
 </head>
 
@@ -1946,6 +1947,185 @@
                     });
                 }
             </script>
+
+    <script>
+        // function generateQR(){
+
+        //     const url = "https://siap-bandarsono.tebingtinggikota.go.id/kk/KK-LWUU7L8X";
+        //     const canvas = document.getElementById('qrCanvas');
+
+        //     QRCode.toCanvas(canvas, url, {
+        //         width: 300,
+        //         margin: 2
+        //     }, function (error) {
+
+        //         if(error) return console.error(error);
+
+        //         // Tambahkan logo
+        //         const ctx = canvas.getContext('2d');
+        //         const img = new Image();
+
+        //         img.src = "/siap.png') }}"; // path logo kamu
+
+        //         img.onload = function(){
+
+        //             const size = 60; // ukuran logo
+
+        //             ctx.drawImage(
+        //                 img,
+        //                 (canvas.width - size) / 2,
+        //                 (canvas.height - size) / 2,
+        //                 size,
+        //                 size
+        //             );
+
+        //         };
+
+        //     });
+
+        // }
+
+        // function generateQR(){
+
+        //     const url = "https://siap-bandarsono.tebingtinggikota.go.id/kk/KK-LWUU7L8X";
+        //     const canvas = document.getElementById('qrCanvas');
+
+        //     QRCode.toCanvas(canvas, url, {
+        //         width: 350,
+        //         margin: 4,
+        //         errorCorrectionLevel: 'H' // 🔥 penting kalau pakai logo
+        //     }, function (error) {
+
+        //         if(error) return console.error(error);
+
+        //         const ctx = canvas.getContext('2d');
+        //         const img = new Image();
+
+        //         img.src = "{{ asset('siap.png') }}"; // ✅ FIX
+
+        //         img.onload = function(){
+
+        //             const size = 60;
+
+        //             // background putih biar QR tetap terbaca
+        //             ctx.fillStyle = "white";
+        //             ctx.fillRect(
+        //                 (canvas.width - size)/2 - 5,
+        //                 (canvas.height - size)/2 - 5,
+        //                 size + 10,
+        //                 size + 10
+        //             );
+
+        //             ctx.drawImage(
+        //                 img,
+        //                 (canvas.width - size) / 2,
+        //                 (canvas.height - size) / 2,
+        //                 size,
+        //                 size
+        //             );
+
+        //         };
+
+        //         img.onerror = function(){
+        //             console.error("Logo gagal dimuat!");
+        //         };
+
+        //     });
+
+        // }
+
+        function generateQR(url){
+
+            const canvas = document.getElementById('qrCanvas');
+
+            QRCode.toCanvas(canvas, url, {
+                width: 350,
+                margin: 4,
+                errorCorrectionLevel: 'H'
+            }, function (error) {
+
+                if(error) return console.error(error);
+
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+
+                img.src = "{{ asset('storage/assets/images/logos/siap.png') }}";
+
+                img.onload = function(){
+
+                    const size = 70;
+
+                    ctx.fillStyle = "white";
+                    ctx.fillRect(
+                        (canvas.width - size)/2 - 5,
+                        (canvas.height - size)/2 - 5,
+                        size + 10,
+                        size + 10
+                    );
+
+                    ctx.drawImage(
+                        img,
+                        (canvas.width - size) / 2,
+                        (canvas.height - size) / 2,
+                        size,
+                        size
+                    );
+
+                };
+
+            });
+
+        }
+
+        // function downloadQR(){
+
+        //     const canvas = document.getElementById('qrCanvas');
+
+        //     const link = document.createElement('a');
+        //     link.download = 'qr-code.png';
+        //     link.href = canvas.toDataURL("image/png");
+
+        //     link.click();
+
+        // }
+
+        function downloadQR(){
+
+            const canvas = document.getElementById('qrCanvas');
+
+            const link = document.createElement('a');
+            link.download = 'qr-kk.png';
+            link.href = canvas.toDataURL("image/png");
+
+            link.click();
+
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function(){
+
+            const modalQR = new bootstrap.Modal(document.getElementById('modalQR'));
+            const canvas = document.getElementById('qrCanvas');
+
+            document.querySelectorAll('.btnQR').forEach(btn => {
+
+                btn.addEventListener('click', function(){
+
+                    let kk = this.dataset.kk;
+
+                    let url = `https://siap-bandarsono.tebingtinggikota.go.id/kk/${kk}`;
+
+                    generateQR(url);
+
+                    modalQR.show();
+
+                });
+
+            });
+
+        });
+    </script>
+    
 </body>
 
 </html>

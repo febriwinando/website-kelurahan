@@ -137,13 +137,26 @@
                         @endforeach
                     </table>
                 </div>
-                
-            
-
-
         </div>
 
-        <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
+        @if(is_null($w->dasawisma->first()))
+
+        @else
+        <div class="row stats-row gy-4 mt-5 pt-5" data-aos="fade-up" data-aos-delay="500">
+            <div class="col-lg-12 mt-2">
+                <h4 class="text-center">Anggota Keluarga</h4>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/bayi.svg') }}" style="width:40px;height:40px;"></span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>Balita</h4>
+                            <p class="mb-0">L: {{$w->dasawisma->first()->balita_l}}, P: {{$w->dasawisma->first()->balita_p}}</p>
+                        </div>
+                    </div>
+            </div>
             <div class="col-lg-3 col-md-6">
                     <div class="stat-item">
                         <div class="stat-icon">
@@ -191,13 +204,30 @@
             <div class="col-lg-3 col-md-6">
                     <div class="stat-item">
                         <div class="stat-icon">
-                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/menyusui.svg') }}" style="width:40px;height:40px;"></span>
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/lansia.svg') }}" style="width:40px;height:40px;"></span>
                         </div>
                         <div class="stat-content">
                             <h4>Lansia</h4>
                             <p class="mb-0">{{$w->dasawisma->first()->lansia}}</p>
                         </div>
                     </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/buta.svg') }}" style="width:40px;height:40px;"></span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>Buta</h4>
+                            <p class="mb-0">L: {{$w->dasawisma->first()->buta_l}}, P: {{$w->dasawisma->first()->buta_p}}</p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+         <div class="row stats-row gy-4 mt-5 pt-5" data-aos="fade-up" data-aos-delay="500">
+            <div class="col-lg-12">
+                <h4 class="text-center">Kriteria Rumah</h4>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="stat-item">
@@ -277,7 +307,41 @@
                     </div>
                     </div>
             </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/spal2.svg') }}" style="width:40px;height:40px;"></span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>SPAL</h4>
+                            <p class="mb-0">
+                                @if($w->dasawisma->first()->memiliki_spal == 1)
+                                    Memiliki SPAL
+                                @else
+                                    Tidak Memiliki SPAL
+                                @endif
+                        </div>
+                    </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <span class="material-symbols-outlined"><img src="{{ asset('storage/assets/svgbarcode/p4k.svg') }}" style="width:40px;height:40px;"></span>
+                        </div>
+                        <div class="stat-content">
+                            <h4>Stiker P4K</h4>
+                            <p class="mb-0">
+                                @if($w->dasawisma->first()->memiliki_stiker_p4k == 1)
+                                    Menempelkan Stiker P4K
+                                @else
+                                    Tidak Menempelkan Stiker P4K
+                                @endif
+                        </div>
+                    </div>
+            </div>
         </div>
+        @endif
+
 
       </div>
 

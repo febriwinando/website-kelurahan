@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SubLingkungan;
+use App\Models\Lingkungan;
+use App\Models\DasawismaWarga;
+use App\Models\Warga;
+use App\Models\KepalaKeluarga;
 
 class BerandaController extends Controller
 {
@@ -11,7 +16,13 @@ class BerandaController extends Controller
      */
     public function index()
     {
-        return view('publik.beranda');
+        $lingkungans = Lingkungan::with([
+            'subLingkungan' => function ($q) {
+                $q->with(['dasawismaWargas']); // relasi tambahan nanti
+            }
+        ])->get();
+
+        return view('publik.beranda', compact('lingkungans'));
     }
 
     /**

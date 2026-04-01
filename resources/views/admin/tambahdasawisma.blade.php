@@ -146,30 +146,42 @@
                                         <h5>Kriteria Rumah</h5>
 
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 mb-2">
                                                 <label class="form-label">
                                                     <input type="checkbox" name="rumah_sehat" value="1"  {{ isset($dasa) && $dasa->rumah_sehat ? 'checked' : '' }}>
                                                     Sehat
                                                 </label>
                                             </div>
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 mb-2">
                                                 <label class="form-label">
                                                     <input type="checkbox" name="rumah_kurang_sehat" value="1"  {{ isset($dasa) && $dasa->rumah_kurang_sehat ? 'checked' : '' }}>
                                                     Kurang Sehat
                                                 </label>
                                             </div>
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 mb-2">
                                                 <label class="form-label">
                                                     <input type="checkbox" name="memiliki_tps" value="1" {{ isset($dasa) && $dasa->memiliki_spal ? 'checked' : '' }}>
                                                     Memiliki TPS
                                                 </label>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 mb-2">
                                                 <label class="form-label">
                                                     <input type="checkbox" name="pembuangan_sampah" value="1" {{ isset($dasa) && $dasa->memiliki_tempat_sampah ? 'checked' : '' }}   >
                                                     Pembuangan Sampah
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+                                                <label class="form-label">
+                                                    <input type="checkbox" name="memiliki_spal" value="1" {{ isset($dasa) && $dasa->memiliki_spal ? 'checked' : '' }}   >
+                                                    Memiliki SPAL
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+                                                <label class="form-label">
+                                                    <input type="checkbox" name="memiliki_stiker_p4k" value="1" {{ isset($dasa) && $dasa->memiliki_stiker_p4k ? 'checked' : '' }}   >
+                                                    Menempel Stiker P4K
                                                 </label>
                                             </div>
 

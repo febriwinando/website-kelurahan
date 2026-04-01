@@ -27,4 +27,14 @@ class SubLingkungan extends Model
             'area_sub_lingkungans'
         );
     }
+
+
+    public function dasawismaWargas()
+    {
+        return $this->hasMany(
+            DasawismaWarga::class,
+            'dasa_wisma',          // foreign key di dasawisma_wargas
+            'nama_sub_lingkungan'  // local key di sub_lingkungan
+        );
+    }
 }
