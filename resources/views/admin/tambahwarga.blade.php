@@ -20,12 +20,6 @@
                     </ul>
                 @endif
             </div>
-
-            {{-- @if($messages->isEmpty())
-                <div class="alert alert-primary" role="alert">
-                    Tidak aduan yang diterima.
-                </div>
-            @else --}}
             <!-- Modal Alert -->
             <div class="modal fade modal-sm" id="globalAlertModal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -79,10 +73,6 @@
                                         @if(isset($warga))
                                             @method('PUT')
                                             <input type="hidden" name="id" id="warga_id">
-                                            <!-- <input type="hidden" name="provinsi_id" id="provinsi_id" value="{{ $warga->provinsi ?? '' }}">
-                                            <input type="hidden" name="kabupaten_id" id="kabupaten_id" value="{{ $warga->kabupaten ?? '' }}">
-                                            <input type="hidden" name="kecamatan_id" id="kecamatan_id" value="{{ $warga->kecamatan ?? '' }}">
-                                            <input type="hidden" name="kelurahan_id" id="kelurahan_id" value="{{ $warga->kelurahan ?? '' }}"> -->
                                             
                                         @endif
                                         

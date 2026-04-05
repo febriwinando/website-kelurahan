@@ -35,17 +35,6 @@ class DasawismaWargaController extends Controller
     {
         try {
 
-            // $request->validate([
-            //     'no_kk' => 'required|unique:dasawisma_wargas,no_kk',
-            //     'balita_l' => 'nullable|integer|min:0',
-            //     'balita_p' => 'nullable|integer|min:0',
-            //     'pus' => 'nullable|integer|min:0',
-            //     'wus' => 'nullable|integer|min:0',
-            //     'ibu_hamil' => 'nullable|integer|min:0',
-            //     'ibu_menyusui' => 'nullable|integer|min:0',
-            //     'lansia' => 'nullable|integer|min:0',
-            // ]);
-
             $request->validate([
                 'no_kk' => 'required|unique:dasawisma_wargas,no_kk',
                 'balita_l' => 'nullable|integer|min:0',

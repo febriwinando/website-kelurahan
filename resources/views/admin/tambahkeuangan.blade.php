@@ -71,7 +71,7 @@
                                                 <tr> 
                                                     <th>Jenis</th> 
                                                     <th>Tanggal</th> 
-                                                    <th>Invoice</th> 
+                                                    <th style="display:none">Invoice</th> 
                                                     <th>Uraian</th> 
                                                     <th>Jumlah</th> 
                                                     <th></th> 
@@ -88,8 +88,8 @@
                                                     <td>
                                                         <input type="date" class="form-control rounded-pill" name="tanggal[]" >
                                                     </td> 
-                                                    <td>
-                                                        <input type="text" class="form-control rounded-pill" name="invoice[]">
+                                                    <td style="display:none">
+                                                        <input type="text" class="form-control rounded-pill" name="invoice[]" value="-">
 
                                                     </td>
                                                     <td> 

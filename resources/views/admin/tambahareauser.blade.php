@@ -51,7 +51,7 @@
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h5 class="card-title fw-semibold mb-0">Notulen Rapat</h5>
+                                        <h5 class="card-title fw-semibold mb-0">Pembagian Area Petugas</h5>
                                         <div>
                                             <a href="/dasawisma" class="btn btn-info">Data Datawisma</a>
                                         </div>
@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Form Notulen </h5>
+                                <h5 class="card-title fw-semibold card-header">Form Pembagian Area </h5>
                                 <div class="card-body">
                                     <form id="formAreaUser">
                                         @csrf
