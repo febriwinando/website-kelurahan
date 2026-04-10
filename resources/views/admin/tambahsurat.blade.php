@@ -52,127 +52,87 @@
                             <div class="row" >
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h5 class="card-title fw-semibold mb-0">Notulen Rapat</h5>
+                                        <h5 class="card-title fw-semibold mb-0">Surat Masuk</h5>
                                         <div>
-                                            <a href="/notulen" class="btn btn-info">Arsip Notulen</a>
+                                            <a href="/surat-masuk" class="btn btn-info">Daftar Surat Masuk</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="card">
-                                <h5 class="card-title fw-semibold card-header">Form Notulen </h5>
-                                @if($anggotas->isEmpty())
-                                    <h4 class="text-center mt-5 mb-5">
-                                        Daftarkan anggota PKK terlebih dahulu ...
-                                    </h4>
-                                @else
-                                <div class="card-body">
-                                    <form id="formTambahNotulen" enctype="multipart/form-data">
-                                        @csrf
+                                <h5 class="card-title fw-semibold card-header">Form Surat Masuk</h5>
 
+                                <div class="card-body">
+                                    <form id="formTambahSM" enctype="multipart/form-data">
+                                        @csrf
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
-                                                    @if(isset($notulen))
-                                                        <input type="hidden" id="notulen_id" value="{{ $notulen->id }}">
+                                                    @if(isset($sm))
+                                                        <input type="hidden" id="notulen_id" value="{{ $sm->id }}">
                                                     @endif
-                                                    <label class="form-label">Tanggal</label>
+                                                    <label class="form-label">Tanggal Terima</label>
                                                     <input type="date"
-                                                        name="tanggal"
+                                                        name="terima_surat"
                                                         class="form-control rounded-pill"
-                                                        value="{{ old('tanggal', isset($notulen) ? $notulen->tanggal?->format('Y-m-d') : '') }}">
+                                                        value="{{ old('terima_surat', isset($sm) ? $sm->terima_surat?->format('Y-m-d') : '') }}">
 
                                                 </div>
                                                 
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Waktu</label>
-                                                    <input type="time"
-                                                        name="waktu"
+                                                    @if(isset($sm))
+                                                        <input type="hidden" id="notulen_id" value="{{ $sm->id }}">
+                                                    @endif
+                                                    <label class="form-label">Tanggal Surat</label>
+                                                    <input type="date"
+                                                        name="tanggal_surat"
                                                         class="form-control rounded-pill"
-                                                        value="{{ old('waktu', isset($notulen) ? $notulen->waktu?->format('H:i') : '') }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Tempat</label>
-                                                    <input type="text" class="form-control rounded-pill" name="tempat" value="{{ $notulen->tempat ?? '' }}" >
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Macam</label>
-                                                    <input type="text" class="form-control rounded-pill" name="macam" value="{{ $notulen->macam ?? '' }}" >
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <h6>Uraian Jalannya Rapat</h6>
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label for="anggota_id" class="form-label">Pemimpin Rapat:</label>
-                                                    <select id="anggota_id" name="anggota_id" class="selectpicker form-control rounded-pill" data-live-search="true" title="pilih pemimpin rapat">
-                                                        @foreach($anggotas as $anggota)
-                                                            <option value="{{ $anggota->id }}" data-name="{{ $anggota->nama }}" {{ isset($notulen) && $notulen->anggota_id == $anggota->id ? 'selected' : '' }}>
-                                                                {{ $anggota->nama }}
-                                                            </option>
-                                                        @endforeach   
-                                                    </select>
-                                                </div>
+                                                        value="{{ old('tanggal_surat', isset($sm) ? $sm->tanggal_surat?->format('Y-m-d') : '') }}">
 
-                                                <input type="hidden" name="nama_anggota" id="nama_anggota"
-                                                    value="{{ $anggota->pimpinan_rapat ?? '' }}">
+                                                </div>
+                                                
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Jumlah Yang Diundang</label>
-                                                    <input type="number" class="form-control rounded-pill" name="jumlah_diundang" value="{{ $notulen->jumlah_diundang ?? '' }}">
+                                                    <label class="form-label">No. Surat</label>
+                                                    <input type="text"
+                                                        name="no_surat"
+                                                        class="form-control rounded-pill"
+                                                        value="{{ $sm->no_surat ?? '' }}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Jumlah Hadir</label>
-                                                    <input type="number" class="form-control rounded-pill" name="jumlah_hadir" value="{{ $notulen->jumlah_hadir ?? '' }}">
+                                                    <label class="form-label">Diterima dari</label>
+                                                    <input type="text" class="form-control rounded-pill" name="dari" value="{{ $sm->dari ?? '' }}" >
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Diteruskan kapada</label>
+                                                    <input type="text" class="form-control rounded-pill" name="diteruskan_kepada" value="{{ $sm->diteruskan_kepada ?? '' }}" >
                                                 </div>
                                             </div>
                                             
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-12">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Susunan Acara</label>
-                                                    <textarea class="form-control" name="susunan_acara" style="height: 200px">{{ $notulen->susunan_acara ?? '' }}</textarea>
+                                                    <label class="form-label">Perihal</label>
+                                                    <textarea class="form-control" name="perihal" style="height: 100px">{{ $sm->perihal ?? '' }}</textarea>
                                                 </div>
                                             </div>
-                                             <div class="col-sm-6">
+                                            <h6>Lampiran</h6>
+                                            <div class="col-sm-12">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Keputusan</label>
-                                                    <textarea class="form-control" name="keputusan" style="height: 200px">{{ $notulen->keputusan ?? '' }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Lain-lain</label>
-                                                    <textarea class="form-control" name="lain_lain" style="height: 200px">{{ $notulen->lain_lain ?? '' }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Penutup</label>
-                                                    <textarea class="form-control" name="penutup" style="height: 200px">{{ $notulen->penutup ?? '' }}</textarea>
-                                                </div>
-                                            </div>
-                                            <hr>
-
-                                            <h6>Dokumentasi Kegiatan</h6>
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Upload Foto</label>
+                                                    <label class="form-label">Upload Lampiran</label>
 
                                                    <input type="file"
                                                         class="form-control rounded-pill"
                                                         id="imageInputMulti"
                                                         multiple
-                                                        name="foto_dokumentasi[]"
+                                                        name="lampiran[]"
                                                         accept="image/*">
 
                                                     <small id="fileCountText" class="text-muted"></small>
@@ -181,8 +141,8 @@
                                                     <div class="row mt-3" id="imagePreviewContainer">
 
                                                         {{-- FOTO LAMA (EDIT MODE) --}}
-                                                        @if(isset($notulen) && $notulen->foto_dokumentasi)
-                                                            @foreach($notulen->foto_dokumentasi as $foto)
+                                                        @if(isset($sm) && $sm->lampiran)
+                                                            @foreach($sm->lampiran as $foto)
                                                                 <div class="col-md-4 mb-3 preview-item old-photo">
                                                                     <div class="position-relative">
                                                                         <img src="{{ asset('storage/'.$foto) }}"
@@ -207,14 +167,14 @@
 
                                         </div>
                                             <button type="submit" class="btn btn-primary w-100">
-                                                {{ isset($anggota) ? 'Update' : 'Tambah' }}
+                                                {{ isset($sm) ? 'Update' : 'Tambah' }}
                                             </button>
                                         
 
                                         {{-- <button type="submit" class="btn btn-primary">Tambah</button> --}}
                                     </form>
                                 </div>
-                                @endif
+                                
             
                             </div>
 

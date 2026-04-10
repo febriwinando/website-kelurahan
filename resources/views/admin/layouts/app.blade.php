@@ -237,12 +237,49 @@
             </li>
             @endrole
             @role('administrator', 'admin', 'ketua')
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+              <span class="hide-menu">Agenda Surat</span>
+            </li>
+            @endrole
+
+            @role('administrator', 'admin', 'ketua')
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/kegiatan" aria-expanded="false">
+              <a class="sidebar-link" href="/surat-masuk/create" aria-expanded="false">
                 <span>
-                  <img src="{{ asset('storage/assets/svg/kegiatan.svg') }}">
+                  <img src="{{ asset('storage/assets/svg/im.svg') }}" style="width:25px">
                 </span>
-                <span class="hide-menu">Daftar Kegiatan</span>
+                <span class="hide-menu">Tambah Surat Masuk</span>
+              </a>
+            </li>
+            @endrole
+            @role('administrator', 'admin')
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/surat-masuk" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/ts.svg') }}" style="width:25px">
+                </span>
+                <span class="hide-menu">Daftar Surat Masuk</span>
+              </a>
+            </li>
+            @endrole
+            @role('administrator', 'admin', 'ketua')
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/surat-keluar/create" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/om.svg') }}" style="width:25px">
+                </span>
+                <span class="hide-menu">Tambah Surat Keluar</span>
+              </a>
+            </li>
+            @endrole
+            @role('administrator', 'admin', 'ketua')
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/surat-keluar" aria-expanded="false">
+                <span>
+                  <img src="{{ asset('storage/assets/svg/dsk.svg') }}" style="width:25px">
+                </span>
+                <span class="hide-menu">Daftar Surat Keluar</span>
               </a>
             </li>
             @endrole
@@ -897,6 +934,113 @@
     </script>
 
     <script>
+        
+        $('#formTambahSM').on('submit', function(e){
+
+            e.preventDefault();
+
+            let formData = new FormData(this);
+            let id = $('#notulen_id').val();
+
+            let url = id ? `/surat-masuk/${id}` : `/surat-masuk`;
+            let method = id ? 'POST' : 'POST';
+
+            if(id){
+                formData.append('_method', 'PUT');
+            }
+
+            $.ajax({
+                url: url,
+                type: method,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response){
+
+                    if(response.success){
+
+                            showAlert('success', id 
+                                ? 'Surat Masuk berhasil diupdate'
+                                : 'Surat Masuk berhasil ditambah'
+                            );
+
+                            if(!id){
+                                $('#formTambahSM')[0].reset();
+                                $('#imagePreview').attr('src', '').addClass('d-none');
+                            }
+                    }
+                },
+                error: function(xhr){
+                    let errors = xhr.responseJSON.errors;
+                        let html = '<div class="alert alert-danger"><ul>';
+
+                        $.each(errors, function(key, value){
+                            html += '<li>' + value[0] + '</li>';
+                        });
+
+                        html += '</ul></div>';
+
+                        $('#alert-container').html(html);
+                }
+            });
+
+        });
+    </script>
+
+        <script>
+        
+        $('#formTambahSK').on('submit', function(e){
+
+            e.preventDefault();
+
+            let formData = new FormData(this);
+            let id = $('#notulen_id').val();
+
+            let url = id ? `/surat-keluar/${id}` : `/surat-keluar`;
+            let method = id ? 'POST' : 'POST';
+
+            if(id){
+                formData.append('_method', 'PUT');
+            }
+
+            $.ajax({
+                url: url,
+                type: method,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response){
+
+                    if(response.success){
+
+                            showAlert('success', id 
+                                ? 'Surat Keluar berhasil diupdate'
+                                : 'Surat Keluar berhasil ditambah'
+                            );
+
+                            if(!id){
+                                $('#formTambahSK')[0].reset();
+                                $('#imagePreview').attr('src', '').addClass('d-none');
+                            }
+                    }
+                },
+                error: function(xhr){
+                    let errors = xhr.responseJSON.errors;
+                        let html = '<div class="alert alert-danger"><ul>';
+
+                        $.each(errors, function(key, value){
+                            html += '<li>' + value[0] + '</li>';
+                        });
+
+                        html += '</ul></div>';
+
+                        $('#alert-container').html(html);
+                }
+            });
+
+        });
+    </script>
+    <script>
         document.getElementById('anggota_id').addEventListener('change', function() {
 
             let selectedOption = this.options[this.selectedIndex];
@@ -973,7 +1117,9 @@
             }
 
         });
-        </script>
+    </script>
+
+    
 
         <script>
             function tambahBaris(){

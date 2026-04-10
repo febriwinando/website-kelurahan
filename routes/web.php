@@ -16,6 +16,8 @@ use App\Http\Controllers\DasawismaWargaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LingkunganController;
 use App\Http\Controllers\SubLingkunganController;
+use App\Http\Controllers\SuratMasukController;
+use App\Http\Controllers\SuratKeluarController;
 
 use App\Models\Kabupaten;
 use App\Models\Lingkungan;
@@ -97,6 +99,10 @@ Route::middleware(['auth','role:administrator,admin'])->group(function () {
     Route::get('pengguna/{no_kk}/area', [UserController::class, 'area'])->name('pengguna.area');
     Route::post('/area-user/store', [UserController::class, 'storearea']);
     Route::get('/area-user/{user}', [UserController::class, 'getarea']);
+
+
+    Route::resource('/surat-masuk', SuratMasukController::class);
+    Route::resource('/surat-keluar', SuratKeluarController::class);
 
 });
 

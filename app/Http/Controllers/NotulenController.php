@@ -136,7 +136,7 @@ class NotulenController extends Controller
             return view('admin.tambahnotulen', compact(
                 'notulen', 'anggotas'
             ));
-        }
+    }
 
     /**
      * Update the specified resource in storage.
